@@ -1,13 +1,13 @@
 package br.pro.hashi.ensino.desagil.firebase;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Paciente {
     private String name;
-    private int id, idade;
-    private int tempoSintomas;
+    private int id, idade, tempoSintomas;
     private Leito leito;
-    private double risco;
+    private double risco = 0.67; //Por enquanto
     private LinkedList<Comorbidade> comorbidades;
     private LinkedList<Exame> exames;
     private LinkedList<Sintoma> sintomas;
@@ -42,6 +42,12 @@ public class Paciente {
     }
 
     public String getName() {
+        return name;
+    }
+
+    // O Array adapter precisa disso.
+    @Override
+    public String toString(){
         return name;
     }
 
