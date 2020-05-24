@@ -35,7 +35,7 @@ public class PatientActivity extends AppCompatActivity{
             patientSymptoms.add(s.getName());
         }
         for (Comorbidade c : tempComorb){
-            patientComorbs.add(c.getName());
+            patientComorbs.add(c.getNomeComorbidades());
         }
 
         patientSummary.add("Nome: " + this.currPatient.getName());
@@ -76,27 +76,22 @@ public class PatientActivity extends AppCompatActivity{
         comorbityView = findViewById(R.id.comorbityView);
 
         editButton.setOnClickListener((view) -> {
-            Intent intent = new Intent(PatientActivity.this, EditorActivity.class);
+            Intent intent = new Intent(PatientActivity.this, PatientEditActivity.class);
             // Tem que passar o paciente atual também;
             startActivity(intent);
         });
 
 
         LinkedList<Comorbidade> Comorbs1, Comorbs2, Comorbs3;
-        Comorbidade obesidade = new Comorbidade("Obesidade");
-        Comorbidade diabetes = new Comorbidade("Diabetes");
-        Comorbidade hiv = new Comorbidade("HIV");
-        Comorbidade cancerEsofago = new Comorbidade("Câncer esofágico");
-        Comorbidade cegueira = new Comorbidade("Cegueira");
         Comorbs1 = new LinkedList<Comorbidade>();
         Comorbs2 = new LinkedList<Comorbidade>();
         Comorbs3 = new LinkedList<Comorbidade>();
-        Comorbs1.add(obesidade);
-        Comorbs1.add(hiv);
-        Comorbs1.add(cancerEsofago);
-        Comorbs2.add(hiv);
-        Comorbs2.add(cegueira);
-        Comorbs3.add(diabetes);
+        Comorbs1.add(Comorbidade.CARDIO);
+        Comorbs1.add(Comorbidade.DIABETES);
+        Comorbs1.add(Comorbidade.HIV);
+        Comorbs2.add(Comorbidade.IMUNODEF);
+        Comorbs2.add(Comorbidade.NEOPLASIA);
+        Comorbs3.add(Comorbidade.PULMONAR);
 
         LinkedList<Sintoma> Sintomas1, Sintomas2, Sintomas3;
         Sintoma coriza = new Sintoma("Coriza");

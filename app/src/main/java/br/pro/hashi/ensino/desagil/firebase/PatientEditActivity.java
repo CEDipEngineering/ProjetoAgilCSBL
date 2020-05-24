@@ -74,7 +74,8 @@ public class PatientEditActivity extends AppCompatActivity {
             }
             System.out.println(sintomasSelecionados);
             System.out.println(comorbidadesSelecionadas);
-
+            System.out.println(patientNameEdit.getText().toString());
+            System.out.println(patientIdadeEdit.getText().toString());
         });
 
     }
