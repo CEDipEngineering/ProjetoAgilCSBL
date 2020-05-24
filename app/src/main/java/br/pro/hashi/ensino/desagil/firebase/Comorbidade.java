@@ -11,10 +11,13 @@ public enum Comorbidade {
     PULMONAR(8,"Doença pulmonar crônica"),
     NEOPLASIA(9,"Neoplasia(Tumor sólido ou hematológico)");
 
-    public String nome;
+    public String nomeComorbidades;
     public int id;
     Comorbidade(int id,String nome) {
-        this.nome = nome;
+        this.nomeComorbidades = nome;
         this.id = id;
+    }
+    public String getNomeComorbidades(){
+        return this.nomeComorbidades;
     }
 }
