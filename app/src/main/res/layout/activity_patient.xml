@@ -6,4 +6,119 @@
     android:layout_height="match_parent"
     tools:context=".PatientActivity">
 
+<!--
+Documentação do android studio:
+Although you can nest one or more layouts within another layout to achieve your UI design,
+you should strive to keep your layout hierarchy as shallow as possible.
+Your layout draws faster if it has fewer nested layouts (a wide view hierarchy is better than a deep view hierarchy).
+-->
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="left"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical"
+            >
+            <Spinner
+                android:id="@+id/patientSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:dropDownWidth="match_parent"
+                android:padding="2dp"
+                />
+
+            <Button
+                android:id="@+id/examesButton"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="50dp"
+                android:text="Ver Exames"
+                />
+
+            <Button
+                android:id="@+id/editButton"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="Editar Paciente"
+                />
+
+        </LinearLayout>
+
+<!--   Talvez adicionar uns botões aqui na esquerda     -->
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="106dp"
+        android:layout_marginTop="35dp"
+        android:orientation="horizontal">
+
+        <ListView
+            android:id="@+id/summaryView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <ListView
+            android:id="@+id/symptomView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <ListView
+            android:id="@+id/comorbityView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="106dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sumário do Paciente"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sintomas"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Comorbidades"
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+</RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
