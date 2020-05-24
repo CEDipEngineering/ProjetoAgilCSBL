@@ -1,13 +1,24 @@
 package br.pro.hashi.ensino.desagil.firebase;
 
-public class Comorbidade {
-    private String name;
+public enum Comorbidade {
+    CARDIO(1,"Doença Cardiovascular, inculuindo hipertensão"),
+    DIABETES(2,"Diabetes"),
+    HEPATICA(3,"Doença Hepática"),
+    NEURO(4,"Doença Neurológica crônica ou neuromuscular"),
+    IMUNODEF(5,"Imunodeficiência"),
+    HIV(6,"HIV"),
+    RENAL(7,"Doença renal"),
+    PULMONAR(8,"Doença pulmonar crônica"),
+    NEOPLASIA(9,"Neoplasia(Tumor sólido ou hematológico)");
 
-    public Comorbidade(String name) {
-        this.name = name;
+    public String nome;
+    public int id;
+    Comorbidade(int id,String nome) {
+        this.nome = nome;
+        this.id = id;
     }
 
     public String getName() {
-        return name;
+        return nome;
     }
 }
