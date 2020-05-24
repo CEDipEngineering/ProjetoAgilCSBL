@@ -45,12 +45,6 @@ public class Paciente {
         return name;
     }
 
-    // O Array adapter precisa disso.
-    @Override
-    public String toString(){
-        return name;
-    }
-
     public int getId() {
         return id;
     }
