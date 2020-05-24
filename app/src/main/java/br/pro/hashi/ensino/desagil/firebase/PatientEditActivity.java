@@ -29,7 +29,7 @@ public class PatientEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ArrayList<String> listaComorbidades = new ArrayList<String>();
         for(Comorbidade e :listaComorbidadesEnum){
-           listaComorbidades.add(e.getNomeComorbidades());
+           listaComorbidades.add(e.getName());
             //System.out.println(e.getNomeComorbidades());
         }
 

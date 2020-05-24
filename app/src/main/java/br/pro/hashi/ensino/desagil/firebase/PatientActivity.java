@@ -76,18 +76,18 @@ public class PatientActivity extends AppCompatActivity{
         comorbityView = findViewById(R.id.comorbityView);
 
         editButton.setOnClickListener((view) -> {
-            Intent intent = new Intent(PatientActivity.this, EditorActivity.class);
+            Intent intent = new Intent(PatientActivity.this, PatientEditActivity.class);
             // Tem que passar o paciente atual também;
             startActivity(intent);
         });
 
 
         LinkedList<Comorbidade> Comorbs1, Comorbs2, Comorbs3;
-        Comorbidade obesidade = new Comorbidade("Obesidade");
-        Comorbidade diabetes = new Comorbidade("Diabetes");
-        Comorbidade hiv = new Comorbidade("HIV");
-        Comorbidade cancerEsofago = new Comorbidade("Câncer esofágico");
-        Comorbidade cegueira = new Comorbidade("Cegueira");
+        Comorbidade obesidade = new Comorbidade(0,"Obesidade");
+        Comorbidade diabetes = new Comorbidade(1,"Diabetes");
+        Comorbidade hiv = new Comorbidade(2,"HIV");
+        Comorbidade cancerEsofago = new Comorbidade(3,"Câncer esofágico");
+        Comorbidade cegueira = new Comorbidade(4,"Cegueira");
         Comorbs1 = new LinkedList<Comorbidade>();
         Comorbs2 = new LinkedList<Comorbidade>();
         Comorbs3 = new LinkedList<Comorbidade>();
