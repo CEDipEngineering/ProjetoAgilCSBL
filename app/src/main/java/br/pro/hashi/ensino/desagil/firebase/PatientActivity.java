@@ -35,7 +35,7 @@ public class PatientActivity extends AppCompatActivity{
             patientSymptoms.add(s.getName());
         }
         for (Comorbidade c : tempComorb){
-            patientComorbs.add(c.getName());
+            patientComorbs.add(c.getNomeComorbidades());
         }
 
         patientSummary.add("Nome: " + this.currPatient.getName());
@@ -83,20 +83,15 @@ public class PatientActivity extends AppCompatActivity{
 
 
         LinkedList<Comorbidade> Comorbs1, Comorbs2, Comorbs3;
-        Comorbidade obesidade = new Comorbidade(0,"Obesidade");
-        Comorbidade diabetes = new Comorbidade(1,"Diabetes");
-        Comorbidade hiv = new Comorbidade(2,"HIV");
-        Comorbidade cancerEsofago = new Comorbidade(3,"Câncer esofágico");
-        Comorbidade cegueira = new Comorbidade(4,"Cegueira");
         Comorbs1 = new LinkedList<Comorbidade>();
         Comorbs2 = new LinkedList<Comorbidade>();
         Comorbs3 = new LinkedList<Comorbidade>();
-        Comorbs1.add(obesidade);
-        Comorbs1.add(hiv);
-        Comorbs1.add(cancerEsofago);
-        Comorbs2.add(hiv);
-        Comorbs2.add(cegueira);
-        Comorbs3.add(diabetes);
+        Comorbs1.add(Comorbidade.CARDIO);
+        Comorbs1.add(Comorbidade.DIABETES);
+        Comorbs1.add(Comorbidade.HIV);
+        Comorbs2.add(Comorbidade.IMUNODEF);
+        Comorbs2.add(Comorbidade.NEOPLASIA);
+        Comorbs3.add(Comorbidade.PULMONAR);
 
         LinkedList<Sintoma> Sintomas1, Sintomas2, Sintomas3;
         Sintoma coriza = new Sintoma("Coriza");
