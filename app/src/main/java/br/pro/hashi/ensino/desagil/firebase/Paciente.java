@@ -1,10 +1,11 @@
 package br.pro.hashi.ensino.desagil.firebase;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class Paciente {
+public class Paciente implements Serializable {
     private String name;
     private int id, idade, tempoSintomas;
     private Leito leito;

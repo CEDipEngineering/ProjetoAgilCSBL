@@ -1,5 +1,6 @@
 package br.pro.hashi.ensino.desagil.firebase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.widget.ArrayAdapter;
@@ -48,6 +49,7 @@ public class PatientEditActivity extends AppCompatActivity {
         patientIdadeView = findViewById(R.id.idade);
         patientNameEdit = findViewById(R.id.edit_name);
         patientIdadeEdit = findViewById(R.id.edit_idade);
+        tempoSintomasEdit = findViewById(R.id.edit_dias);
         listaSintomasView = findViewById(R.id.list_sintomas);
         listaComorbidadesView = findViewById(R.id.list_comorbidades);
         finalizarButton = findViewById((R.id.finalizar));
@@ -56,6 +58,18 @@ public class PatientEditActivity extends AppCompatActivity {
         adapterComorbidades = new ArrayAdapter<Comorbidade>(this, android.R.layout.simple_list_item_multiple_choice, listaComorbidadesEnum);
         listaSintomasView.setAdapter(adapterSintomas);
         listaComorbidadesView.setAdapter(adapterComorbidades);
+
+
+        Intent myIntent = getIntent();
+        // Try to get message handed in when creating intent
+        Paciente patient = (Paciente) myIntent.getSerializableExtra("patient");
+
+        // If there is one, put it in the textView
+        if (patient != null) {
+            patientNameEdit.setText(patient.getName());
+            patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
+            tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
+        }
 
         finalizarButton.setOnClickListener((view) -> {
             switch(view.getId()){
@@ -78,7 +92,18 @@ public class PatientEditActivity extends AppCompatActivity {
                             comorbidadesSelecionadas.add((Comorbidade) listaComorbidadesView.getItemAtPosition(key));
                         }
                     }
-                    Paciente Paciente1 = new Paciente("Rafael", 1, 21, 7, comorbidadesSelecionadas, sintomasSelecionados);
+
+                    patientName = patientNameEdit.getText().toString();
+                    int idade = Integer.parseInt(patientIdadeEdit.getText().toString());
+                    int tempoSint = Integer.parseInt(tempoSintomasEdit.getText().toString());
+                    Paciente Paciente1 = new Paciente(patientName, 1, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados);
+
+                    //intent
+                    Intent intent = new Intent(PatientEditActivity.this, PatientActivity.class);
+                    // Tem que passar o paciente atual também;
+                    intent.putExtra("patient", Paciente1);
+                    startActivity(intent);
+
             }
             System.out.println(sintomasSelecionados);
             System.out.println(comorbidadesSelecionadas);

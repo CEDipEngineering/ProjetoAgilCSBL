@@ -76,11 +76,7 @@ public class PatientActivity extends AppCompatActivity{
         symptomView = findViewById(R.id.symptomView);
         comorbityView = findViewById(R.id.comorbityView);
 
-        editButton.setOnClickListener((view) -> {
-            Intent intent = new Intent(PatientActivity.this, PatientEditActivity.class);
-            // Tem que passar o paciente atual também;
-            startActivity(intent);
-        });
+
 
 
         LinkedList<Comorbidade> Comorbs1, Comorbs2, Comorbs3;
@@ -109,11 +105,22 @@ public class PatientActivity extends AppCompatActivity{
         Patients[1] = new Paciente("Raquel", 2, 11, 3, Comorbs2, Sintomas2);
         Patients[2] = new Paciente("Ronaldo", 3, 41, 2, Comorbs3, Sintomas3);
 
+        Intent myIntent = getIntent();
+        // Try to get message handed in when creating intent
+        Paciente patiente = (Paciente) myIntent.getSerializableExtra("patient");
+
+        // If there is one, put it in the textView
+        if (patiente != null) {
+            Patients[0] = patiente;
+        }
+
         for (int i = 0; i<Patients.length; i++) {
             System.out.println(Patients[i].getIdade());
             converter.put(Patients[i].getName(), Patients[i]);
         }
 //            System.out.println(converter);
+
+
 
         ArrayList arraySpinner = new ArrayList();
         arraySpinner.add(Patients[0].getName());
@@ -126,6 +133,14 @@ public class PatientActivity extends AppCompatActivity{
         patientSpinner.setAdapter(adapter);
         this.currPatient = Patients[0];
         update();
+
+
+        editButton.setOnClickListener((view) -> {
+            Intent intent = new Intent(PatientActivity.this, PatientEditActivity.class);
+            // Tem que passar o paciente atual também;
+            intent.putExtra("patient", currPatient);
+            startActivity(intent);
+        });
 
 
         patientSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
