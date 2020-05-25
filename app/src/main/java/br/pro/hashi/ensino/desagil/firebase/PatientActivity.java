@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public class PatientActivity extends AppCompatActivity{
     private Spinner patientSpinner;
@@ -24,15 +25,15 @@ public class PatientActivity extends AppCompatActivity{
     private HashMap<String , Paciente> converter = new HashMap<>();
 
     private void update(){
-        LinkedList<Comorbidade> tempComorb = this.currPatient.getComorbidades();
-        LinkedList<Sintoma> tempSintoma = this.currPatient.getSintomas();
+        List<Comorbidade> tempComorb = this.currPatient.getComorbidades();
+        List<Sintoma> tempSintoma = this.currPatient.getSintomas();
 
         ArrayList<String> patientComorbs = new ArrayList<String>();
         ArrayList<String> patientSymptoms = new ArrayList<String>();
         ArrayList<String> patientSummary = new ArrayList<String>();
 
         for (Sintoma s : tempSintoma){
-            patientSymptoms.add(s.getName());
+            patientSymptoms.add(s.getNome());
         }
         for (Comorbidade c : tempComorb){
             patientComorbs.add(c.getNomeComorbidades());
@@ -94,20 +95,15 @@ public class PatientActivity extends AppCompatActivity{
         Comorbs3.add(Comorbidade.PULMONAR);
 
         LinkedList<Sintoma> Sintomas1, Sintomas2, Sintomas3;
-        Sintoma coriza = new Sintoma("Coriza");
-        Sintoma faltaAr = new Sintoma("Falta de Ar");
-        Sintoma febre = new Sintoma("Febre");
-        Sintoma hypoNatremia = new Sintoma("Hiponatremia");
-        Sintoma dorNoPe = new Sintoma("Dor no pé");
         Sintomas1 = new LinkedList<Sintoma>();
         Sintomas2 = new LinkedList<Sintoma>();
         Sintomas3 = new LinkedList<Sintoma>();
-        Sintomas1.add(coriza);
-        Sintomas1.add(faltaAr);
-        Sintomas1.add(dorNoPe);
-        Sintomas2.add(hypoNatremia);
-        Sintomas2.add(febre);
-        Sintomas3.add(dorNoPe);
+        Sintomas1.add(Sintoma.CONJUTIVITE);
+        Sintomas1.add(Sintoma.ABDOMEM);
+        Sintomas1.add(Sintoma.AGEUSIA);
+        Sintomas2.add(Sintoma.ANOSMIA);
+        Sintomas2.add(Sintoma.AR);
+        Sintomas3.add(Sintoma.AGEUSIA);
         Paciente[] Patients = new Paciente[3];
         Patients[0] = new Paciente("Rafael", 1, 21, 7, Comorbs1, Sintomas1);
         Patients[1] = new Paciente("Raquel", 2, 11, 3, Comorbs2, Sintomas2);
@@ -153,4 +149,3 @@ public class PatientActivity extends AppCompatActivity{
 
     }
 }
-

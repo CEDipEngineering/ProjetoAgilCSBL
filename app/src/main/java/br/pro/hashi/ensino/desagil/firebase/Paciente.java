@@ -1,6 +1,7 @@
 package br.pro.hashi.ensino.desagil.firebase;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class Paciente {
@@ -8,11 +9,11 @@ public class Paciente {
     private int id, idade, tempoSintomas;
     private Leito leito;
     private double risco = 0.67; //Por enquanto
-    private LinkedList<Comorbidade> comorbidades;
+    private List<Comorbidade> comorbidades;
     private LinkedList<Exame> exames;
-    private LinkedList<Sintoma> sintomas;
+    private List<Sintoma> sintomas;
 
-    public Paciente(String name, int id, int idade, int tempoSintomas, LinkedList<Comorbidade> comorbidades, LinkedList<Sintoma> sintomas) {
+    public Paciente(String name, int id, int idade, int tempoSintomas, List<Comorbidade> comorbidades, List<Sintoma> sintomas) {
         this.name = name;
         this.id = id;
         this.idade = idade;
@@ -65,7 +66,7 @@ public class Paciente {
         return risco;
     }
 
-    public LinkedList<Comorbidade> getComorbidades() {
+    public List<Comorbidade> getComorbidades() {
         return comorbidades;
     }
 
@@ -73,7 +74,7 @@ public class Paciente {
         return exames;
     }
 
-    public LinkedList<Sintoma> getSintomas() {
+    public List<Sintoma> getSintomas() {
         return sintomas;
     }
 }

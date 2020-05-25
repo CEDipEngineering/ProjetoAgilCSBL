@@ -1,7 +1,7 @@
 package br.pro.hashi.ensino.desagil.firebase;
 
 public enum Comorbidade {
-    CARDIO(1,"Doença Cardiovascular, inculuindo hipertensão"),
+    CARDIO(1,"Doença Cardiovascular, incluindo hipertensão"),
     DIABETES(2,"Diabetes"),
     HEPATICA(3,"Doença Hepática"),
     NEURO(4,"Doença Neurológica crônica ou neuromuscular"),

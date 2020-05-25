@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
 
 
         editorButton.setOnClickListener((view) -> {
-            Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+            Intent intent = new Intent(MainActivity.this, PatientEditActivity.class);
             startActivity(intent);
         });
     }
