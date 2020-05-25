@@ -33,10 +33,11 @@ public enum Sintoma {
         this.nome = nome;
         this.id = id;
     }
-    public String getNome(Sintoma sintoma) {
-        return sintoma.nome;
+    public String getNome() {
+        return this.nome;
     }
-    public int getId(Sintoma sintoma) {
-        return sintoma.id;
+    public int getId() {
+        return this.id;
+
     }
 }
