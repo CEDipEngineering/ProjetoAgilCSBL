@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public class PatientActivity extends AppCompatActivity{
     private Spinner patientSpinner;
@@ -24,18 +25,18 @@ public class PatientActivity extends AppCompatActivity{
     private HashMap<String , Paciente> converter = new HashMap<>();
 
     private void update(){
-        LinkedList<Comorbidade> tempComorb = this.currPatient.getComorbidades();
-        LinkedList<Sintoma> tempSintoma = this.currPatient.getSintomas();
+        List<Comorbidade> tempComorb = this.currPatient.getComorbidades();
+        List<Sintoma> tempSintoma = this.currPatient.getSintomas();
 
         ArrayList<String> patientComorbs = new ArrayList<String>();
         ArrayList<String> patientSymptoms = new ArrayList<String>();
         ArrayList<String> patientSummary = new ArrayList<String>();
 
         for (Sintoma s : tempSintoma){
-            patientSymptoms.add(s.getName());
+            patientSymptoms.add(s.getNome());
         }
         for (Comorbidade c : tempComorb){
-            patientComorbs.add(c.getName());
+            patientComorbs.add(c.getNomeComorbidades());
         }
 
         patientSummary.add("Nome: " + this.currPatient.getName());
@@ -83,36 +84,26 @@ public class PatientActivity extends AppCompatActivity{
 
 
         LinkedList<Comorbidade> Comorbs1, Comorbs2, Comorbs3;
-        Comorbidade obesidade = new Comorbidade(0,"Obesidade");
-        Comorbidade diabetes = new Comorbidade(1,"Diabetes");
-        Comorbidade hiv = new Comorbidade(2,"HIV");
-        Comorbidade cancerEsofago = new Comorbidade(3,"Câncer esofágico");
-        Comorbidade cegueira = new Comorbidade(4,"Cegueira");
         Comorbs1 = new LinkedList<Comorbidade>();
         Comorbs2 = new LinkedList<Comorbidade>();
         Comorbs3 = new LinkedList<Comorbidade>();
-        Comorbs1.add(obesidade);
-        Comorbs1.add(hiv);
-        Comorbs1.add(cancerEsofago);
-        Comorbs2.add(hiv);
-        Comorbs2.add(cegueira);
-        Comorbs3.add(diabetes);
+        Comorbs1.add(Comorbidade.CARDIO);
+        Comorbs1.add(Comorbidade.DIABETES);
+        Comorbs1.add(Comorbidade.HIV);
+        Comorbs2.add(Comorbidade.IMUNODEF);
+        Comorbs2.add(Comorbidade.NEOPLASIA);
+        Comorbs3.add(Comorbidade.PULMONAR);
 
         LinkedList<Sintoma> Sintomas1, Sintomas2, Sintomas3;
-        Sintoma coriza = new Sintoma("Coriza");
-        Sintoma faltaAr = new Sintoma("Falta de Ar");
-        Sintoma febre = new Sintoma("Febre");
-        Sintoma hypoNatremia = new Sintoma("Hiponatremia");
-        Sintoma dorNoPe = new Sintoma("Dor no pé");
         Sintomas1 = new LinkedList<Sintoma>();
         Sintomas2 = new LinkedList<Sintoma>();
         Sintomas3 = new LinkedList<Sintoma>();
-        Sintomas1.add(coriza);
-        Sintomas1.add(faltaAr);
-        Sintomas1.add(dorNoPe);
-        Sintomas2.add(hypoNatremia);
-        Sintomas2.add(febre);
-        Sintomas3.add(dorNoPe);
+        Sintomas1.add(Sintoma.CONJUTIVITE);
+        Sintomas1.add(Sintoma.ABDOMEM);
+        Sintomas1.add(Sintoma.AGEUSIA);
+        Sintomas2.add(Sintoma.ANOSMIA);
+        Sintomas2.add(Sintoma.AR);
+        Sintomas3.add(Sintoma.AGEUSIA);
         Paciente[] Patients = new Paciente[3];
         Patients[0] = new Paciente("Rafael", 1, 21, 7, Comorbs1, Sintomas1);
         Patients[1] = new Paciente("Raquel", 2, 11, 3, Comorbs2, Sintomas2);
@@ -158,4 +149,3 @@ public class PatientActivity extends AppCompatActivity{
 
     }
 }
-

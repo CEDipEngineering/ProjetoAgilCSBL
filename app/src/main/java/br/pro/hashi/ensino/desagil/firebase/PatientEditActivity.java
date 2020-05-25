@@ -17,19 +17,26 @@ public class PatientEditActivity extends AppCompatActivity {
     private EditText tempoSintomasEdit, patientNameEdit, patientIdadeEdit, leitoEdit, riscoEdit;
     private ListView listaSintomasView, listaComorbidadesView;
     private String patientName;
-    private String listaSintomas[] = {"Tosse", "Febre", "Coriza", "Dor de cabeça", "Dor no corpo"};
+    private List <Sintoma>  listaSintomasEnum = Arrays.asList(Sintoma.class.getEnumConstants());
     private List<Comorbidade> listaComorbidadesEnum = Arrays.asList(Comorbidade.class.getEnumConstants());
     private Button finalizarButton;
-    private List<String> comorbidadesSelecionadas, sintomasSelecionados;
-    ArrayAdapter<String> adapterSintomas, adapterComorbidades;
+    private List<Sintoma>  sintomasSelecionados;
+    private List<Comorbidade> comorbidadesSelecionadas;
+    private ArrayAdapter<Sintoma> adapterSintomas;
+    private ArrayAdapter<Comorbidade> adapterComorbidades;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ArrayList<String> listaComorbidades = new ArrayList<String>();
+        ArrayList<String> listaSintomas = new ArrayList<String>();
         for(Comorbidade e :listaComorbidadesEnum){
-           listaComorbidades.add(e.getName());
+            listaComorbidades.add(e.getNomeComorbidades());
+            //System.out.println(e.getNomeComorbidades());
+        }
+        for(Sintoma s :listaSintomasEnum){
+            listaSintomas.add(s.getNome());
             //System.out.println(e.getNomeComorbidades());
         }
 
@@ -45,38 +52,38 @@ public class PatientEditActivity extends AppCompatActivity {
         listaComorbidadesView = findViewById(R.id.list_comorbidades);
         finalizarButton = findViewById((R.id.finalizar));
         patientName = patientNameEdit.getText().toString();
-        adapterSintomas = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, listaSintomas);
-        adapterComorbidades = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, listaComorbidades);
+        adapterSintomas = new ArrayAdapter<Sintoma>(this, android.R.layout.simple_list_item_multiple_choice, listaSintomasEnum);
+        adapterComorbidades = new ArrayAdapter<Comorbidade>(this, android.R.layout.simple_list_item_multiple_choice, listaComorbidadesEnum);
         listaSintomasView.setAdapter(adapterSintomas);
         listaComorbidadesView.setAdapter(adapterComorbidades);
 
         finalizarButton.setOnClickListener((view) -> {
             switch(view.getId()){
                 case R.id.finalizar:
-                    sintomasSelecionados = new ArrayList<>();
-                    comorbidadesSelecionadas = new ArrayList<>();
+                    sintomasSelecionados = new ArrayList<Sintoma>();
+                    comorbidadesSelecionadas = new ArrayList<Comorbidade>();
                     SparseBooleanArray sintomasChecked = listaSintomasView.getCheckedItemPositions();
-                    SparseBooleanArray comorbidadesChecked = listaSintomasView.getCheckedItemPositions();
+                    SparseBooleanArray comorbidadesChecked = listaComorbidadesView.getCheckedItemPositions();
                     for(int i = 0;i<sintomasChecked.size(); i++){
                         int key =  sintomasChecked.keyAt(i);
                         boolean value = sintomasChecked.get(key);
                         if(value){
-                            sintomasSelecionados.add(listaSintomasView.getItemAtPosition(key).toString());
+                            sintomasSelecionados.add((Sintoma) listaSintomasView.getItemAtPosition(key));
                         }
                     }
                     for(int i = 0;i<comorbidadesChecked.size(); i++){
                         int key =  comorbidadesChecked.keyAt(i);
                         boolean value = comorbidadesChecked.get(key);
                         if(value){
-                            comorbidadesSelecionadas.add(listaComorbidadesView.getItemAtPosition(key).toString());
+                            comorbidadesSelecionadas.add((Comorbidade) listaComorbidadesView.getItemAtPosition(key));
                         }
                     }
+                    Paciente Paciente1 = new Paciente("Rafael", 1, 21, 7, comorbidadesSelecionadas, sintomasSelecionados);
             }
             System.out.println(sintomasSelecionados);
             System.out.println(comorbidadesSelecionadas);
-
+            System.out.println(patientNameEdit.getText().toString());
+            System.out.println(patientIdadeEdit.getText().toString());
         });
-
     }
-
 }

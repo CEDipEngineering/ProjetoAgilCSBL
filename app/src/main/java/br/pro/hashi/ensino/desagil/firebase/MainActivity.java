@@ -41,13 +41,10 @@ public class MainActivity extends Activity {
             startActivity(intent);
         });
 
-        loginButton.setOnClickListener((view) -> {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-        });
+
 
         editorButton.setOnClickListener((view) -> {
-            Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+            Intent intent = new Intent(MainActivity.this, PatientEditActivity.class);
             startActivity(intent);
         });
     }
