@@ -115,7 +115,7 @@ public class PatientActivity extends AppCompatActivity{
         }
 
         for (int i = 0; i<Patients.length; i++) {
-            System.out.println(Patients[i].getIdade());
+            //System.out.println(Patients[i].getIdade());
             converter.put(Patients[i].getName(), Patients[i]);
         }
 //            System.out.println(converter);
@@ -147,11 +147,11 @@ public class PatientActivity extends AppCompatActivity{
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
-                    System.out.println(patientSpinner.getSelectedItem().toString());
-                    System.out.println(converter);
+                    //System.out.println(patientSpinner.getSelectedItem().toString());
+                   //System.out.println(converter);
                     currPatient = converter.get(patientSpinner.getSelectedItem().toString());
 
-                    System.out.println(currPatient);
+                    //System.out.println(currPatient);
                     update();
                 } catch (Exception e) {
                     e.printStackTrace();
