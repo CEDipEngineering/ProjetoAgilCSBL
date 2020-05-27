@@ -3,12 +3,16 @@ package br.pro.hashi.ensino.desagil.firebase;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatCheckBox;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,6 +64,7 @@ public class PatientEditActivity extends AppCompatActivity {
         listaComorbidadesView.setAdapter(adapterComorbidades);
 
 
+
         Intent myIntent = getIntent();
         // Try to get message handed in when creating intent
         Paciente patient = (Paciente) myIntent.getSerializableExtra("patient");
@@ -69,7 +74,22 @@ public class PatientEditActivity extends AppCompatActivity {
             patientNameEdit.setText(patient.getName());
             patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
             tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
+            for (int i = 0; i < listaComorbidadesView.getCount(); i++) {
+                Comorbidade comorbidade = (Comorbidade) listaComorbidadesView.getItemAtPosition(i);
+                if (patient.getComorbidades().contains(comorbidade)){
+                    listaComorbidadesView.setItemChecked(i, true);
+                }
+            }
+
+            for (int i = 0; i < listaSintomasView.getCount(); i++) {
+                Sintoma sintoma = (Sintoma) listaSintomasView.getItemAtPosition(i);
+                if (patient.getSintomas().contains(sintoma)){
+                    listaSintomasView.setItemChecked(i, true);
+                }
+            }
         }
+
+
 
         finalizarButton.setOnClickListener((view) -> {
             switch(view.getId()){
@@ -77,6 +97,7 @@ public class PatientEditActivity extends AppCompatActivity {
                     sintomasSelecionados = new ArrayList<Sintoma>();
                     comorbidadesSelecionadas = new ArrayList<Comorbidade>();
                     SparseBooleanArray sintomasChecked = listaSintomasView.getCheckedItemPositions();
+                    //System.out.println(listaSintomasView);
                     SparseBooleanArray comorbidadesChecked = listaComorbidadesView.getCheckedItemPositions();
                     for(int i = 0;i<sintomasChecked.size(); i++){
                         int key =  sintomasChecked.keyAt(i);
@@ -105,10 +126,7 @@ public class PatientEditActivity extends AppCompatActivity {
                     startActivity(intent);
 
             }
-            System.out.println(sintomasSelecionados);
-            System.out.println(comorbidadesSelecionadas);
-            System.out.println(patientNameEdit.getText().toString());
-            System.out.println(patientIdadeEdit.getText().toString());
+            //System.out.println(patient.getComorbidades());
         });
     }
 }
