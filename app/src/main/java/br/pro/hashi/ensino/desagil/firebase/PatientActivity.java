@@ -113,8 +113,6 @@ public class PatientActivity extends AppCompatActivity{
         // If there is one, put it in the textView
         if (patiente != null) {
             Patients[patiente.getId()-1] = patiente;
-            currPatient = Patients[patiente.getId()-1];
-            update();
         }
 
 
@@ -136,6 +134,15 @@ public class PatientActivity extends AppCompatActivity{
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         patientSpinner.setAdapter(adapter);
         this.currPatient = Patients[0];
+
+
+        if (patiente != null) {
+            this.currPatient = Patients[patiente.getId()-1];
+            patientSpinner.setSelection(adapter.getPosition(patiente.getName()));
+
+        }
+
+
         update();
 
 
