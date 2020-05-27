@@ -30,6 +30,8 @@ public class PatientEditActivity extends AppCompatActivity {
     private ArrayAdapter<Sintoma> adapterSintomas;
     private ArrayAdapter<Comorbidade> adapterComorbidades;
 
+    private int idpacient;
+
 
 
     @Override
@@ -74,6 +76,7 @@ public class PatientEditActivity extends AppCompatActivity {
             patientNameEdit.setText(patient.getName());
             patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
             tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
+            idpacient = patient.getId();
         }
 
         for (int i = 0; i < listaComorbidadesView.getCount(); i++) {
@@ -116,7 +119,7 @@ public class PatientEditActivity extends AppCompatActivity {
                     patientName = patientNameEdit.getText().toString();
                     int idade = Integer.parseInt(patientIdadeEdit.getText().toString());
                     int tempoSint = Integer.parseInt(tempoSintomasEdit.getText().toString());
-                    Paciente Paciente1 = new Paciente(patientName, 1, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados);
+                    Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados);
 
                     //intent
                     Intent intent = new Intent(PatientEditActivity.this, PatientActivity.class);

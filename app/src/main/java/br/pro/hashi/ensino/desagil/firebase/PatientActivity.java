@@ -109,10 +109,14 @@ public class PatientActivity extends AppCompatActivity{
         // Try to get message handed in when creating intent
         Paciente patiente = (Paciente) myIntent.getSerializableExtra("patient");
 
+
         // If there is one, put it in the textView
         if (patiente != null) {
-            Patients[0] = patiente;
+            Patients[patiente.getId()-1] = patiente;
+            currPatient = Patients[patiente.getId()-1];
+            update();
         }
+
 
         for (int i = 0; i<Patients.length; i++) {
             //System.out.println(Patients[i].getIdade());
@@ -135,12 +139,7 @@ public class PatientActivity extends AppCompatActivity{
         update();
 
 
-        editButton.setOnClickListener((view) -> {
-            Intent intent = new Intent(PatientActivity.this, PatientEditActivity.class);
-            // Tem que passar o paciente atual também;
-            intent.putExtra("patient", currPatient);
-            startActivity(intent);
-        });
+
 
 
         patientSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -160,6 +159,15 @@ public class PatientActivity extends AppCompatActivity{
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
+
+
+        editButton.setOnClickListener((view) -> {
+            Intent intent = new Intent(PatientActivity.this, PatientEditActivity.class);
+            // Tem que passar o paciente atual também;
+            intent.putExtra("patient", currPatient);
+            startActivity(intent);
         });
 
     }
