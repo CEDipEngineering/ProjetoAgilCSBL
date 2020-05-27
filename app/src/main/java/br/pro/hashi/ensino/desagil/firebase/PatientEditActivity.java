@@ -74,21 +74,22 @@ public class PatientEditActivity extends AppCompatActivity {
             patientNameEdit.setText(patient.getName());
             patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
             tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
-        }
+            for (int i = 0; i < listaComorbidadesView.getCount(); i++) {
+                Comorbidade comorbidade = (Comorbidade) listaComorbidadesView.getItemAtPosition(i);
+                if (patient.getComorbidades().contains(comorbidade)){
+                    listaComorbidadesView.setItemChecked(i, true);
+                }
+            }
 
-        for (int i = 0; i < listaComorbidadesView.getCount(); i++) {
-            Comorbidade comorbidade = (Comorbidade) listaComorbidadesView.getItemAtPosition(i);
-            if (patient.getComorbidades().contains(comorbidade)){
-                listaComorbidadesView.setItemChecked(i, true);
+            for (int i = 0; i < listaSintomasView.getCount(); i++) {
+                Sintoma sintoma = (Sintoma) listaSintomasView.getItemAtPosition(i);
+                if (patient.getSintomas().contains(sintoma)){
+                    listaSintomasView.setItemChecked(i, true);
+                }
             }
         }
 
-        for (int i = 0; i < listaSintomasView.getCount(); i++) {
-            Sintoma sintoma = (Sintoma) listaSintomasView.getItemAtPosition(i);
-            if (patient.getSintomas().contains(sintoma)){
-                listaSintomasView.setItemChecked(i, true);
-            }
-        }
+
 
         finalizarButton.setOnClickListener((view) -> {
             switch(view.getId()){
