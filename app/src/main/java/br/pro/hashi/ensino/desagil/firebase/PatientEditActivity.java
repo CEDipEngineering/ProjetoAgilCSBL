@@ -13,9 +13,20 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class PatientEditActivity extends AppCompatActivity {
     private TextView patientNameView, patientIdadeView, tempoSintomasView, leitoView, riscoView, comorbidadesView, examesView, sintomasView;
@@ -29,7 +40,6 @@ public class PatientEditActivity extends AppCompatActivity {
     private List<Comorbidade> comorbidadesSelecionadas;
     private ArrayAdapter<Sintoma> adapterSintomas;
     private ArrayAdapter<Comorbidade> adapterComorbidades;
-
 
 
     @Override
@@ -124,9 +134,8 @@ public class PatientEditActivity extends AppCompatActivity {
                     // Tem que passar o paciente atual também;
                     intent.putExtra("patient", Paciente1);
                     startActivity(intent);
-
             }
-            //System.out.println(patient.getComorbidades());
+            //System.out.println(patient.gtComorbidades());
         });
     }
 }
