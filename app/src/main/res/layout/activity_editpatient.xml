@@ -155,7 +155,8 @@
                     <ListView
                         android:id="@+id/list_sintomas"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"/>
+                        android:layout_height="200dp"
+                        android:choiceMode="multipleChoice"/>
 
                     <TextView
                         android:id="@+id/comorbidades"
@@ -163,12 +164,14 @@
                         android:layout_height="65dp"
                         android:textSize="@dimen/StandardFontSize"
                         android:text="Comorbidades"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        />
 
                     <ListView
                         android:id="@+id/list_comorbidades"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp" />
+                        android:layout_height="200dp"
+                        android:choiceMode="multipleChoice"/>
 
 
             </LinearLayout>
