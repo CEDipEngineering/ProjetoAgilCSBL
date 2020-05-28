@@ -8,186 +8,178 @@
     tools:context=".PatientActivity">
 
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="89dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="32dp"
-        android:text="Nome:"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/idade"
-        android:layout_width="82dp"
-        android:layout_height="41dp"
-        android:layout_below="@id/name"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="32dp"
-        android:text="Idade:"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        <LinearLayout
+            android:id="@+id/leftMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/leito"
-        android:layout_width="82dp"
-        android:layout_height="41dp"
-        android:layout_below="@id/idade"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="32dp"
-        android:text="Leito:"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idade" />
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="25dp"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/temposintomas"
-        android:layout_width="197dp"
-        android:layout_height="52dp"
-        android:layout_below="@id/idade"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="32dp"
-        android:text="Dias com Sintomas:"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/leito" />
+<!--                <Button-->
+<!--                    android:id="@+id/examesButton"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="80dp"-->
+<!--                    android:layout_marginTop="50dp"-->
+<!--                    android:text="Ver Exames" />-->
 
-    <TextView
-        android:id="@+id/sintomas"
-        android:layout_width="126dp"
-        android:layout_height="55dp"
-        android:layout_below="@id/idade"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="32dp"
-        android:text="Sintomas:"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.755"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/temposintomas" />
+<!--                <Button-->
+<!--                    android:id="@+id/editButton"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="80dp"-->
+<!--                    android:text="Editar Paciente" />-->
 
-    <TextView
-        android:id="@+id/comorbidades"
-        android:layout_width="138dp"
-        android:layout_height="54dp"
-        android:layout_below="@id/idade"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginEnd="32dp"
-        android:text="Comorbidades:"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.124"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/temposintomas" />
+                <Button
+                    android:id="@+id/finalizar"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:text="Finalizar" />
+                <!--   Talvez adicionar uns botões aqui na esquerda     -->
 
-    <EditText
-        android:id="@+id/edit_name"
-        android:layout_width="191dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="44dp"
-        android:inputType="text"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.657"
-        app:layout_constraintStart_toEndOf="@+id/name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
-    <EditText
-        android:id="@+id/edit_idade"
-        android:layout_width="183dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="132dp"
-        android:inputType="phone"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.654"
-        app:layout_constraintStart_toEndOf="@+id/name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edit_leito"
-        android:layout_width="183dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="260dp"
-        android:inputType="phone"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.649"
-        app:layout_constraintStart_toEndOf="@+id/name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/black" />
+        </LinearLayout>
 
-    <EditText
-        android:id="@+id/edit_dias"
-        android:layout_width="183dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="352dp"
-        android:inputType="phone"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.654"
-        app:layout_constraintStart_toEndOf="@+id/name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="111dp"
+            android:layout_marginTop="25dp">
 
-    <ListView
-        android:id="@+id/list_sintomas"
-        android:layout_width="238dp"
-        android:layout_height="160dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
-        android:choiceMode="multipleChoice"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.813"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sintomas" />
+<!--            Start of Editor Field-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/EditorField">
 
-    <ListView
-        android:id="@+id/list_comorbidades"
-        android:layout_width="206dp"
-        android:layout_height="159dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:choiceMode="multipleChoice"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comorbidades" />
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="@dimen/TextViewWidthEditPatient1"
+                    android:layout_height="65dp"
+                    android:textSize="@dimen/StandardFontSize"
+                    android:text="Nome:"
+                    android:textAlignment="center"
+                    android:gravity="bottom"/>
 
-    <Button
-        android:id="@+id/finalizar"
-        android:layout_width="347dp"
-        android:layout_height="107dp"
-        android:text="Finalizar:"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.543"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_comorbidades"
-        app:layout_constraintVertical_bias="0.458" />
+                <TextView
+                    android:id="@+id/idade"
+                    android:layout_width="@dimen/TextViewWidthEditPatient1"
+                    android:layout_height="65dp"
+                    android:textSize="@dimen/StandardFontSize"
+                    android:layout_below="@id/name"
+                    android:text="Idade:"
+                    android:textAlignment="center"
+                    android:gravity="bottom"/>
+
+                <TextView
+                    android:id="@+id/leito"
+                    android:layout_width="@dimen/TextViewWidthEditPatient1"
+                    android:layout_height="65dp"
+                    android:textSize="@dimen/StandardFontSize"
+                    android:layout_below="@id/idade"
+                    android:text="Leito:"
+                    android:textAlignment="center"
+                    android:gravity="bottom"/>
+
+                <TextView
+                    android:id="@+id/temposintomas"
+                    android:layout_width="@dimen/TextViewWidthEditPatient1"
+                    android:layout_height="65dp"
+                    android:textSize="@dimen/StandardFontSize"
+                    android:layout_below="@id/leito"
+                    android:text="Tempo com Sintomas:"
+                    android:textAlignment="center"
+                    android:gravity="bottom"/>
+
+                <EditText
+                    android:id="@+id/edit_name"
+                    android:layout_width="200dp"
+                    android:layout_height="65dp"
+                    android:layout_alignBottom="@id/name"
+                    android:layout_toRightOf="@id/name"/>
+
+                <EditText
+                    android:id="@+id/edit_idade"
+                    android:layout_width="200dp"
+                    android:layout_height="65dp"
+                    android:layout_alignBottom="@id/idade"
+                    android:layout_toRightOf="@id/idade"/>
+
+                <EditText
+                    android:id="@+id/edit_leito"
+                    android:layout_width="200dp"
+                    android:layout_height="65dp"
+                    android:layout_alignBottom="@id/leito"
+                    android:layout_toRightOf="@id/leito"/>
+
+                <EditText
+                    android:id="@+id/edit_dias"
+                    android:layout_width="200dp"
+                    android:layout_height="65dp"
+                    android:layout_alignBottom="@id/temposintomas"
+                    android:layout_toRightOf="@id/temposintomas"/>
+
+
+
+            </RelativeLayout>
+<!--            End of Editor Field  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/EditorField"
+                android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/sintomas"
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp"
+                        android:text="Sintomas"
+                        android:textSize="@dimen/StandardFontSize"
+                        android:textAlignment="center"/>
+
+                    <ListView
+                        android:id="@+id/list_sintomas"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:choiceMode="multipleChoice"/>
+
+                    <TextView
+                        android:id="@+id/comorbidades"
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp"
+                        android:textSize="@dimen/StandardFontSize"
+                        android:text="Comorbidades"
+                        android:textAlignment="center"
+                        />
+
+                    <ListView
+                        android:id="@+id/list_comorbidades"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:choiceMode="multipleChoice"/>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
