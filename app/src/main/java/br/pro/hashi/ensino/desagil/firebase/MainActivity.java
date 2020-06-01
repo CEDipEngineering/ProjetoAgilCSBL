@@ -41,6 +41,11 @@ public class MainActivity extends Activity {
             startActivity(intent);
         });
 
+        loginButton.setOnClickListener((view) -> {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        });
+
 
 
         editorButton.setOnClickListener((view) -> {
