@@ -11,8 +11,8 @@ public enum Comorbidade {
     PULMONAR(8,"Doença pulmonar crônica"),
     NEOPLASIA(9,"Neoplasia(Tumor sólido ou hematológico)");
 
-    public String nomeComorbidades;
-    public int id;
+    private String nomeComorbidades;
+    private int id;
     Comorbidade(int id,String nome) {
         this.nomeComorbidades = nome;
         this.id = id;
@@ -20,5 +20,20 @@ public enum Comorbidade {
 
     public String getNomeComorbidades(){
         return this.nomeComorbidades;
+    }
+    public int getId(){
+        return this.id;
+    }
+
+    public static Comorbidade getById(int id) {
+        for(Comorbidade e : values()) {
+            System.out.println("CCCCCCCCCCCCCCCCCCCC");
+            System.out.println(e);
+            if(e.getId() == id) {
+                System.out.println(e.getId());
+                return e;
+            }
+        }
+        return CARDIO;
     }
 }

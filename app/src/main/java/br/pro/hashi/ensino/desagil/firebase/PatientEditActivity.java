@@ -186,13 +186,14 @@ public class PatientEditActivity extends AppCompatActivity {
                         patiente.put("id", Paciente1.getId());
                         patiente.put("idade", Paciente1.getIdade());
                         patiente.put("tempoSintomas",Paciente1.getTempoSintomas());
-                        patiente.put("sintomas",Paciente1.getSintomas());
-                        patiente.put("comorbidades",Paciente1.getComorbidades());
+
+                        patiente.put("sintomas",(JSONArray)Paciente1.getIdSintomas());
+                        patiente.put("comorbidades",Paciente1.getIdComorbidades());
                         if (add) {
                             patientes.put(patientes.length(),patiente);
                             data.put("patients",patientes);
                             root.put("database", data);
-                            System.out.println(root);
+
 
                         }
                         saveData(root.toString());

@@ -39,7 +39,7 @@ public class Paciente {
             JSONArray jarcomorbs = pacient.getJSONArray("comorbidades");
             if (jarcomorbs != null) {
                 for (int i=0;i<jarcomorbs.length();i++) {
-                    comorbs.add((Comorbidade)jarcomorbs.get(i));
+                    comorbs.add(Comorbidade.getById((Integer)jarcomorbs.get(i)));
                 }
             }
 
@@ -47,7 +47,7 @@ public class Paciente {
             JSONArray jarsints = pacient.getJSONArray("sintomas");
             if (jarsints != null) {
                 for (int i=0;i<jarsints.length();i++) {
-                    sints.add((Sintoma)jarcomorbs.get(i));
+                    sints.add(Sintoma.getById((Integer)jarsints.get(i)));
                 }
             }
 
@@ -104,6 +104,22 @@ public class Paciente {
 
     public List<Comorbidade> getComorbidades() {
         return comorbidades;
+    }
+
+    public JSONArray getIdComorbidades() {
+        JSONArray ids = new JSONArray();
+        for (Comorbidade comor : comorbidades) {
+            ids.put(comor.getId());
+        }
+        return ids;
+    }
+
+    public JSONArray getIdSintomas() {
+        JSONArray ids = new JSONArray();
+        for (Sintoma sint : sintomas) {
+            ids.put(sint.getId());
+        }
+        return ids;
     }
 
     public LinkedList<Exame> getExames() {
