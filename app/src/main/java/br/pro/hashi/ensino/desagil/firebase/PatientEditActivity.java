@@ -2,6 +2,7 @@ package br.pro.hashi.ensino.desagil.firebase;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,22 +12,22 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatCheckBox;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+
 
 public class PatientEditActivity extends AppCompatActivity {
     private TextView patientNameView, patientIdadeView, tempoSintomasView, leitoView, riscoView, comorbidadesView, examesView, sintomasView;
@@ -113,6 +114,7 @@ public class PatientEditActivity extends AppCompatActivity {
                     SparseBooleanArray sintomasChecked = listaSintomasView.getCheckedItemPositions();
                     //System.out.println(listaSintomasView);
                     SparseBooleanArray comorbidadesChecked = listaComorbidadesView.getCheckedItemPositions();
+
                     for(int i = 0;i<sintomasChecked.size(); i++){
                         int key =  sintomasChecked.keyAt(i);
                         boolean value = sintomasChecked.get(key);
@@ -128,16 +130,61 @@ public class PatientEditActivity extends AppCompatActivity {
                         }
                     }
 
-                    patientName = patientNameEdit.getText().toString();
-                    int idade = Integer.parseInt(patientIdadeEdit.getText().toString());
-                    int tempoSint = Integer.parseInt(tempoSintomasEdit.getText().toString());
-                    Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados);
+
+
+                    //// INTEGRACAO JAVA -> PYTHON/////
+                    String URL  = "https://pythontojava3.herokuapp.com/api/post_some_data";
+                    RequestQueue requestQueue = Volley.newRequestQueue(this);
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject = jsonObject.put("text","10");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, URL, jsonObject, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.e("Rest Response", response.toString());
+                            double teste = 0;
+                            try {
+                                teste = response.getDouble("value");
+                                patientName = patientNameEdit.getText().toString();
+                                int idade = Integer.parseInt(patientIdadeEdit.getText().toString());
+                                int tempoSint = Integer.parseInt(tempoSintomasEdit.getText().toString());
+                                Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, teste, comorbidadesSelecionadas, sintomasSelecionados);
+                                Intent intent = new Intent(PatientEditActivity.this, PatientActivity.class);
+                                // Tem que passar o paciente atual também;
+                                intent.putExtra("patient", Paciente1);
+                                startActivity(intent);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println(teste);
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("Rest Response", error.toString());
+
+                        }
+                    });
+                    requestQueue.add(objectRequest);
+                    //// INTEGRACAO JAVA -> PYTHON/////
+
+
+
+
+                    //patientName = patientNameEdit.getText().toString();
+                    //int idade = Integer.parseInt(patientIdadeEdit.getText().toString());
+                    //int tempoSint = Integer.parseInt(tempoSintomasEdit.getText().toString());
+                    //Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, teste, comorbidadesSelecionadas, sintomasSelecionados);
 
                     //intent
-                    Intent intent = new Intent(PatientEditActivity.this, PatientActivity.class);
+                    //Intent intent = new Intent(PatientEditActivity.this, PatientActivity.class);
                     // Tem que passar o paciente atual também;
-                    intent.putExtra("patient", Paciente1);
-                    startActivity(intent);
+                    //intent.putExtra("patient", Paciente1);
+                    //startActivity(intent);
             }
             //System.out.println(patient.gtComorbidades());
         });

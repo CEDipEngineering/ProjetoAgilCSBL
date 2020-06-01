@@ -155,6 +155,7 @@
                     <ListView
                         android:id="@+id/list_sintomas"
                         android:layout_width="match_parent"
+                        android:choiceMode="multipleChoice"
                         android:layout_height="200dp"/>
 
                     <TextView
@@ -165,10 +166,11 @@
                         android:text="Comorbidades"
                         android:textAlignment="center"/>
 
-                    <ListView
-                        android:id="@+id/list_comorbidades"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp" />
+                <ListView
+                    android:id="@+id/list_comorbidades"
+                    android:layout_width="match_parent"
+                    android:choiceMode="multipleChoice"
+                    android:layout_height="200dp" />
 
 
             </LinearLayout>

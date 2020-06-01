@@ -101,9 +101,9 @@ public class PatientActivity extends AppCompatActivity{
         Sintomas2.add(Sintoma.AR);
         Sintomas3.add(Sintoma.AGEUSIA);
         Paciente[] Patients = new Paciente[3];
-        Patients[0] = new Paciente("Rafael", 1, 21, 7, Comorbs1, Sintomas1);
-        Patients[1] = new Paciente("Raquel", 2, 11, 3, Comorbs2, Sintomas2);
-        Patients[2] = new Paciente("Ronaldo", 3, 41, 2, Comorbs3, Sintomas3);
+        Patients[0] = new Paciente("Rafael", 1, 21, 7,7, Comorbs1, Sintomas1);
+        Patients[1] = new Paciente("Raquel", 2, 11, 3,50, Comorbs2, Sintomas2);
+        Patients[2] = new Paciente("Ronaldo", 3, 41, 2,75, Comorbs3, Sintomas3);
 
         Intent myIntent = getIntent();
         // Try to get message handed in when creating intent

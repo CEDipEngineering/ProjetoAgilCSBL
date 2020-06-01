@@ -9,15 +9,16 @@ public class Paciente implements Serializable {
     private String name;
     private int id, idade, tempoSintomas;
     private Leito leito;
-    private double risco = 0.67; //Por enquanto
+    private double risco;
     private List<Comorbidade> comorbidades;
     private LinkedList<Exame> exames;
     private List<Sintoma> sintomas;
 
-    public Paciente(String name, int id, int idade, int tempoSintomas, List<Comorbidade> comorbidades, List<Sintoma> sintomas) {
+    public Paciente(String name, int id, int idade, int tempoSintomas,double risco, List<Comorbidade> comorbidades, List<Sintoma> sintomas) {
         this.name = name;
         this.id = id;
         this.idade = idade;
+        this.risco = risco;
         this.tempoSintomas = tempoSintomas;
         this.comorbidades = comorbidades;
         this.sintomas = sintomas;
