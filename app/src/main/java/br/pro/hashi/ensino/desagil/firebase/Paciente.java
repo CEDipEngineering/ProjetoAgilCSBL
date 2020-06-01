@@ -4,14 +4,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class Paciente implements Serializable {
+public class Paciente {
     private String name;
     private int id, idade, tempoSintomas;
     private Leito leito;

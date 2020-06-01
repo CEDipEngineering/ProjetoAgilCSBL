@@ -27,7 +27,7 @@ import org.json.JSONObject;
 
 public class PatientActivity extends AppCompatActivity{
     private Spinner patientSpinner;
-    private Button examesButton, editButton;
+    private Button examesButton, editButton, addButton;
     private ListView summaryView, symptomView, comorbityView;
     private Paciente currPatient;
     private HashMap<String , Paciente> converter = new HashMap<>();
@@ -85,6 +85,7 @@ public class PatientActivity extends AppCompatActivity{
 
         examesButton = findViewById(R.id.examesButton);
         editButton = findViewById(R.id.editButton);
+        addButton = findViewById(R.id.addButton);
 
         summaryView = findViewById(R.id.summaryView);
         symptomView = findViewById(R.id.symptomView);
@@ -130,7 +131,7 @@ public class PatientActivity extends AppCompatActivity{
         try {
             JSONObject root = new JSONObject(json_f);
             JSONObject data = root.getJSONObject("database");
-
+            System.out.println("AAAAAAAAAAAAAAA");
             System.out.println(data);
             JSONArray JSONpacientes = data.getJSONArray("patients");
 
@@ -211,6 +212,13 @@ public class PatientActivity extends AppCompatActivity{
             Intent intent = new Intent(PatientActivity.this, PatientEditActivity.class);
             // Tem que passar o paciente atual também;
             intent.putExtra("patientid", currPatient.getId());
+            startActivity(intent);
+        });
+
+        addButton.setOnClickListener((view) -> {
+            Intent intent = new Intent(PatientActivity.this, PatientEditActivity.class);
+            // Tem que passar o paciente atual também;
+            //intent.putExtra("patientid", -1);
             startActivity(intent);
         });
 

@@ -39,6 +39,7 @@ public class PatientEditActivity extends AppCompatActivity {
     private ArrayAdapter<Comorbidade> adapterComorbidades;
 
     private int idpacient;
+    private boolean add;
 
 
 
@@ -75,15 +76,9 @@ public class PatientEditActivity extends AppCompatActivity {
 
 
         LinkedList<Sintoma> Sintomas1 = new LinkedList<Sintoma>();
-        Sintomas1.add(Sintoma.CONJUTIVITE);
-        Sintomas1.add(Sintoma.ABDOMEM);
-        Sintomas1.add(Sintoma.AGEUSIA);
         LinkedList<Comorbidade> Comorbs1 = new LinkedList<Comorbidade>();
-        Comorbs1.add(Comorbidade.CARDIO);
-        Comorbs1.add(Comorbidade.DIABETES);
-        Comorbs1.add(Comorbidade.HIV);
-        Paciente patient = new Paciente("Rafael", 1, 21, 7, Comorbs1, Sintomas1);
-
+        Paciente patient = new Paciente("", -1, 1, 1, Comorbs1, Sintomas1);
+        add = false;
 
 
         Intent myIntent = getIntent();
@@ -115,6 +110,17 @@ public class PatientEditActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+        } else {
+            add = true;
+            String json = loadData();
+            try {
+                JSONObject root = new JSONObject(json);
+                JSONObject data = root.getJSONObject("database");
+                JSONArray patientes = data.getJSONArray("patients");
+                idpacient = patientes.length();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
 
@@ -166,22 +172,33 @@ public class PatientEditActivity extends AppCompatActivity {
 
                     String json = loadData();
                     try {
+
                         JSONObject root = new JSONObject(json);
                         JSONObject data = root.getJSONObject("database");
                         JSONArray patientes = data.getJSONArray("patients");
-                        JSONObject patiente = patientes.getJSONObject(idpacient);
-
+                        JSONObject patiente = new JSONObject();
+                        if (!add) {
+                            patiente = patientes.getJSONObject(idpacient);
+                        }
                         patiente.put("nome", Paciente1.getName());
                         patiente.put("id", Paciente1.getId());
                         patiente.put("idade", Paciente1.getIdade());
                         patiente.put("tempoSintomas",Paciente1.getTempoSintomas());
                         patiente.put("sintomas",Paciente1.getSintomas());
                         patiente.put("comorbidades",Paciente1.getComorbidades());
+                        if (add) {
+                            patientes.put(patientes.length(),patiente);
+                            data.put("patients",patientes);
+                            root.put("database", data);
+                            System.out.println(root);
 
+                        }
                         saveData(root.toString());
 
 
+
                     } catch (JSONException e) {
+
                         e.printStackTrace();
                     }
 

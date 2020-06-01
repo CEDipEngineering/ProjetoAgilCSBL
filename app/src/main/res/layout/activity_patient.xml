@@ -52,6 +52,14 @@ Your layout draws faster if it has fewer nested layouts (a wide view hierarchy i
                 android:text="Editar Paciente"
                 />
 
+
+            <Button
+                android:id="@+id/addButton"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="Adicionar Paciente"
+                />
+
         </LinearLayout>
 
 <!--   Talvez adicionar uns botões aqui na esquerda     -->
