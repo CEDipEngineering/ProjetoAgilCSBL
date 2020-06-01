@@ -40,4 +40,13 @@ public enum Sintoma {
         return this.id;
 
     }
+
+    public static Sintoma getById(int id) {
+        for(Sintoma e : values()) {
+            if(e.getId() == id) {
+                return e;
+            }
+        }
+        return ANOSMIA;
+    }
 }
