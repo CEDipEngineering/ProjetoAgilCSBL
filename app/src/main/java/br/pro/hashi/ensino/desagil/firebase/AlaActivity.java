@@ -183,15 +183,17 @@ public class AlaActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Leito leito_intent = null;
                 for(Leito leito: currAla.getLeitos()){
-                    if (leito.getId() == (i+1)){
+                    if (leito.getId() == (i)){
                         leito_intent = leito;
                     }
                 }
                 Intent intent = new Intent(AlaActivity.this, PatientActivity.class);
 
                 // Tem que passar o paciente atual também;
-                if (leito_intent != null) {
+                if (leito_intent.getPaciente() != null) {
                     intent.putExtra("patientid", leito_intent.getPaciente().getId());
+                } else {
+                    intent = new Intent(AlaActivity.this, PatientEditActivity.class);
                 }
                 startActivity(intent);
             }
