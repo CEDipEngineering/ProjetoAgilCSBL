@@ -34,6 +34,7 @@ public class Paciente {
             this.id = pacient.getInt("id");
             this.idade = pacient.getInt("idade");
             this.tempoSintomas = pacient.getInt("tempoSintomas");
+            this.risco = pacient.getDouble("risco");
 
             ArrayList<Comorbidade> comorbs= new ArrayList<Comorbidade>();
             JSONArray jarcomorbs = pacient.getJSONArray("comorbidades");

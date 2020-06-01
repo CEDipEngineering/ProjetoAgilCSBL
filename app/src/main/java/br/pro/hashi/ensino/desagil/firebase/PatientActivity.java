@@ -100,23 +100,23 @@ public class PatientActivity extends AppCompatActivity{
         Comorbs1 = new LinkedList<Comorbidade>();
         Comorbs2 = new LinkedList<Comorbidade>();
         Comorbs3 = new LinkedList<Comorbidade>();
-        Comorbs1.add(Comorbidade.CARDIO);
-        Comorbs1.add(Comorbidade.DIABETES);
-        Comorbs1.add(Comorbidade.HIV);
-        Comorbs2.add(Comorbidade.IMUNODEF);
-        Comorbs2.add(Comorbidade.NEOPLASIA);
-        Comorbs3.add(Comorbidade.PULMONAR);
+//        Comorbs1.add(Comorbidade.CARDIO);
+//        Comorbs1.add(Comorbidade.DIABETES);
+//        Comorbs1.add(Comorbidade.HIV);
+//        Comorbs2.add(Comorbidade.IMUNODEF);
+//        Comorbs2.add(Comorbidade.NEOPLASIA);
+//        Comorbs3.add(Comorbidade.PULMONAR);
 
         LinkedList<Sintoma> Sintomas1, Sintomas2, Sintomas3;
         Sintomas1 = new LinkedList<Sintoma>();
         Sintomas2 = new LinkedList<Sintoma>();
         Sintomas3 = new LinkedList<Sintoma>();
-        Sintomas1.add(Sintoma.CONJUTIVITE);
-        Sintomas1.add(Sintoma.ABDOMEM);
-        Sintomas1.add(Sintoma.AGEUSIA);
-        Sintomas2.add(Sintoma.ANOSMIA);
-        Sintomas2.add(Sintoma.AR);
-        Sintomas3.add(Sintoma.AGEUSIA);
+//        Sintomas1.add(Sintoma.CONJUTIVITE);
+//        Sintomas1.add(Sintoma.ABDOMEM);
+//        Sintomas1.add(Sintoma.AGEUSIA);
+//        Sintomas2.add(Sintoma.ANOSMIA);
+//        Sintomas2.add(Sintoma.AR);
+//        Sintomas3.add(Sintoma.AGEUSIA);
 
         /*
         Paciente[] Patients = new Paciente[3];

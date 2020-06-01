@@ -4,6 +4,25 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,18 +31,17 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatCheckBox;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.json.JSONArray;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PatientEditActivity extends AppCompatActivity {
     private TextView patientNameView, patientIdadeView, tempoSintomasView, leitoView, riscoView, comorbidadesView, examesView, sintomasView;
@@ -167,53 +185,84 @@ public class PatientEditActivity extends AppCompatActivity {
                         }
                     }
 
-                    patientName = patientNameEdit.getText().toString();
-                    int idade = Integer.parseInt(patientIdadeEdit.getText().toString());
-                    int tempoSint = Integer.parseInt(tempoSintomasEdit.getText().toString());
-                    Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados);
 
-                    String json = loadData();
+
+
+                    //// INTEGRACAO JAVA -> PYTHON/////
+                    String URL  = "https://pythontojava3.herokuapp.com/api/post_some_data";
+                    RequestQueue requestQueue = Volley.newRequestQueue(this);
+                    JSONObject jsonObject = new JSONObject();
                     try {
-
-                        JSONObject root = new JSONObject(json);
-                        JSONObject data = root.getJSONObject("database");
-                        JSONArray patientes = data.getJSONArray("patients");
-                        JSONObject patiente = new JSONObject();
-                        if (!add) {
-                            patiente = patientes.getJSONObject(idpacient);
-                        }
-                        patiente.put("nome", Paciente1.getName());
-                        patiente.put("id", Paciente1.getId());
-                        patiente.put("idade", Paciente1.getIdade());
-                        patiente.put("tempoSintomas",Paciente1.getTempoSintomas());
-
-                        patiente.put("sintomas",(JSONArray)Paciente1.getIdSintomas());
-                        patiente.put("comorbidades",Paciente1.getIdComorbidades());
-                        if (add) {
-                            patientes.put(patientes.length(),patiente);
-                            data.put("patients",patientes);
-                            root.put("database", data);
-
-
-                        }
-                        saveData(root.toString());
-
-
-
+                        jsonObject = jsonObject.put("text","10");
                     } catch (JSONException e) {
-
                         e.printStackTrace();
                     }
+                    JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, URL, jsonObject, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.e("Rest Response", response.toString());
+                            double teste = 0;
+                            try {
+                                teste = response.getDouble("value");
+                                patientName = patientNameEdit.getText().toString();
+                                int idade = Integer.parseInt(patientIdadeEdit.getText().toString());
+                                int tempoSint = Integer.parseInt(tempoSintomasEdit.getText().toString());
+                                Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados);
+                                String json = loadData();
+                                try {
+
+                                    JSONObject root = new JSONObject(json);
+                                    JSONObject data = root.getJSONObject("database");
+                                    JSONArray patientes = data.getJSONArray("patients");
+                                    JSONObject patiente = new JSONObject();
+                                    if (!add) {
+                                        patiente = patientes.getJSONObject(idpacient);
+                                    }
+                                    patiente.put("risco", teste);
+                                    patiente.put("nome", Paciente1.getName());
+                                    patiente.put("id", Paciente1.getId());
+                                    patiente.put("idade", Paciente1.getIdade());
+                                    patiente.put("tempoSintomas",Paciente1.getTempoSintomas());
+
+                                    patiente.put("sintomas",(JSONArray)Paciente1.getIdSintomas());
+                                    patiente.put("comorbidades",Paciente1.getIdComorbidades());
+                                    if (add) {
+                                        patientes.put(patientes.length(),patiente);
+                                        data.put("patients",patientes);
+                                        root.put("database", data);
 
 
-                    //intent
-                    Intent intent = new Intent(PatientEditActivity.this, PatientActivity.class);
-                    // Tem que passar o paciente atual também;
-                    intent.putExtra("patientid", idpacient);
-                    startActivity(intent);
+                                    }
+                                    saveData(root.toString());
 
+
+
+                                } catch (JSONException e) {
+
+                                    e.printStackTrace();
+                                }
+                                //intent
+                                Intent intent = new Intent(PatientEditActivity.this, PatientActivity.class);
+                                // Tem que passar o paciente atual também;
+                                intent.putExtra("patientid", idpacient);
+                                startActivity(intent);
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println(teste);
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("Rest Response", error.toString());
+
+                        }
+                    });
+                    requestQueue.add(objectRequest);
             }
-            //System.out.println(patient.getComorbidades());
+
         });
     }
 
