@@ -1,6 +1,7 @@
 package br.pro.hashi.ensino.desagil.firebase;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -13,9 +14,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class PatientEditActivity extends AppCompatActivity {
     private TextView patientNameView, patientIdadeView, tempoSintomasView, leitoView, riscoView, comorbidadesView, examesView, sintomasView;
@@ -66,29 +74,62 @@ public class PatientEditActivity extends AppCompatActivity {
         listaComorbidadesView.setAdapter(adapterComorbidades);
 
 
+        LinkedList<Sintoma> Sintomas1 = new LinkedList<Sintoma>();
+        Sintomas1.add(Sintoma.CONJUTIVITE);
+        Sintomas1.add(Sintoma.ABDOMEM);
+        Sintomas1.add(Sintoma.AGEUSIA);
+        LinkedList<Comorbidade> Comorbs1 = new LinkedList<Comorbidade>();
+        Comorbs1.add(Comorbidade.CARDIO);
+        Comorbs1.add(Comorbidade.DIABETES);
+        Comorbs1.add(Comorbidade.HIV);
+        Paciente patient = new Paciente("Rafael", 1, 21, 7, Comorbs1, Sintomas1);
+
+
 
         Intent myIntent = getIntent();
         // Try to get message handed in when creating intent
-        Paciente patient = (Paciente) myIntent.getSerializableExtra("patient");
+        int patientid = myIntent.getIntExtra("patientid",-1);
 
         // If there is one, put it in the textView
-        if (patient != null) {
-            patientNameEdit.setText(patient.getName());
-            patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
-            tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
-            idpacient = patient.getId();
+        if (patientid != -1) {
+            idpacient = patientid;
+
+            String json = loadData();
+            try {
+                JSONObject root = new JSONObject(json);
+                JSONObject data = root.getJSONObject("database");
+                JSONArray patientes = data.getJSONArray("patients");
+                int i = 0;
+                while (patientes.getJSONObject(i).getInt("id") != patientid) { i++;}
+                JSONObject patiente = patientes.getJSONObject(i);
+
+
+
+
+                patient = new Paciente(patiente);
+                patientNameEdit.setText(patient.getName());
+                patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
+                tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
+
+
 
         for (int i = 0; i < listaComorbidadesView.getCount(); i++) {
             Comorbidade comorbidade = (Comorbidade) listaComorbidadesView.getItemAtPosition(i);
-            if (patient.getComorbidades().contains(comorbidade)){
-                listaComorbidadesView.setItemChecked(i, true);
-            }
-
-            for (int b = 0; b < listaSintomasView.getCount(); b++) {
-                Sintoma sintoma = (Sintoma) listaSintomasView.getItemAtPosition(b);
-                if (patient.getSintomas().contains(sintoma)){
-                    listaSintomasView.setItemChecked(b, true);
+            if (patient.getComorbidades() != null && patient.getSintomas() != null) {
+                if (patient.getComorbidades().contains(comorbidade)){
+                    listaComorbidadesView.setItemChecked(i, true);
+                }
+                for (int b = 0; b < listaSintomasView.getCount(); b++) {
+                    Sintoma sintoma = (Sintoma) listaSintomasView.getItemAtPosition(b);
+                    if (patient.getSintomas().contains(sintoma)){
+                        listaSintomasView.setItemChecked(b, true);
+                    }
                 }
             }
         }
@@ -123,14 +164,70 @@ public class PatientEditActivity extends AppCompatActivity {
                     int tempoSint = Integer.parseInt(tempoSintomasEdit.getText().toString());
                     Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados);
 
+                    String json = loadData();
+                    try {
+                        JSONObject root = new JSONObject(json);
+                        JSONObject data = root.getJSONObject("database");
+                        JSONArray patientes = data.getJSONArray("patients");
+                        JSONObject patiente = patientes.getJSONObject(idpacient);
+
+                        patiente.put("nome", Paciente1.getName());
+                        patiente.put("id", Paciente1.getId());
+                        patiente.put("idade", Paciente1.getIdade());
+                        patiente.put("tempoSintomas",Paciente1.getTempoSintomas());
+                        patiente.put("sintomas",Paciente1.getSintomas());
+                        patiente.put("comorbidades",Paciente1.getComorbidades());
+
+                        saveData(root.toString());
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
                     //intent
                     Intent intent = new Intent(PatientEditActivity.this, PatientActivity.class);
                     // Tem que passar o paciente atual também;
-                    intent.putExtra("patient", Paciente1);
+                    intent.putExtra("patientid", idpacient);
                     startActivity(intent);
 
             }
             //System.out.println(patient.getComorbidades());
         });
+    }
+
+    public String loadJSON() {
+        String json = null;
+        try {
+            InputStream is = getResources().openRawResource(R.raw.data);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+    }
+    private void saveData(String s) {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("data", s);
+        editor.apply();
+    }
+
+    private String loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", 0);
+        String json = sharedPreferences.getString("data", null);
+
+        if (json == null) {
+            json = loadJSON();
+            saveData(json);
+        }
+
+        return json;
     }
 }

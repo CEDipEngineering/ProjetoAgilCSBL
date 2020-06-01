@@ -1,0 +1,31 @@
+{
+	"database": {
+		"patients": [
+			{
+				"id": 0,
+				"nome": "Rafael",
+				"idade": 21,
+				"tempoSintomas": 7,
+				"comorbidades": [],
+				"sintomas": []
+			},
+			{
+				"id": 1,
+				"nome": "Raquel",
+				"idade": 11,
+				"tempoSintomas": 3,
+				"comorbidades": [],
+				"sintomas": []
+			},
+			{
+				"id": 2,
+				"nome": "Ronaldo",
+				"idade": 41,
+				"tempoSintomas": 2,
+				"comorbidades": [],
+				"sintomas": []
+			}
+
+	]
+}
+}
