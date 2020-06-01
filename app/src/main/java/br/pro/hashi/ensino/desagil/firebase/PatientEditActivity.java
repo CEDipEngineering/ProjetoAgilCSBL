@@ -112,6 +112,8 @@ public class PatientEditActivity extends AppCompatActivity {
 
         } else {
             add = true;
+            patientIdadeEdit.setText(Integer.toString(0));
+            tempoSintomasEdit.setText(Integer.toString(0));
             String json = loadData();
             try {
                 JSONObject root = new JSONObject(json);
