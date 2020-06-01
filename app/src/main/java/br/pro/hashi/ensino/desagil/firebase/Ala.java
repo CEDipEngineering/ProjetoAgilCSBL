@@ -6,7 +6,14 @@ public class Ala {
     private String name;
     private LinkedList<Leito> leitos;
     private int capacidade;
-    private double ocupação;
+    private int ocupacao;
+
+    public Ala(String name, LinkedList<Leito> leitos, int ocupacao, int capacidade) {
+        this.name = name;
+        this.leitos = leitos;
+        this.ocupacao = ocupacao;
+        this.capacidade = capacidade;
+    }
 
     public String getName() {
         return name;
@@ -20,11 +27,11 @@ public class Ala {
         return capacidade;
     }
 
-    public double getOcupação() {
-        return ocupação;
+    public int getOcupação() {
+        return ocupacao;
     }
 
-    public void setOcupação(double ocupação) {
-        this.ocupação = ocupação;
+    public void setOcupação(int ocupação) {
+        this.ocupacao = ocupacao;
     }
 }

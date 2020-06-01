@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/selected_leito"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="3dp"></ImageView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="id"
+        android:textSize="18sp"
+        android:layout_centerInParent="true"></TextView>
+
+    <TextView
+        android:id="@+id/textViewNome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:ellipsize="marquee"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:layout_marginTop="15dp"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="76dp"></TextView>
+
+</RelativeLayout>
