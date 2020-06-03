@@ -25,12 +25,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class PatientActivity extends AppCompatActivity{
+public class PatientActivity extends Json {
     private Spinner patientSpinner;
     private Button examesButton, editButton, addButton;
     private ListView summaryView, symptomView, comorbityView;
     private Paciente currPatient;
     private HashMap<String , Paciente> converter = new HashMap<>();
+
 
     private void update(){
         List<Comorbidade> tempComorb = this.currPatient.getComorbidades();
@@ -95,7 +96,6 @@ public class PatientActivity extends AppCompatActivity{
 
 
 
-
         LinkedList<Comorbidade> Comorbs1, Comorbs2, Comorbs3;
         Comorbs1 = new LinkedList<Comorbidade>();
         Comorbs2 = new LinkedList<Comorbidade>();
@@ -131,8 +131,6 @@ public class PatientActivity extends AppCompatActivity{
         try {
             JSONObject root = new JSONObject(json_f);
             JSONObject data = root.getJSONObject("database");
-            System.out.println("AAAAAAAAAAAAAAA");
-            System.out.println(data);
             JSONArray JSONpacientes = data.getJSONArray("patients");
 
             Patients = new Paciente[JSONpacientes.length()];
@@ -222,42 +220,6 @@ public class PatientActivity extends AppCompatActivity{
             startActivity(intent);
         });
 
-    }
-
-
-    public String loadJSON() {
-        String json = null;
-        try {
-            InputStream is = getResources().openRawResource(R.raw.data);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }
-
-    private void saveData(String s) {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("data", s);
-        editor.apply();
-    }
-
-    private String loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", 0);
-        String json = sharedPreferences.getString("data", null);
-
-        if (json == null) {
-            json = loadJSON();
-            saveData(json);
-        }
-
-        return json;
     }
 
 
