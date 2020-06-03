@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
         avançar = findViewById(R.id.advance);
 
         this.avançar.setOnClickListener((view) ->{
-            Intent intent = new Intent(LoginActivity.this, PatientActivity.class);
+            Intent intent = new Intent(LoginActivity.this, AlaActivity.class);
             startActivity(intent);
 
         });

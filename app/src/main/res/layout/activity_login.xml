@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:layout_marginLeft="20dp"
-        android:text="Login"
+        android:hint="Login"
         android:textSize="20sp"
         ></EditText>
 
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:layout_marginLeft="20dp"
-        android:text="Senha"
+        android:hint="Senha"
         android:textSize="20sp"
         ></EditText>
 

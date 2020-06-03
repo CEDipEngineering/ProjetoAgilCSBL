@@ -190,9 +190,10 @@ public class AlaActivity extends AppCompatActivity {
                 Intent intent = new Intent(AlaActivity.this, PatientActivity.class);
 
                 // Tem que passar o paciente atual também;
-                if (leito_intent.getPaciente() != null) {
+                try {
                     intent.putExtra("patientid", leito_intent.getPaciente().getId());
-                } else {
+                } catch (Exception e){
+                    e.printStackTrace();
                     intent = new Intent(AlaActivity.this, PatientEditActivity.class);
                 }
                 startActivity(intent);
