@@ -7,15 +7,4 @@ public class LeitoUTI extends Leito {
         super(id);
     }
 
-    public int getId(){
-        return id;
-    }
-
-    public Paciente getPaciente(){
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente){
-        this.paciente = paciente;
-    }
 }

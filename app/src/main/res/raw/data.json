@@ -3,32 +3,52 @@
 		"patients": [
 			{
 				"id": 0,
-				"leito": 1,
+				"leito": 1001,
 				"nome": "Rafael",
 				"idade": 21,
 				"tempoSintomas": 7,
+				"risco": 0.67,
 				"comorbidades": [1,2,4],
 				"sintomas": [3,5]
 			},
 			{
 				"id": 1,
-				"leito": 2,
+				"leito": 1002,
 				"nome": "Raquel",
 				"idade": 11,
 				"tempoSintomas": 3,
+				"risco": 0.67,
 				"comorbidades": [1,3,6],
 				"sintomas": [2,7]
 			},
 			{
 				"id": 2,
-				"leito": 3,
+				"leito": 1003,
 				"nome": "Ronaldo",
 				"idade": 41,
 				"tempoSintomas": 2,
+				"risco": 0.67,
 				"comorbidades": [2,3,5],
 				"sintomas": [5,7,8]
 			}
 
-	]
-}
+		],
+		"wings": [
+			{
+				"id": 0,
+				"nome": "Ala 1",
+				"capacidade": 12
+			},
+			{
+				"id": 1,
+				"nome": "Ala 2",
+				"capacidade": 12
+			},
+			{
+				"id": 2,
+				"nome": "Ala 3",
+				"capacidade": 12
+			}
+		]
+	}
 }

@@ -19,4 +19,10 @@ public class Leito {
     public int getId() {
         return id;
     }
+
+    public int getNumber() {
+        return id%1000;
+    }
+
+
 }

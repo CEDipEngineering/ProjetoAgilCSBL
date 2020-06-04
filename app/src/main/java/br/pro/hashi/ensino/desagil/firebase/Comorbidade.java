@@ -27,10 +27,7 @@ public enum Comorbidade {
 
     public static Comorbidade getById(int id) {
         for(Comorbidade e : values()) {
-            System.out.println("CCCCCCCCCCCCCCCCCCCC");
-            System.out.println(e);
             if(e.getId() == id) {
-                System.out.println(e.getId());
                 return e;
             }
         }
