@@ -13,6 +13,10 @@ import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -20,13 +24,9 @@ public class AlaActivity extends Json {
 
     private GridViewAdapter mAdapter;
 
-    private Ala ala1;
-    private Ala ala2;
-    private Ala ala3;
     private Ala currAla;
     private LinkedList<Leito> leitos = new LinkedList<Leito>();
-    private LinkedList<Leito> leitos2 = new LinkedList<Leito>();
-    private LinkedList<Ala> alas = new LinkedList<Ala>();
+    Ala[] Alas;
     private GridView gridView;
     private Spinner alaSpinner;
     private TextView lotacaoText;
@@ -43,86 +43,43 @@ public class AlaActivity extends Json {
         alaSpinner = findViewById(R.id.spinnerAla);
         lotacaoText = findViewById(R.id.lotacao);
 
-        Leito leito1 = new Leito(1);
-        Leito leito2 = new Leito(2);
-        Leito leito3 = new Leito(3);
-        Leito leito4 = new Leito(4);
-        Leito leito5 = new Leito(5);
-        Leito leito6 = new Leito(6);
-        Leito leito7 = new Leito(7);
-        Leito leito8 = new Leito(8);
-        Leito leito9 = new Leito(9);
-        Leito leito10 = new Leito(10);
-        Leito leito11 = new Leito(11);
-        Leito leito12 = new Leito(12);
-        Leito leitoRafa = new Leito(1);
-        Leito leitoRaq = new Leito(2);
-        Leito leitoRon = new Leito(3);
 
-        LinkedList<Comorbidade> Comorbs1, Comorbs2, Comorbs3;
-        Comorbs1 = new LinkedList<Comorbidade>();
-        Comorbs2 = new LinkedList<Comorbidade>();
-        Comorbs3 = new LinkedList<Comorbidade>();
-        Comorbs1.add(Comorbidade.CARDIO);
-        Comorbs1.add(Comorbidade.DIABETES);
-        Comorbs1.add(Comorbidade.HIV);
-        Comorbs2.add(Comorbidade.IMUNODEF);
-        Comorbs2.add(Comorbidade.NEOPLASIA);
-        Comorbs3.add(Comorbidade.PULMONAR);
+        Alas = new Ala[1];
 
-        LinkedList<Sintoma> Sintomas1, Sintomas2, Sintomas3;
-        Sintomas1 = new LinkedList<Sintoma>();
-        Sintomas2 = new LinkedList<Sintoma>();
-        Sintomas3 = new LinkedList<Sintoma>();
-        Sintomas1.add(Sintoma.CONJUTIVITE);
-        Sintomas1.add(Sintoma.ABDOMEM);
-        Sintomas1.add(Sintoma.AGEUSIA);
-        Sintomas2.add(Sintoma.ANOSMIA);
-        Sintomas2.add(Sintoma.AR);
-        Sintomas3.add(Sintoma.AGEUSIA);
-
-        leitos2.add(leito1);
-        leitos2.add(leito2);
-        leitos2.add(leito3);
-        leitos2.add(leito4);
-        leitos2.add(leito5);
-        leitos2.add(leito6);
-        leitos2.add(leito7);
-        leitos2.add(leito8);
-        leitos2.add(leito9);
-        leitos2.add(leito10);
-        leitos2.add(leito11);
-        leitos2.add(leito12);
+        String json_f = loadData();
+        try {
+            JSONObject root = new JSONObject(json_f);
+            JSONObject data = root.getJSONObject("database");
+            JSONArray JSONpacientes = data.getJSONArray("patients");
+            JSONArray JSONwings = data.getJSONArray("wings");
+            Alas = new Ala[JSONwings.length()];
+            for (int a = 0; a < Alas.length; a++) {
+                Alas[a] = new Ala(JSONwings.getJSONObject(a));
+                int ocup = 0;
+                for (int l = 0; l < Alas[a].getCapacidade(); l++) {
+                    int id = l+1+Alas[a].getNumber()*1000;
+                    Leito newL = new Leito(id);
+                    for (int i = 0; i < JSONpacientes.length(); i++) {
+                        JSONObject paciente = JSONpacientes.getJSONObject(i);
+                        if (paciente.getInt("leito") == id) {
+                            newL.setPaciente(new Paciente(paciente));
+                            ocup+=1;
+                            break;
+                        }
+                    }
+                    Alas[a].addLeito(newL);
+                }
+                Alas[a].setOcupação(ocup);
+                nameSpinner.add(Alas[a].getName());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            leitos.add(new Leito(1));
+            Alas[0] = new Ala(1,"Ala 1", leitos,1,1);
+        }
 
 
-        leitoRafa.setPaciente(new Paciente("Rafael", 1, 21, 7, Comorbs1, Sintomas1));
-        leitoRaq.setPaciente(new Paciente("Raquel", 2, 11, 3, Comorbs2, Sintomas2));
-        leitoRon.setPaciente(new Paciente("Ronaldo", 3, 41, 2, Comorbs3, Sintomas3));
-
-        leitos.add(leitoRafa);
-        leitos.add(leitoRaq);
-        leitos.add(leitoRon);
-        leitos.add(leito4);
-        leitos.add(leito5);
-        leitos.add(leito6);
-        leitos.add(leito7);
-        leitos.add(leito8);
-        leitos.add(leito9);
-        leitos.add(leito10);
-        leitos.add(leito11);
-        leitos.add(leito12);
-
-        this.ala1 = new Ala("Ala 1", leitos, 3, 12);
-        this.ala2 = new Ala("Ala 2", leitos2, 3,3);
-        this.ala3 = new Ala("Ala 3", leitos2, 3,3);
-        alas.add(ala1);
-        alas.add(ala2);
-        alas.add(ala3);
-        nameSpinner.add(ala1.getName());
-        nameSpinner.add(ala2.getName());
-        nameSpinner.add(ala3.getName());
-
-        for(Leito leito: ala1.getLeitos()){
+        for(Leito leito: Alas[0].getLeitos()){
             idGridView.add(leito.getId());
             if(leito.getPaciente() != null) {
                 nameGridView.add(leito.getPaciente().getName());
@@ -138,7 +95,7 @@ public class AlaActivity extends Json {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(AlaActivity.this, android.R.layout.simple_spinner_dropdown_item, nameSpinner);
         alaSpinner.setAdapter(adapter);
 
-        lotacaoText.setText(Integer.toString(ala1.getOcupação()));
+        lotacaoText.setText(Integer.toString(Alas[0].getOcupação()));
 
 
 
@@ -149,7 +106,7 @@ public class AlaActivity extends Json {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
 
-                    for(Ala ala: alas) {
+                    for(Ala ala: Alas) {
                         if(ala.getName().equals(alaSpinner.getSelectedItem())) {
                             currAla = ala;
                         }
@@ -158,7 +115,7 @@ public class AlaActivity extends Json {
                     idGridView = new ArrayList<Integer>();
                     nameGridView = new ArrayList<String>();
                     for(Leito leito: currAla.getLeitos()){
-                        idGridView.add(leito.getId());
+                        idGridView.add(leito.getNumber());
                         if(leito.getPaciente() != null) {
                             nameGridView.add(leito.getPaciente().getName());
                         } else {
@@ -183,19 +140,16 @@ public class AlaActivity extends Json {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Leito leito_intent = null;
                 for(Leito leito: currAla.getLeitos()){
-                    if (leito.getId() == (i)){
+                    if (leito.getId() == (i+1)){
                         leito_intent = leito;
                     }
                 }
                 Intent intent = new Intent(AlaActivity.this, PatientActivity.class);
-
                 // Tem que passar o paciente atual também;
-                try {
-                    intent.putExtra("patientid", leito_intent.getPaciente().getId());
-                } catch (Exception e){
-                    e.printStackTrace();
+                if(leito_intent.getPaciente() == null) {
                     intent = new Intent(AlaActivity.this, PatientEditActivity.class);
                 }
+                intent.putExtra("leito", leito_intent.getId()+currAla.getNumber()*1000);
                 startActivity(intent);
             }
         });

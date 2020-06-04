@@ -57,7 +57,11 @@ public class PatientActivity extends Json {
         patientSummary.add("Nome: " + this.currPatient.getName());
         patientSummary.add("Idade: " + this.currPatient.getIdade());
         patientSummary.add("Dias com sintomas: " + this.currPatient.getTempoSintomas());
-        patientSummary.add("Leito: " + this.currPatient.getLeito());
+        if (this.currPatient.getLeitoId() >= 0) {
+            patientSummary.add("Leito: " + this.currPatient.getLeitoId());
+        } else {
+            patientSummary.add("Leito: ");
+        }
         patientSummary.add("Risco: " + this.currPatient.getRisco()*100 + "%");
 
         ArrayAdapter<String> adapter0 = new ArrayAdapter<String>(this,
@@ -151,7 +155,7 @@ public class PatientActivity extends Json {
         Intent myIntent = getIntent();
         // Try to get message handed in when creating intent
         int patientid = myIntent.getIntExtra("patientid",-1);
-
+        int leitoid = myIntent.getIntExtra("leito",-1);
 
 
         ArrayList arraySpinner = new ArrayList();
@@ -175,7 +179,14 @@ public class PatientActivity extends Json {
         if (patientid != -1) {
             this.currPatient = Patients[patientid];
             patientSpinner.setSelection(adapter.getPosition(currPatient.getName()));
-
+        } else if (leitoid != -1) {
+            for (Paciente p : Patients) {
+                if (p.getLeitoId() == leitoid) {
+                    this.currPatient = p;
+                    patientSpinner.setSelection(adapter.getPosition(currPatient.getName()));
+                    break;
+                }
+            }
         }
 
 

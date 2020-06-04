@@ -13,7 +13,7 @@ import java.util.Random;
 public class Paciente {
     private String name;
     private int id, idade, tempoSintomas;
-    private Leito leito;
+    private int idLeito;
     private double risco = 0.67; //Por enquanto
     private List<Comorbidade> comorbidades;
     private LinkedList<Exame> exames;
@@ -34,7 +34,9 @@ public class Paciente {
             this.id = pacient.getInt("id");
             this.idade = pacient.getInt("idade");
             this.tempoSintomas = pacient.getInt("tempoSintomas");
-            this.risco = pacient.getDouble("risco");
+            //this.risco = pacient.getDouble("risco");
+            this.idLeito = pacient.getInt("leito");
+
 
             ArrayList<Comorbidade> comorbs= new ArrayList<Comorbidade>();
             JSONArray jarcomorbs = pacient.getJSONArray("comorbidades");
@@ -54,7 +56,10 @@ public class Paciente {
 
             this.comorbidades = comorbs;
             this.sintomas = sints;
+
+
         } catch (JSONException e) {
+            System.out.println("DDDDDDDDDDDDDDD");
             e.printStackTrace();
         }
     }
@@ -63,8 +68,8 @@ public class Paciente {
         this.tempoSintomas = tempoSintomas;
     }
 
-    public void setLeito(Leito leito) {
-        this.leito = leito;
+    public void setLeitoId(int idLeito) {
+        this.idLeito = idLeito;
     }
 
     public void addComorbidade(Comorbidade comorbidade) {
@@ -95,8 +100,8 @@ public class Paciente {
         return tempoSintomas;
     }
 
-    public Leito getLeito() {
-        return leito;
+    public int getLeitoId() {
+        return idLeito;
     }
 
     public double getRisco() {

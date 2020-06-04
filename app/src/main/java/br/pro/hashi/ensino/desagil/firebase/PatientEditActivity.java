@@ -82,6 +82,7 @@ public class PatientEditActivity extends Json {
         patientIdadeView = findViewById(R.id.idade);
         patientNameEdit = findViewById(R.id.edit_name);
         patientIdadeEdit = findViewById(R.id.edit_idade);
+        leitoEdit = findViewById(R.id.edit_leito);
         tempoSintomasEdit = findViewById(R.id.edit_dias);
         listaSintomasView = findViewById(R.id.list_sintomas);
         listaComorbidadesView = findViewById(R.id.list_comorbidades);
@@ -102,46 +103,58 @@ public class PatientEditActivity extends Json {
         Intent myIntent = getIntent();
         // Try to get message handed in when creating intent
         int patientid = myIntent.getIntExtra("patientid",-1);
+        int leito = myIntent.getIntExtra("leito",-1);
 
         // If there is one, put it in the textView
-        if (patientid != -1) {
-            idpacient = patientid;
 
-            String json = loadData();
-            try {
-                JSONObject root = new JSONObject(json);
-                JSONObject data = root.getJSONObject("database");
-                JSONArray patientes = data.getJSONArray("patients");
+
+        String json = loadData();
+        try {
+            JSONObject root = new JSONObject(json);
+            JSONObject data = root.getJSONObject("database");
+            JSONArray patientes = data.getJSONArray("patients");
+            if (patientid != -1 | leito != -1) {
                 int i = 0;
-                while (patientes.getJSONObject(i).getInt("id") != patientid) { i++;}
-                JSONObject patiente = patientes.getJSONObject(i);
+                if (patientid != -1) {
+                    while (patientes.getJSONObject(i).getInt("id") != patientid) { i++;}
+                } else if (leito != -1) {
+                    leitoEdit.setText(Integer.toString(leito));
+                    while (patientes.getJSONObject(i).getInt("leito") != leito) {
+                        if (i < patientes.length()) {i++;}
+                    }
+                }
 
+                if (i < patientes.length()) {
+                    JSONObject patiente = patientes.getJSONObject(i);
 
-
-
-                patient = new Paciente(patiente);
-                patientNameEdit.setText(patient.getName());
-                patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
-                tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            add = true;
-            patientIdadeEdit.setText(Integer.toString(0));
-            tempoSintomasEdit.setText(Integer.toString(0));
-            String json = loadData();
-            try {
-                JSONObject root = new JSONObject(json);
-                JSONObject data = root.getJSONObject("database");
-                JSONArray patientes = data.getJSONArray("patients");
+                    patient = new Paciente(patiente);
+                    idpacient = patient.getId();
+                    if (patient.getLeitoId() >= 0) {
+                        leitoEdit.setText(Integer.toString(patient.getLeitoId()));
+                    }
+                    patientNameEdit.setText(patient.getName());
+                    patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
+                    tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
+                } else {
+                    add = true;
+                    patientIdadeEdit.setText(Integer.toString(0));
+                    tempoSintomasEdit.setText(Integer.toString(0));
+                    idpacient = patientes.length();
+                }
+            } else {
+                add = true;
+                patientIdadeEdit.setText(Integer.toString(0));
+                tempoSintomasEdit.setText(Integer.toString(0));
                 idpacient = patientes.length();
-            } catch (JSONException e) {
-                e.printStackTrace();
+
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+
+
+        leitoEdit.setEnabled(false);
 
 
 
@@ -218,6 +231,13 @@ public class PatientEditActivity extends Json {
                                     if (!add) {
                                         patiente = patientes.getJSONObject(idpacient);
                                     }
+
+                                    if (!(leitoEdit.getText().toString().equals(""))) {
+                                        patiente.put("leito",Integer.parseInt(leitoEdit.getText().toString()));
+                                    } else {
+                                        patiente.put("leito",-1);
+                                    }
+
                                     patiente.put("risco", teste);
                                     patiente.put("nome", Paciente1.getName());
                                     patiente.put("id", Paciente1.getId());
