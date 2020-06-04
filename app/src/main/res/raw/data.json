@@ -3,6 +3,7 @@
 		"patients": [
 			{
 				"id": 0,
+				"leito": 1,
 				"nome": "Rafael",
 				"idade": 21,
 				"tempoSintomas": 7,
@@ -11,6 +12,7 @@
 			},
 			{
 				"id": 1,
+				"leito": 2,
 				"nome": "Raquel",
 				"idade": 11,
 				"tempoSintomas": 3,
@@ -19,6 +21,7 @@
 			},
 			{
 				"id": 2,
+				"leito": 3,
 				"nome": "Ronaldo",
 				"idade": 41,
 				"tempoSintomas": 2,

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class AlaActivity extends AppCompatActivity {
+public class AlaActivity extends Json {
 
     private GridViewAdapter mAdapter;
 
