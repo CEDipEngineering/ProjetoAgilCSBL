@@ -141,9 +141,6 @@ public class AlaActivity extends Json {
                 Leito leito_intent = null;
 
                 for(Leito leito: currAla.getLeitos()){
-                    System.out.println("FFFFFFFFFFFFFFFFFFFFF");
-                    System.out.println(i);
-                    System.out.println(leito.getId());
                     if (leito.getId()-currAla.getNumber()*1000 == (i+1)){
                         leito_intent = leito;
                     }
