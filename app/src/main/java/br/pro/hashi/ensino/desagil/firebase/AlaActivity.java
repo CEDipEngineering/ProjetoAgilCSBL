@@ -139,8 +139,12 @@ public class AlaActivity extends Json {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Leito leito_intent = null;
+
                 for(Leito leito: currAla.getLeitos()){
-                    if (leito.getId() == (i+1)){
+                    System.out.println("FFFFFFFFFFFFFFFFFFFFF");
+                    System.out.println(i);
+                    System.out.println(leito.getId());
+                    if (leito.getId()-currAla.getNumber()*1000 == (i+1)){
                         leito_intent = leito;
                     }
                 }
@@ -149,7 +153,7 @@ public class AlaActivity extends Json {
                 if(leito_intent.getPaciente() == null) {
                     intent = new Intent(AlaActivity.this, PatientEditActivity.class);
                 }
-                intent.putExtra("leito", leito_intent.getId()+currAla.getNumber()*1000);
+                intent.putExtra("leito", leito_intent.getId());
                 startActivity(intent);
             }
         });
