@@ -19,13 +19,14 @@ public class Paciente {
     private LinkedList<Exame> exames;
     private List<Sintoma> sintomas;
 
-    public Paciente(String name, int id, int idade, int tempoSintomas, List<Comorbidade> comorbidades, List<Sintoma> sintomas) {
+    public Paciente(String name, int id, int idade, int tempoSintomas, List<Comorbidade> comorbidades, List<Sintoma> sintomas, double risco) {
         this.name = name;
         this.id = id;
         this.idade = idade;
         this.tempoSintomas = tempoSintomas;
         this.comorbidades = comorbidades;
         this.sintomas = sintomas;
+        this.risco = risco;
     }
 
     public Paciente(JSONObject pacient) {
@@ -34,7 +35,7 @@ public class Paciente {
             this.id = pacient.getInt("id");
             this.idade = pacient.getInt("idade");
             this.tempoSintomas = pacient.getInt("tempoSintomas");
-            //this.risco = pacient.getDouble("risco");
+            this.risco = pacient.getDouble("risco");
             this.idLeito = pacient.getInt("leito");
 
 

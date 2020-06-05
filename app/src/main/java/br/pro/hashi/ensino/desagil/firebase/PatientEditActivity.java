@@ -96,7 +96,7 @@ public class PatientEditActivity extends Json {
 
         LinkedList<Sintoma> Sintomas1 = new LinkedList<Sintoma>();
         LinkedList<Comorbidade> Comorbs1 = new LinkedList<Comorbidade>();
-        Paciente patient = new Paciente("", -1, 1, 1, Comorbs1, Sintomas1);
+        Paciente patient = new Paciente("", -1, 1, 1, Comorbs1, Sintomas1,0);
         add = false;
 
 
@@ -217,10 +217,11 @@ public class PatientEditActivity extends Json {
                             double teste = 0;
                             try {
                                 teste = response.getDouble("value");
+                                System.out.println(teste);
                                 patientName = patientNameEdit.getText().toString();
                                 int idade = Integer.parseInt(patientIdadeEdit.getText().toString());
                                 int tempoSint = Integer.parseInt(tempoSintomasEdit.getText().toString());
-                                Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados);
+                                Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados, teste);
                                 String json = loadData();
                                 try {
 

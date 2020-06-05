@@ -146,7 +146,7 @@ public class PatientActivity extends Json {
         } catch (JSONException e) {
             e.printStackTrace();
             Patients = new Paciente[1];
-            Patients[0] = new Paciente("Rafael", 1, 21, 7, Comorbs1, Sintomas1);
+            Patients[0] = new Paciente("Rafael", 1, 21, 7, Comorbs1, Sintomas1, 0.67);
         }
 
         System.out.println(Patients);
