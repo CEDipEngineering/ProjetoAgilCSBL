@@ -61,8 +61,8 @@ public class Ala {
         return ocupacao;
     }
 
-    public void setOcupação(int ocupação) {
-        this.ocupacao = ocupacao;
+    public void setOcupação(int ocupa) {
+        this.ocupacao = ocupa;
     }
 
     public int getId() {
