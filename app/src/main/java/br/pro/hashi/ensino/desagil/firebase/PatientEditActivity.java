@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import org.json.JSONArray;
@@ -55,6 +58,7 @@ public class PatientEditActivity extends Json {
     private List<Comorbidade> comorbidadesSelecionadas;
     private ArrayAdapter<Sintoma> adapterSintomas;
     private ArrayAdapter<Comorbidade> adapterComorbidades;
+    private HashMap<Enum, String> tempSintomasData;
 
     private int idpacient;
     private boolean add;
@@ -67,11 +71,9 @@ public class PatientEditActivity extends Json {
         ArrayList<String> listaSintomas = new ArrayList<String>();
         for(Comorbidade e :listaComorbidadesEnum){
             listaComorbidades.add(e.getNomeComorbidades());
-            //System.out.println(e.getNomeComorbidades());
         }
         for(Sintoma s :listaSintomasEnum){
             listaSintomas.add(s.getNome());
-            //System.out.println(e.getNomeComorbidades());
         }
 
 
@@ -96,7 +98,8 @@ public class PatientEditActivity extends Json {
 
         LinkedList<Sintoma> Sintomas1 = new LinkedList<Sintoma>();
         LinkedList<Comorbidade> Comorbs1 = new LinkedList<Comorbidade>();
-        Paciente patient = new Paciente("", -1, 1, 1, Comorbs1, Sintomas1,0);
+        HashMap<Enum, String> tempSintomasData = new HashMap<Enum, String>();
+        Paciente patient = new Paciente("", -1, 1, 1, Comorbs1, Sintomas1,0, tempSintomasData);
         add = false;
 
 
@@ -181,7 +184,6 @@ public class PatientEditActivity extends Json {
                     sintomasSelecionados = new ArrayList<Sintoma>();
                     comorbidadesSelecionadas = new ArrayList<Comorbidade>();
                     SparseBooleanArray sintomasChecked = listaSintomasView.getCheckedItemPositions();
-                    //System.out.println(listaSintomasView);
                     SparseBooleanArray comorbidadesChecked = listaComorbidadesView.getCheckedItemPositions();
                     for(int i = 0;i<sintomasChecked.size(); i++){
                         int key =  sintomasChecked.keyAt(i);
@@ -217,11 +219,15 @@ public class PatientEditActivity extends Json {
                             double teste = 0;
                             try {
                                 teste = response.getDouble("value");
-                                System.out.println(teste);
                                 patientName = patientNameEdit.getText().toString();
                                 int idade = Integer.parseInt(patientIdadeEdit.getText().toString());
                                 int tempoSint = Integer.parseInt(tempoSintomasEdit.getText().toString());
-                                Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados, teste);
+                                HashMap<Enum, String> tempSintomasData = new HashMap<Enum, String>();
+                                String currentTime = Calendar.getInstance().getTime().toString();
+                                for(Sintoma s: sintomasSelecionados){
+                                    tempSintomasData.put(s, currentTime);
+                                }
+                                Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados, teste, tempSintomasData);
                                 String json = loadData();
                                 try {
 
@@ -244,22 +250,19 @@ public class PatientEditActivity extends Json {
                                     patiente.put("id", Paciente1.getId());
                                     patiente.put("idade", Paciente1.getIdade());
                                     patiente.put("tempoSintomas",Paciente1.getTempoSintomas());
-
+                                    patiente.put("sintomasData", Paciente1.getSintomasData());
                                     patiente.put("sintomas",(JSONArray)Paciente1.getIdSintomas());
                                     patiente.put("comorbidades",Paciente1.getIdComorbidades());
                                     if (add) {
                                         patientes.put(patientes.length(),patiente);
                                         data.put("patients",patientes);
                                         root.put("database", data);
-
-
                                     }
                                     saveData(root.toString());
 
 
 
                                 } catch (JSONException e) {
-
                                     e.printStackTrace();
                                 }
                                 //intent
@@ -272,7 +275,6 @@ public class PatientEditActivity extends Json {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            System.out.println(teste);
                         }
                     }, new Response.ErrorListener() {
                         @Override

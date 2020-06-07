@@ -5,10 +5,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 public class Paciente {
     private String name;
@@ -18,8 +17,9 @@ public class Paciente {
     private List<Comorbidade> comorbidades;
     private LinkedList<Exame> exames;
     private List<Sintoma> sintomas;
+    private HashMap<Enum, String> sintomasData;
 
-    public Paciente(String name, int id, int idade, int tempoSintomas, List<Comorbidade> comorbidades, List<Sintoma> sintomas, double risco) {
+    public Paciente(String name, int id, int idade, int tempoSintomas, List<Comorbidade> comorbidades, List<Sintoma> sintomas, double risco, HashMap<Enum, String> sintomasData) {
         this.name = name;
         this.id = id;
         this.idade = idade;
@@ -27,6 +27,7 @@ public class Paciente {
         this.comorbidades = comorbidades;
         this.sintomas = sintomas;
         this.risco = risco;
+        this.sintomasData = sintomasData;
     }
 
     public Paciente(JSONObject pacient) {
@@ -64,6 +65,9 @@ public class Paciente {
             e.printStackTrace();
         }
     }
+    public void setSintomasData(HashMap<Enum, String> sintomasData) {
+        this.sintomasData = sintomasData;
+    }
 
     public void setTempoSintomas(int tempoSintomas) {
         this.tempoSintomas = tempoSintomas;
@@ -99,6 +103,10 @@ public class Paciente {
 
     public int getTempoSintomas() {
         return tempoSintomas;
+    }
+
+    public HashMap<Enum, String> getSintomasData() {
+        return sintomasData;
     }
 
     public int getLeitoId() {
