@@ -173,22 +173,27 @@ public class AlaActivity extends Json {
             int id = 0;
             String json = loadData();
             try {
-
                 JSONObject root = new JSONObject(json);
                 JSONObject data = root.getJSONObject("database");
                 JSONArray alas = data.getJSONArray("wings");
                 JSONObject ala = new JSONObject();
 
-                while (id== alas.getJSONObject(id).getInt("wings")) { id++; }
 
-                String name = "Ala "+ id+1;
+                while (id < alas.length() && id == alas.getJSONObject(id).getInt("id")) { id++; }
+
+                String name = "Ala "+ (id+1);
                 ala.put("nome", name);
                 ala.put("id", id);
                 ala.put("capacidade", 12);
 
+
                 alas.put(alas.length(),ala);
-                data.put("alas",alas);
+                data.put("wings",alas);
                 root.put("database", data);
+
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAA");
+                System.out.println(root.toString());
+
 
                 saveData(root.toString());
 
@@ -196,6 +201,7 @@ public class AlaActivity extends Json {
 
                 } catch (JSONException e) {
 
+                    System.out.println("BBBBBBBBBBBBBBBBBB");
                     e.printStackTrace();
                 }
 
