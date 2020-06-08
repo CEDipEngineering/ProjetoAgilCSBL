@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -22,16 +23,19 @@ import org.json.JSONObject;
 
 
 public class PatientActivity extends Json {
+    private SymptomGridAdapter symptomGridAdapter;
+
     private Spinner patientSpinner;
     private Button examesButton, editButton, addButton;
     private ListView summaryView, symptomView, comorbityView;
     private ImageView Sibilos, Ageusia;
     private Paciente currPatient;
+    private GridView gridView;
     private Calendar currentTime;
     private HashMap<String , Paciente> converter = new HashMap<>();
     private ArrayList<Integer> idSintomas = new ArrayList<Integer>();
     private HashMap<Enum, String> tempSintomasData;
-
+    private ArrayList<Sintoma> symptomGridView = new ArrayList<>();
 
     public void grayOut(ImageView view) {
         view.setColorFilter(Color.argb(150,200,200,200));
@@ -89,6 +93,15 @@ public class PatientActivity extends Json {
                 android.R.layout.simple_list_item_1,
                 patientComorbs);
         comorbityView.setAdapter(adapter2);
+
+
+        symptomGridView = new ArrayList<Sintoma>();
+        for(Sintoma s: Sintoma.class.getEnumConstants()){
+            symptomGridView.add(s);
+        }
+
+        symptomGridAdapter = new SymptomGridAdapter(PatientActivity.this, symptomGridView, this.currPatient);
+        gridView.setAdapter(symptomGridAdapter);
     }
 
 
@@ -103,8 +116,7 @@ public class PatientActivity extends Json {
         summaryView = findViewById(R.id.summaryView);
         symptomView = findViewById(R.id.symptomView);
         comorbityView = findViewById(R.id.comorbityView);
-        Sibilos = findViewById(R.id.Sibilos);
-        Ageusia = findViewById(R.id.Ageusia);
+        gridView = findViewById(R.id.symptomGrid);
 
 
 
@@ -230,12 +242,12 @@ public class PatientActivity extends Json {
             }
         }
         System.out.println(idSintomas);
-        for(ImageView i: imagens){
-            if(idSintomas.contains(Integer.parseInt((String) i.getTag()))){
-                System.out.println("GREY");
-                grayOut(i);
-            }
-        }
+//        for(ImageView i: imagens){
+//            if(idSintomas.contains(Integer.parseInt((String) i.getTag()))){
+//                System.out.println("GREY");
+//                grayOut(i);
+//            }
+//        }
 
 
 
