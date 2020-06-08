@@ -9,6 +9,7 @@ import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class AlaActivity extends Json {
 
@@ -30,22 +32,32 @@ public class AlaActivity extends Json {
     private GridView gridView;
     private Spinner alaSpinner;
     private TextView lotacaoText;
+    private Button addButton;
     private ArrayList<Integer> idGridView = new ArrayList<Integer>();
     private ArrayList<String> nameGridView = new ArrayList<String>();
-    private ArrayList<String> nameSpinner = new ArrayList<String>();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ala);
-
-        gridView = findViewById(R.id.ala);
-        alaSpinner = findViewById(R.id.spinnerAla);
-        lotacaoText = findViewById(R.id.lotacao);
+    private ArrayList<String> nameSpinner;
 
 
-        Alas = new Ala[1];
+    private void update(){
 
+        idGridView = new ArrayList<Integer>();
+        nameGridView = new ArrayList<String>();
+        for(Leito leito: currAla.getLeitos()){
+            idGridView.add(leito.getNumber());
+            if(leito.getPaciente() != null) {
+                nameGridView.add(leito.getPaciente().getName());
+            } else {
+                nameGridView.add("vago");
+            }
+        }
+
+
+        lotacaoText.setText("Lotação:\n" + currAla.getOcupação() + "/" + currAla.getCapacidade());
+    }
+
+    private void getAlas(int pos){
+        nameSpinner = new ArrayList<String>();
+        String posname = "Ala 0";
         String json_f = loadData();
         try {
             JSONObject root = new JSONObject(json_f);
@@ -71,6 +83,7 @@ public class AlaActivity extends Json {
                 }
                 Alas[a].setOcupação(ocup);
                 nameSpinner.add(Alas[a].getName());
+                if (Alas[a].getId() == pos) { posname = Alas[a].getName(); }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -78,26 +91,35 @@ public class AlaActivity extends Json {
             Alas[0] = new Ala(1,"Ala 1", leitos,1,1);
         }
 
-
-        for(Leito leito: Alas[0].getLeitos()){
-            idGridView.add(leito.getId());
-            if(leito.getPaciente() != null) {
-                nameGridView.add(leito.getPaciente().getName());
-            } else {
-                nameGridView.add("vago");
-            }
-        }
-
-
         mAdapter = new GridViewAdapter(this,idGridView, nameGridView);
         gridView.setAdapter(mAdapter);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(AlaActivity.this, android.R.layout.simple_spinner_dropdown_item, nameSpinner);
         alaSpinner.setAdapter(adapter);
+        alaSpinner.setSelection(adapter.getPosition(posname));
+    }
 
-        lotacaoText.setText(Integer.toString(Alas[0].getOcupação()));
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ala);
+
+        gridView = findViewById(R.id.ala);
+        alaSpinner = findViewById(R.id.spinnerAla);
+        lotacaoText = findViewById(R.id.lotacao);
+
+        addButton = findViewById(R.id.addButton);
+
+        ArrayList<String> nameSpinner;
 
 
+        Alas = new Ala[1];
+
+        getAlas(0);
+
+
+        //update();
 
 
         alaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -112,20 +134,12 @@ public class AlaActivity extends Json {
                         }
                     }
 
-                    idGridView = new ArrayList<Integer>();
-                    nameGridView = new ArrayList<String>();
-                    for(Leito leito: currAla.getLeitos()){
-                        idGridView.add(leito.getNumber());
-                        if(leito.getPaciente() != null) {
-                            nameGridView.add(leito.getPaciente().getName());
-                        } else {
-                            nameGridView.add("vago");
-                        }
-                    }
+
+
+                    update();
 
                     mAdapter = new GridViewAdapter(AlaActivity.this,idGridView, nameGridView);
                     gridView.setAdapter(mAdapter);
-                    lotacaoText.setText("Lotação:\n" + currAla.getOcupação() + "/" + currAla.getCapacidade());
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -155,6 +169,39 @@ public class AlaActivity extends Json {
             }
         });
 
+        addButton.setOnClickListener((view) -> {
+            int id = 0;
+            String json = loadData();
+            try {
+
+                JSONObject root = new JSONObject(json);
+                JSONObject data = root.getJSONObject("database");
+                JSONArray alas = data.getJSONArray("wings");
+                JSONObject ala = new JSONObject();
+
+                while (id== alas.getJSONObject(id).getInt("wings")) { id++; }
+
+                String name = "Ala "+ id+1;
+                ala.put("nome", name);
+                ala.put("id", id);
+                ala.put("capacidade", 12);
+
+                alas.put(alas.length(),ala);
+                data.put("alas",alas);
+                root.put("database", data);
+
+                saveData(root.toString());
+
+
+
+                } catch (JSONException e) {
+
+                    e.printStackTrace();
+                }
+
+            getAlas(id);
+            update();
+        });
 
     }
 }
