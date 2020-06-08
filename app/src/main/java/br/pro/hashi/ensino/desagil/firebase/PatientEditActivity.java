@@ -120,7 +120,8 @@ public class PatientEditActivity extends Json {
                 } else if (leito != -1) {
                     leitoEdit.setText(Integer.toString(leito));
                     while (patientes.getJSONObject(i).getInt("leito") != leito) {
-                        if (i < patientes.length()) {i++;}
+                        if (i < patientes.length()-1) {i++;}
+                        else {break;}
                     }
                 }
 
@@ -139,14 +140,13 @@ public class PatientEditActivity extends Json {
                     add = true;
                     patientIdadeEdit.setText(Integer.toString(0));
                     tempoSintomasEdit.setText(Integer.toString(0));
-                    idpacient = patientes.length();
+                    idpacient = getNext(patientes,"id");
                 }
             } else {
                 add = true;
                 patientIdadeEdit.setText(Integer.toString(0));
                 tempoSintomasEdit.setText(Integer.toString(0));
-                idpacient = patientes.length();
-
+                idpacient = getNext(patientes,"id");
             }
         } catch (JSONException e) {
             e.printStackTrace();

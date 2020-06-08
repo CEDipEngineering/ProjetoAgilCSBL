@@ -4,6 +4,10 @@ import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -43,5 +47,58 @@ public class Json extends AppCompatActivity {
         }
 
         return json;
+    }
+
+    protected JSONArray sortData(JSONArray js,String key) {
+        JSONArray sortedArray = new JSONArray();
+        try {
+            while (js.length() != 0) {
+                int gv = 9999999;
+                int sj = 0;
+                for (int o = 0; o < js.length(); o++) {
+                    JSONObject jo = js.getJSONObject(o);
+                    if (jo.getInt(key) <= gv) {
+                        gv = jo.getInt(key);
+                        sj = o;
+                    }
+                }
+                sortedArray.put(sortedArray.length(),js.getJSONObject(sj));
+                js.remove(sj);
+            }
+            return sortedArray;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return js;
+        }
+    }
+
+    protected int getMax(JSONArray js,String key) {
+        try {
+            if (js.length() != 0) {
+                int gv = -1;
+                for (int o = 0; o < js.length(); o++) {
+                    JSONObject jo = js.getJSONObject(o);
+                    if (jo.getInt(key) <= gv) {
+                        gv = jo.getInt(key);
+                    }
+                }
+                return gv;
+            } else {
+                return 0;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    protected int getNext(JSONArray js,String key) {
+        int i = 0;
+        try {
+            while (i < js.length() && i == js.getJSONObject(i).getInt(key)) { i++; }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return i;
     }
 }
