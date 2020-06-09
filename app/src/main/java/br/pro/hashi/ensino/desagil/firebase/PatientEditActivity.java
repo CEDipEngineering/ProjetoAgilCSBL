@@ -58,7 +58,7 @@ public class PatientEditActivity extends Json {
     private List<Comorbidade> comorbidadesSelecionadas;
     private ArrayAdapter<String> adapterSintomas;
     private ArrayAdapter<String> adapterComorbidades;
-    private ArrayAdapter<Sintoma> adapterSintomas;
+    private HashMap<Enum, String> tempSintomasData;
 
     private int idpacient;
     private boolean add;
@@ -69,7 +69,7 @@ public class PatientEditActivity extends Json {
     protected void onCreate(Bundle savedInstanceState) {
         ArrayList<String> listaComorbidades = new ArrayList<String>();
         ArrayList<String> listaSintomas = new ArrayList<String>();
-        
+ 
         /*for(Comorbidade e :listaComorbidadesEnum){
             listaComorbidades.add(e.getNomeComorbidades());
         }
