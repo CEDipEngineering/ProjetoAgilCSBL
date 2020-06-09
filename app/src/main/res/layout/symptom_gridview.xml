@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/transparent">
+
+    <ImageView
+        android:id="@+id/imagem"
+        android:layout_width="@dimen/SymptomStandardSizeBall"
+        android:layout_height="@dimen/SymptomStandardSizeBall"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/empty_symptom"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="3dp"
+        android:background="@android:color/transparent"
+        />
+
+    <TextView
+        android:id="@+id/nomeSintoma"
+        android:layout_width="@dimen/SymptomStandardSizeBall"
+        android:layout_height="@dimen/SymptomStandardSizeBall"
+        android:text="Sintoma"
+        android:textSize="10sp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:background="@android:color/transparent"/>
+
+
+</RelativeLayout>
