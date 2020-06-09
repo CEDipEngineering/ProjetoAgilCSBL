@@ -33,4 +33,22 @@ public enum Comorbidade {
         }
         return CARDIO;
     }
+
+    public static Comorbidade getByName(String name) {
+        for(Comorbidade e : values()) {
+            if(e.getNomeComorbidades().equals( name)) {
+                return e;
+            }
+        }
+        return CARDIO;
+    }
+
+    public static String[] getNameArray(){
+        String[] output = new String[Comorbidade.class.getEnumConstants().length];
+        for(int i = 0; i < Comorbidade.class.getEnumConstants().length; i++){
+            output[i] = Comorbidade.class.getEnumConstants()[i].getNomeComorbidades();
+
+        }
+        return output;
+    }
 }
