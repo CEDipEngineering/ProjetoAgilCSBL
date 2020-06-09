@@ -48,13 +48,13 @@ public class PatientEditActivity extends Json {
     private EditText tempoSintomasEdit, patientNameEdit, patientIdadeEdit, leitoEdit, riscoEdit;
     private ListView listaSintomasView, listaComorbidadesView;
     private String patientName;
-    private List <Sintoma>  listaSintomasEnum = Arrays.asList(Sintoma.class.getEnumConstants());
-    private List<Comorbidade> listaComorbidadesEnum = Arrays.asList(Comorbidade.class.getEnumConstants());
+    private List <String>  listaSintomasEnum = Arrays.asList(Sintoma.getNameArray());
+    private List<String> listaComorbidadesEnum = Arrays.asList(Comorbidade.getNameArray());
     private Button finalizarButton;
     private List<Sintoma>  sintomasSelecionados;
     private List<Comorbidade> comorbidadesSelecionadas;
-    private ArrayAdapter<Sintoma> adapterSintomas;
-    private ArrayAdapter<Comorbidade> adapterComorbidades;
+    private ArrayAdapter<String> adapterSintomas;
+    private ArrayAdapter<String> adapterComorbidades;
 
     private int idpacient;
     private boolean add;
@@ -65,14 +65,18 @@ public class PatientEditActivity extends Json {
     protected void onCreate(Bundle savedInstanceState) {
         ArrayList<String> listaComorbidades = new ArrayList<String>();
         ArrayList<String> listaSintomas = new ArrayList<String>();
-        for(Comorbidade e :listaComorbidadesEnum){
-            listaComorbidades.add(e.getNomeComorbidades());
+        //for(Comorbidade e :listaComorbidadesEnum){
+            //listaComorbidades.add(e.getNomeComorbidades());
             //System.out.println(e.getNomeComorbidades());
-        }
-        for(Sintoma s :listaSintomasEnum){
+        //}
+
+        /*for(Sintoma s :listaSintomasEnum){
             listaSintomas.add(s.getNome());
+            System.out.println("SINTOMAS ENUM: " + s.getNome());
+            System.out.println("listaSintomasEnum: " + listaSintomasEnum);
+            //System.out.println("Nada");
             //System.out.println(e.getNomeComorbidades());
-        }
+        }*/
 
 
         super.onCreate(savedInstanceState);
@@ -88,10 +92,16 @@ public class PatientEditActivity extends Json {
         listaComorbidadesView = findViewById(R.id.list_comorbidades);
         finalizarButton = findViewById((R.id.finalizar));
         patientName = patientNameEdit.getText().toString();
-        adapterSintomas = new ArrayAdapter<Sintoma>(this, android.R.layout.simple_list_item_multiple_choice, listaSintomasEnum);
-        adapterComorbidades = new ArrayAdapter<Comorbidade>(this, android.R.layout.simple_list_item_multiple_choice, listaComorbidadesEnum);
+        adapterSintomas = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, listaSintomasEnum);
+        adapterComorbidades = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, listaComorbidadesEnum);
         listaSintomasView.setAdapter(adapterSintomas);
         listaComorbidadesView.setAdapter(adapterComorbidades);
+
+        for(int j = 0; j < listaSintomasView.getCount(); j++){
+            System.out.println("listaSintomasView ESTADO 1: " + listaSintomasView.getItemAtPosition(j));
+        }
+
+        //System.out.println("listaComorbidadesView ESTADO 1: " + listaComorbidadesView);
 
 
         LinkedList<Sintoma> Sintomas1 = new LinkedList<Sintoma>();
@@ -157,21 +167,29 @@ public class PatientEditActivity extends Json {
         leitoEdit.setEnabled(false);
 
 
+        int c = 0;
+
 
         for (int i = 0; i < listaComorbidadesView.getCount(); i++) {
-            Comorbidade comorbidade = (Comorbidade) listaComorbidadesView.getItemAtPosition(i);
+            Comorbidade comorbidade = Comorbidade.getByName( listaComorbidadesView.getItemAtPosition(i).toString());
             if (patient.getComorbidades() != null && patient.getSintomas() != null) {
                 if (patient.getComorbidades().contains(comorbidade)){
                     listaComorbidadesView.setItemChecked(i, true);
                 }
                 for (int b = 0; b < listaSintomasView.getCount(); b++) {
-                    Sintoma sintoma = (Sintoma) listaSintomasView.getItemAtPosition(b);
-                    if (patient.getSintomas().contains(sintoma)){
+                    Sintoma sintoma = Sintoma.getByName(listaSintomasView.getItemAtPosition(b).toString());
+                    System.out.println("SINTOMA listView: " + listaSintomasView.getItemAtPosition(b));
+
+
+                    if (patient.getSintomas().contains(sintoma)) {
+                        System.out.println("TEM OS SINTOMAS: " + patient.getSintomas());
                         listaSintomasView.setItemChecked(b, true);
                     }
+
                 }
             }
         }
+
 
 
 
