@@ -69,7 +69,7 @@ public class PatientEditActivity extends Json {
     protected void onCreate(Bundle savedInstanceState) {
         ArrayList<String> listaComorbidades = new ArrayList<String>();
         ArrayList<String> listaSintomas = new ArrayList<String>();
- 
+
         /*for(Comorbidade e :listaComorbidadesEnum){
             listaComorbidades.add(e.getNomeComorbidades());
         }
@@ -195,14 +195,14 @@ public class PatientEditActivity extends Json {
                         int key =  sintomasChecked.keyAt(i);
                         boolean value = sintomasChecked.get(key);
                         if(value){
-                            sintomasSelecionados.add((Sintoma) listaSintomasView.getItemAtPosition(key));
+                            sintomasSelecionados.add(Sintoma.getByName(listaSintomasView.getItemAtPosition(key).toString()));
                         }
                     }
                     for(int i = 0;i<comorbidadesChecked.size(); i++){
                         int key =  comorbidadesChecked.keyAt(i);
                         boolean value = comorbidadesChecked.get(key);
                         if(value){
-                            comorbidadesSelecionadas.add((Comorbidade) listaComorbidadesView.getItemAtPosition(key));
+                            comorbidadesSelecionadas.add(Comorbidade.getByName( listaComorbidadesView.getItemAtPosition(key).toString()));
                         }
                     }
 
