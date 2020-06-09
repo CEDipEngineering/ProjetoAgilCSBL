@@ -314,7 +314,7 @@ public class AlaActivity extends Json {
 
                 int cap = ala.getInt("capacidade");
 
-                if (cap > 0) {
+                if (cap > 1) {
                     ala.put("capacidade", (cap - 1));
 
                     Leito lastleito = new Leito(0);
