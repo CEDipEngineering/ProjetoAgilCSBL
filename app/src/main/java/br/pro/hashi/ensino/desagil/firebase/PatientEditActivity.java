@@ -104,7 +104,10 @@ public class PatientEditActivity extends Json {
         // Try to get message handed in when creating intent
         int patientid = myIntent.getIntExtra("patientid",-1);
         int leito = myIntent.getIntExtra("leito",-1);
-        leitoEdit.setText(Integer.toString(leito));
+
+        if (leito != -1) {
+            leitoEdit.setText(Integer.toString(leito));
+        }
 
         // If there is one, put it in the textView
 
@@ -116,27 +119,19 @@ public class PatientEditActivity extends Json {
             JSONArray patientes = data.getJSONArray("patients");
             if (patientid != -1) {
                 int i = 0;
-                if (patientid != -1) {
-                    while (patientes.getJSONObject(i).getInt("id") != patientid) { i++;}
-                }
+                while (patientes.getJSONObject(i).getInt("id") != patientid) { i++;}
 
-                if (i < patientes.length()) {
-                    JSONObject patiente = patientes.getJSONObject(i);
+                JSONObject patiente = patientes.getJSONObject(i);
 
-                    patient = new Paciente(patiente);
-                    idpacient = patient.getId();
-                    if (patient.getLeitoId() >= 0) {
-                        leitoEdit.setText(Integer.toString(patient.getLeitoId()));
-                    }
-                    patientNameEdit.setText(patient.getName());
-                    patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
-                    tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
-                } else {
-                    add = true;
-                    patientIdadeEdit.setText(Integer.toString(0));
-                    tempoSintomasEdit.setText(Integer.toString(0));
-                    idpacient = getNext(patientes,"id");
+                patient = new Paciente(patiente);
+                idpacient = patient.getId();
+                if (patient.getLeitoId() >= 0) {
+                    leitoEdit.setText(Integer.toString(patient.getLeitoId()));
                 }
+                patientNameEdit.setText(patient.getName());
+                patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
+                tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
+
             } else {
                 add = true;
                 patientIdadeEdit.setText(Integer.toString(0));
