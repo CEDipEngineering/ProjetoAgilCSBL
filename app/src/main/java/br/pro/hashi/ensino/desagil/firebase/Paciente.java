@@ -104,6 +104,10 @@ public class Paciente {
         return idLeito;
     }
 
+    public int getAlaId() {
+        return idLeito/1000;
+    }
+
     public double getRisco() {
         return risco;
     }
