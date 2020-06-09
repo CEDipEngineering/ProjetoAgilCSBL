@@ -36,6 +36,7 @@ public class AlaActivity extends Json {
     private Button leitoAddButton, leitoDeleteButton, addButton,deleteButton;
     private ArrayList<Integer> idGridView = new ArrayList<Integer>();
     private ArrayList<String> nameGridView = new ArrayList<String>();
+    private ArrayList<Double> riskPatient = new ArrayList<Double>();
     private ArrayList<String> nameSpinner;
 
 
@@ -43,12 +44,15 @@ public class AlaActivity extends Json {
 
         idGridView = new ArrayList<Integer>();
         nameGridView = new ArrayList<String>();
+        riskPatient = new ArrayList<Double>();
         for(Leito leito: currAla.getLeitos()){
             idGridView.add(leito.getNumber());
             if(leito.getPaciente() != null) {
                 nameGridView.add(leito.getPaciente().getName());
+                riskPatient.add((double) 22);
             } else {
                 nameGridView.add("vago");
+                riskPatient.add((double) -1);
             }
         }
 
@@ -92,7 +96,7 @@ public class AlaActivity extends Json {
             Alas[0] = new Ala(1,"Ala 1", leitos,1,1);
         }
 
-        mAdapter = new GridViewAdapter(this,idGridView, nameGridView);
+        mAdapter = new GridViewAdapter(this,idGridView, nameGridView, riskPatient);
         gridView.setAdapter(mAdapter);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(AlaActivity.this, android.R.layout.simple_spinner_dropdown_item, nameSpinner);
@@ -150,7 +154,7 @@ public class AlaActivity extends Json {
 
                     update();
 
-                    mAdapter = new GridViewAdapter(AlaActivity.this,idGridView, nameGridView);
+                    mAdapter = new GridViewAdapter(AlaActivity.this,idGridView, nameGridView, riskPatient);
                     gridView.setAdapter(mAdapter);
 
                 } catch (Exception e) {
