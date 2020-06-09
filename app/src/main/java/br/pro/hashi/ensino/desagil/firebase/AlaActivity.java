@@ -33,7 +33,7 @@ public class AlaActivity extends Json {
     private GridView gridView;
     private Spinner alaSpinner;
     private TextView lotacaoText;
-    private Button addButton,deleteButton;
+    private Button leitoAddButton, leitoDeleteButton, addButton,deleteButton;
     private ArrayList<Integer> idGridView = new ArrayList<Integer>();
     private ArrayList<String> nameGridView = new ArrayList<String>();
     private ArrayList<String> nameSpinner;
@@ -112,6 +112,8 @@ public class AlaActivity extends Json {
 
         addButton = findViewById(R.id.addButton);
         deleteButton = findViewById(R.id.deleteButton);
+        leitoAddButton = findViewById(R.id.leitoAddButton);
+        leitoDeleteButton = findViewById(R.id.leitoDeleteButton);
 
         ArrayList<String> nameSpinner;
 
@@ -253,9 +255,96 @@ public class AlaActivity extends Json {
                         }
                     }
                 } else {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Não foi possível remover a ala", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Não foi possível remover ala", Toast.LENGTH_SHORT);
                     toast.show();
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            getAlas(id);
+            update();
+        });
+
+
+        leitoAddButton.setOnClickListener((view) -> {
+            int id = currAla.getId();
+            String json = loadData();
+            try {
+                JSONObject root = new JSONObject(json);
+                JSONObject data = root.getJSONObject("database");
+                JSONArray alas = data.getJSONArray("wings");
+
+                int i = 0;
+                while (alas.getJSONObject(i).getInt("id") != currAla.getId()) {i++;}
+                JSONObject ala = alas.getJSONObject(i);
+
+                int cap = ala.getInt("capacidade");
+                ala.put("capacidade", (cap + 1));
+
+                alas.put(i,ala);
+                data.put("wings",alas);
+                root.put("database", data);
+
+                saveData(root.toString());
+                Toast toast = Toast.makeText(getApplicationContext(), "Leito adicionado com sucesso", Toast.LENGTH_SHORT);
+                toast.show();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            getAlas(id);
+            update();
+        });
+
+
+        leitoDeleteButton.setOnClickListener((view) -> {
+            int id = 0;
+            String json = loadData();
+            try {
+                JSONObject root = new JSONObject(json);
+                JSONObject data = root.getJSONObject("database");
+                JSONArray alas = data.getJSONArray("wings");
+                JSONArray patientes = data.getJSONArray("patients");
+
+                int i = 0;
+                while (alas.getJSONObject(i).getInt("id") != currAla.getId()) {i++;}
+                JSONObject ala = alas.getJSONObject(i);
+
+                int cap = ala.getInt("capacidade");
+
+                if (cap > 0) {
+                    ala.put("capacidade", (cap - 1));
+
+                    Leito lastleito = new Leito(0);
+                    for (Leito leto : currAla.getLeitos()) {
+                        lastleito = leto;
+                    }
+                    if (lastleito.getPaciente() != null) {
+                        int p = 0;
+                        while (patientes.getJSONObject(p).getInt("id") != lastleito.getPaciente().getId()) {i++;}
+                        patientes.getJSONObject(p).put("leito",-1);
+                        data.put("patients",patientes);
+                    }
+
+                    alas.put(i,ala);
+                    data.put("wings",alas);
+                    root.put("database", data);
+
+                    saveData(root.toString());
+                    Toast toast = Toast.makeText(getApplicationContext(), "Leito removido com sucesso", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Não foi possível remover leito", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
+
+
+
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
