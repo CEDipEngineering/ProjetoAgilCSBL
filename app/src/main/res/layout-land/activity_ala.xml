@@ -68,7 +68,7 @@
             android:layout_marginLeft="151dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:numColumns="5"
+            android:numColumns="auto_fit"
             android:horizontalSpacing="1dp"
             android:verticalSpacing="1dp"
             android:textAlignment="center">
