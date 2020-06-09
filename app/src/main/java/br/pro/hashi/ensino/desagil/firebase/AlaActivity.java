@@ -300,7 +300,7 @@ public class AlaActivity extends Json {
 
 
         leitoDeleteButton.setOnClickListener((view) -> {
-            int id = 0;
+            int id = currAla.getId();
             String json = loadData();
             try {
                 JSONObject root = new JSONObject(json);
