@@ -1,42 +1,51 @@
 package br.pro.hashi.ensino.desagil.firebase;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
-
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.Calendar;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class PatientActivity extends Json {
+    private SymptomGridAdapter symptomGridAdapter;
+
     private Spinner patientSpinner;
-    private Button examesButton, editButton, addButton;
+    private Button examesButton, editButton, addButton, alaButton;
     private ListView summaryView, symptomView, comorbityView;
+    private ImageView Sibilos, Ageusia;
     private Paciente currPatient;
+    private GridView gridView;
+    private Calendar currentTime;
     private HashMap<String , Paciente> converter = new HashMap<>();
+    private ArrayList<Integer> idSintomas = new ArrayList<Integer>();
+    private HashMap<Enum, String> tempSintomasData;
+    private ArrayList<Sintoma> symptomGridView = new ArrayList<>();
+
+    public void grayOut(ImageView view) {
+        view.setColorFilter(Color.argb(150,200,200,200));
+    }
+
 
 
     private void update(){
         List<Comorbidade> tempComorb = this.currPatient.getComorbidades();
         List<Sintoma> tempSintoma = this.currPatient.getSintomas();
-
         ArrayList<String> patientComorbs = new ArrayList<String>();
         ArrayList<String> patientSymptoms = new ArrayList<String>();
         ArrayList<String> patientSummary = new ArrayList<String>();
@@ -44,11 +53,17 @@ public class PatientActivity extends Json {
         if (tempSintoma != null && tempComorb != null) {
             for (Sintoma s : tempSintoma){
                 patientSymptoms.add(s.getNome());
+
             }
             for (Comorbidade c : tempComorb){
                 patientComorbs.add(c.getNomeComorbidades());
             }
         }
+
+
+
+
+
 
 
 
@@ -78,6 +93,15 @@ public class PatientActivity extends Json {
                 android.R.layout.simple_list_item_1,
                 patientComorbs);
         comorbityView.setAdapter(adapter2);
+
+
+        symptomGridView = new ArrayList<Sintoma>();
+        for(Sintoma s: Sintoma.class.getEnumConstants()){
+            symptomGridView.add(s);
+        }
+
+        symptomGridAdapter = new SymptomGridAdapter(PatientActivity.this, symptomGridView, this.currPatient);
+        gridView.setAdapter(symptomGridAdapter);
     }
 
 
@@ -85,49 +109,28 @@ public class PatientActivity extends Json {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
-
         patientSpinner = findViewById(R.id.patientSpinner);
-
         examesButton = findViewById(R.id.examesButton);
         editButton = findViewById(R.id.editButton);
         addButton = findViewById(R.id.addButton);
-
+        alaButton = findViewById(R.id.alaButton);
         summaryView = findViewById(R.id.summaryView);
         symptomView = findViewById(R.id.symptomView);
         comorbityView = findViewById(R.id.comorbityView);
-
+        gridView = findViewById(R.id.symptomGrid);
 
 
 
 
         LinkedList<Comorbidade> Comorbs1, Comorbs2, Comorbs3;
         Comorbs1 = new LinkedList<Comorbidade>();
-        Comorbs2 = new LinkedList<Comorbidade>();
-        Comorbs3 = new LinkedList<Comorbidade>();
-//        Comorbs1.add(Comorbidade.CARDIO);
-//        Comorbs1.add(Comorbidade.DIABETES);
-//        Comorbs1.add(Comorbidade.HIV);
-//        Comorbs2.add(Comorbidade.IMUNODEF);
-//        Comorbs2.add(Comorbidade.NEOPLASIA);
-//        Comorbs3.add(Comorbidade.PULMONAR);
+        HashMap<Enum, String> tempSintomasData = new HashMap<Enum, String>();
+
+
 
         LinkedList<Sintoma> Sintomas1, Sintomas2, Sintomas3;
         Sintomas1 = new LinkedList<Sintoma>();
-        Sintomas2 = new LinkedList<Sintoma>();
-        Sintomas3 = new LinkedList<Sintoma>();
-//        Sintomas1.add(Sintoma.CONJUTIVITE);
-//        Sintomas1.add(Sintoma.ABDOMEM);
-//        Sintomas1.add(Sintoma.AGEUSIA);
-//        Sintomas2.add(Sintoma.ANOSMIA);
-//        Sintomas2.add(Sintoma.AR);
-//        Sintomas3.add(Sintoma.AGEUSIA);
 
-        /*
-        Paciente[] Patients = new Paciente[3];
-        Patients[0] = new Paciente("Rafael", 1, 21, 7, Comorbs1, Sintomas1);
-        Patients[1] = new Paciente("Raquel", 2, 11, 3, Comorbs2, Sintomas2);
-        Patients[2] = new Paciente("Ronaldo", 3, 41, 2, Comorbs3, Sintomas3);
-        */
 
         Paciente[] Patients;
 
@@ -146,10 +149,8 @@ public class PatientActivity extends Json {
         } catch (JSONException e) {
             e.printStackTrace();
             Patients = new Paciente[1];
-            Patients[0] = new Paciente("Rafael", 1, 21, 7, Comorbs1, Sintomas1);
+            Patients[0] = new Paciente("Rafael", 1, 21, 7, Comorbs1, Sintomas1, 0.67, tempSintomasData);
         }
-
-        System.out.println(Patients);
 
 
         Intent myIntent = getIntent();
@@ -160,11 +161,10 @@ public class PatientActivity extends Json {
 
         ArrayList arraySpinner = new ArrayList();
         for (int i = 0; i<Patients.length; i++) {
-            //System.out.println(Patients[i].getIdade());
             converter.put(Patients[i].getName(), Patients[i]);
             arraySpinner.add(Patients[i].getName());
         }
-//            System.out.println(converter);
+
 
 
 
@@ -200,11 +200,7 @@ public class PatientActivity extends Json {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
-                    //System.out.println(patientSpinner.getSelectedItem().toString());
-                   //System.out.println(converter);
                     currPatient = converter.get(patientSpinner.getSelectedItem().toString());
-
-                    //System.out.println(currPatient);
                     update();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -228,6 +224,36 @@ public class PatientActivity extends Json {
             Intent intent = new Intent(PatientActivity.this, PatientEditActivity.class);
             // Tem que passar o paciente atual também;
             //intent.putExtra("patientid", -1);
+            startActivity(intent);
+        });
+
+        List<Comorbidade> tempComorb = this.currPatient.getComorbidades();
+        JSONArray jsonSintomas = this.currPatient.getIdSintomas();
+        List<ImageView> imagens = Arrays.asList(Sibilos, Ageusia);
+        ArrayList<String> patientSymptoms = new ArrayList<String>();
+
+        if (jsonSintomas != null) {
+            for (int i=0;i<jsonSintomas.length();i++){
+                try {
+                    idSintomas.add(jsonSintomas.getInt(i));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println(idSintomas);
+//        for(ImageView i: imagens){
+//            if(idSintomas.contains(Integer.parseInt((String) i.getTag()))){
+//                System.out.println("GREY");
+//                grayOut(i);
+//            }
+//        }
+
+        alaButton.setOnClickListener((view) -> {
+            Intent intent = new Intent(PatientActivity.this, AlaActivity.class);
+            // Tem que passar o paciente atual também;
+            intent.putExtra("alaid", currPatient.getAlaId());
             startActivity(intent);
         });
 

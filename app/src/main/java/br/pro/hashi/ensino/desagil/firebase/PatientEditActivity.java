@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import org.json.JSONArray;
@@ -55,6 +58,7 @@ public class PatientEditActivity extends Json {
     private List<Comorbidade> comorbidadesSelecionadas;
     private ArrayAdapter<String> adapterSintomas;
     private ArrayAdapter<String> adapterComorbidades;
+    private ArrayAdapter<Sintoma> adapterSintomas;
 
     private int idpacient;
     private boolean add;
@@ -65,17 +69,13 @@ public class PatientEditActivity extends Json {
     protected void onCreate(Bundle savedInstanceState) {
         ArrayList<String> listaComorbidades = new ArrayList<String>();
         ArrayList<String> listaSintomas = new ArrayList<String>();
-        //for(Comorbidade e :listaComorbidadesEnum){
-            //listaComorbidades.add(e.getNomeComorbidades());
-            //System.out.println(e.getNomeComorbidades());
-        //}
+        
+        /*for(Comorbidade e :listaComorbidadesEnum){
+            listaComorbidades.add(e.getNomeComorbidades());
+        }
 
-        /*for(Sintoma s :listaSintomasEnum){
+        for(Sintoma s :listaSintomasEnum){
             listaSintomas.add(s.getNome());
-            System.out.println("SINTOMAS ENUM: " + s.getNome());
-            System.out.println("listaSintomasEnum: " + listaSintomasEnum);
-            //System.out.println("Nada");
-            //System.out.println(e.getNomeComorbidades());
         }*/
 
 
@@ -106,7 +106,8 @@ public class PatientEditActivity extends Json {
 
         LinkedList<Sintoma> Sintomas1 = new LinkedList<Sintoma>();
         LinkedList<Comorbidade> Comorbs1 = new LinkedList<Comorbidade>();
-        Paciente patient = new Paciente("", -1, 1, 1, Comorbs1, Sintomas1);
+        HashMap<Enum, String> tempSintomasData = new HashMap<Enum, String>();
+        Paciente patient = new Paciente("", -1, 1, 1, Comorbs1, Sintomas1,0, tempSintomasData);
         add = false;
 
 
@@ -114,6 +115,10 @@ public class PatientEditActivity extends Json {
         // Try to get message handed in when creating intent
         int patientid = myIntent.getIntExtra("patientid",-1);
         int leito = myIntent.getIntExtra("leito",-1);
+
+        if (leito != -1) {
+            leitoEdit.setText(Integer.toString(leito));
+        }
 
         // If there is one, put it in the textView
 
@@ -123,40 +128,26 @@ public class PatientEditActivity extends Json {
             JSONObject root = new JSONObject(json);
             JSONObject data = root.getJSONObject("database");
             JSONArray patientes = data.getJSONArray("patients");
-            if (patientid != -1 | leito != -1) {
+            if (patientid != -1) {
                 int i = 0;
-                if (patientid != -1) {
-                    while (patientes.getJSONObject(i).getInt("id") != patientid) { i++;}
-                } else if (leito != -1) {
-                    leitoEdit.setText(Integer.toString(leito));
-                    while (patientes.getJSONObject(i).getInt("leito") != leito) {
-                        if (i < patientes.length()) {i++;}
-                    }
-                }
+                while (patientes.getJSONObject(i).getInt("id") != patientid) { i++;}
 
-                if (i < patientes.length()) {
-                    JSONObject patiente = patientes.getJSONObject(i);
+                JSONObject patiente = patientes.getJSONObject(i);
 
-                    patient = new Paciente(patiente);
-                    idpacient = patient.getId();
-                    if (patient.getLeitoId() >= 0) {
-                        leitoEdit.setText(Integer.toString(patient.getLeitoId()));
-                    }
-                    patientNameEdit.setText(patient.getName());
-                    patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
-                    tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
-                } else {
-                    add = true;
-                    patientIdadeEdit.setText(Integer.toString(0));
-                    tempoSintomasEdit.setText(Integer.toString(0));
-                    idpacient = patientes.length();
+                patient = new Paciente(patiente);
+                idpacient = patient.getId();
+                if (patient.getLeitoId() >= 0) {
+                    leitoEdit.setText(Integer.toString(patient.getLeitoId()));
                 }
+                patientNameEdit.setText(patient.getName());
+                patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
+                tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
+
             } else {
                 add = true;
                 patientIdadeEdit.setText(Integer.toString(0));
                 tempoSintomasEdit.setText(Integer.toString(0));
-                idpacient = patientes.length();
-
+                idpacient = getNext(patientes,"id");
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -199,7 +190,6 @@ public class PatientEditActivity extends Json {
                     sintomasSelecionados = new ArrayList<Sintoma>();
                     comorbidadesSelecionadas = new ArrayList<Comorbidade>();
                     SparseBooleanArray sintomasChecked = listaSintomasView.getCheckedItemPositions();
-                    //System.out.println(listaSintomasView);
                     SparseBooleanArray comorbidadesChecked = listaComorbidadesView.getCheckedItemPositions();
                     for(int i = 0;i<sintomasChecked.size(); i++){
                         int key =  sintomasChecked.keyAt(i);
@@ -238,7 +228,12 @@ public class PatientEditActivity extends Json {
                                 patientName = patientNameEdit.getText().toString();
                                 int idade = Integer.parseInt(patientIdadeEdit.getText().toString());
                                 int tempoSint = Integer.parseInt(tempoSintomasEdit.getText().toString());
-                                Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados);
+                                HashMap<Enum, String> tempSintomasData = new HashMap<Enum, String>();
+                                String currentTime = Calendar.getInstance().getTime().toString();
+                                for(Sintoma s: sintomasSelecionados){
+                                    tempSintomasData.put(s, currentTime);
+                                }
+                                Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados, teste, tempSintomasData);
                                 String json = loadData();
                                 try {
 
@@ -261,22 +256,19 @@ public class PatientEditActivity extends Json {
                                     patiente.put("id", Paciente1.getId());
                                     patiente.put("idade", Paciente1.getIdade());
                                     patiente.put("tempoSintomas",Paciente1.getTempoSintomas());
-
+                                    patiente.put("sintomasData", Paciente1.getSintomasData());
                                     patiente.put("sintomas",(JSONArray)Paciente1.getIdSintomas());
                                     patiente.put("comorbidades",Paciente1.getIdComorbidades());
                                     if (add) {
                                         patientes.put(patientes.length(),patiente);
                                         data.put("patients",patientes);
                                         root.put("database", data);
-
-
                                     }
                                     saveData(root.toString());
 
 
 
                                 } catch (JSONException e) {
-
                                     e.printStackTrace();
                                 }
                                 //intent
@@ -289,7 +281,6 @@ public class PatientEditActivity extends Json {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            System.out.println(teste);
                         }
                     }, new Response.ErrorListener() {
                         @Override

@@ -12,17 +12,15 @@ Although you can nest one or more layouts within another layout to achieve your 
 you should strive to keep your layout hierarchy as shallow as possible.
 Your layout draws faster if it has fewer nested layouts (a wide view hierarchy is better than a deep view hierarchy).
 -->
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="left"
-        android:orientation="horizontal">
+        tools:layout_editor_absoluteX="74dp"
+        tools:layout_editor_absoluteY="-34dp">
 
         <LinearLayout
+            android:id="@+id/leftMenu"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
@@ -60,73 +58,89 @@ Your layout draws faster if it has fewer nested layouts (a wide view hierarchy i
                 android:text="Adicionar Paciente"
                 />
 
+
+            <Button
+                android:id="@+id/alaButton"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="Ver Ala"
+                />
         </LinearLayout>
 
-<!--   Talvez adicionar uns botões aqui na esquerda     -->
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/black" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="106dp"
-        android:layout_marginTop="35dp"
-        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/summaryViewLabel"
+            android:layout_width="@dimen/ListViewWidthViewPatient"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_toRightOf="@id/leftMenu"
+            android:layout_marginLeft="5dp"
+            android:padding="5dp"
+            android:text="Sumário do Paciente"
+            android:textAlignment="center" />
 
         <ListView
             android:id="@+id/summaryView"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/ListViewWidthViewPatient"
+            android:layout_height="250dp"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@id/summaryViewLabel"
+            android:layout_alignRight="@id/summaryViewLabel"
+            android:layout_marginTop="2dp"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/comorbityViewLabel"
+            android:layout_width="@dimen/ListViewWidthViewPatient"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
-        <ListView
-            android:id="@+id/symptomView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
+            android:layout_marginLeft="5dp"
+            android:layout_below="@id/summaryView"
+            android:layout_alignRight="@id/summaryViewLabel"
+            android:layout_marginTop="35dp"
+            android:padding="5dp"
+            android:text="Comorbidades"
+            android:textAlignment="center" />
+
         <ListView
             android:id="@+id/comorbityView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
+            android:layout_width="@dimen/ListViewWidthViewPatient"
+            android:layout_height="250dp"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@id/comorbityViewLabel"
+            android:layout_alignRight="@id/comorbityViewLabel"
+            android:layout_marginTop="2dp"
+            android:padding="5dp" />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginLeft="106dp"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
+        <!--    Apagar depois, só não tirei porque ia dar erro pela falto do ListView com esse id.-->
 
-        <TextView
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/bodyImg"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Sumário do Paciente"
-            android:textAlignment="center"
-            />
-        <TextView
-            android:layout_width="match_parent"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@id/summaryViewLabel"
+            android:src="@drawable/body" />
+
+        <ListView
+            android:id="@+id/symptomView"
+            android:layout_width="@dimen/ListViewWidthViewPatient"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Sintomas"
-            android:textAlignment="center"
-            />
-        <TextView
+            android:visibility="invisible" />
+
+        <GridView
+            android:id="@+id/symptomGrid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Comorbidades"
-            android:textAlignment="center"
-            />
-    </LinearLayout>
-</RelativeLayout>
+            android:layout_height="match_parent"
+            android:layout_margin="25dp"
+            android:layout_toRightOf="@id/bodyImg"
+            android:layout_alignTop="@+id/bodyImg"
+            android:numColumns="4"
+            android:verticalSpacing="5dp"
+            android:src="@drawable/body" />
+
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

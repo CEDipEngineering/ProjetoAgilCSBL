@@ -5,10 +5,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 public class Paciente {
     private String name;
@@ -18,14 +17,17 @@ public class Paciente {
     private List<Comorbidade> comorbidades;
     private LinkedList<Exame> exames;
     private List<Sintoma> sintomas;
+    private HashMap<Enum, String> sintomasData;
 
-    public Paciente(String name, int id, int idade, int tempoSintomas, List<Comorbidade> comorbidades, List<Sintoma> sintomas) {
+    public Paciente(String name, int id, int idade, int tempoSintomas, List<Comorbidade> comorbidades, List<Sintoma> sintomas, double risco, HashMap<Enum, String> sintomasData) {
         this.name = name;
         this.id = id;
         this.idade = idade;
         this.tempoSintomas = tempoSintomas;
         this.comorbidades = comorbidades;
         this.sintomas = sintomas;
+        this.risco = risco;
+        this.sintomasData = sintomasData;
     }
 
     public Paciente(JSONObject pacient) {
@@ -34,7 +36,7 @@ public class Paciente {
             this.id = pacient.getInt("id");
             this.idade = pacient.getInt("idade");
             this.tempoSintomas = pacient.getInt("tempoSintomas");
-            //this.risco = pacient.getDouble("risco");
+            this.risco = pacient.getDouble("risco");
             this.idLeito = pacient.getInt("leito");
 
 
@@ -62,6 +64,9 @@ public class Paciente {
             System.out.println("DDDDDDDDDDDDDDD");
             e.printStackTrace();
         }
+    }
+    public void setSintomasData(HashMap<Enum, String> sintomasData) {
+        this.sintomasData = sintomasData;
     }
 
     public void setTempoSintomas(int tempoSintomas) {
@@ -100,8 +105,16 @@ public class Paciente {
         return tempoSintomas;
     }
 
+    public HashMap<Enum, String> getSintomasData() {
+        return sintomasData;
+    }
+
     public int getLeitoId() {
         return idLeito;
+    }
+
+    public int getAlaId() {
+        return idLeito/1000;
     }
 
     public double getRisco() {
