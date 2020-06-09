@@ -2,6 +2,6 @@
 <resources>
     <dimen name="StandardFontSize">22dp</dimen>
     <dimen name="TextViewWidthEditPatient1">120dp</dimen>
-    <dimen name="ListViewWidthViewPatient">300dp</dimen>
+    <dimen name="ListViewWidthViewPatient">220dp</dimen>
     <dimen name="SymptomStandardSizeBall">60dp</dimen>
 </resources>
