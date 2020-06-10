@@ -34,7 +34,7 @@ public class PatientActivity extends Json {
     private Calendar currentTime;
     private HashMap<String , Paciente> converter = new HashMap<>();
     private ArrayList<Integer> idSintomas = new ArrayList<Integer>();
-    private HashMap<Enum, String> tempSintomasData;
+    private HashMap<String, String> tempSintomasData;
     private ArrayList<Sintoma> symptomGridView = new ArrayList<>();
 
     public void grayOut(ImageView view) {
@@ -49,7 +49,7 @@ public class PatientActivity extends Json {
         ArrayList<String> patientComorbs = new ArrayList<String>();
         ArrayList<String> patientSymptoms = new ArrayList<String>();
         ArrayList<String> patientSummary = new ArrayList<String>();
-
+        tempSintomasData = this.currPatient.getSintomasData();
         if (tempSintoma != null && tempComorb != null) {
             for (Sintoma s : tempSintoma){
                 patientSymptoms.add(s.getNome());
@@ -129,9 +129,9 @@ public class PatientActivity extends Json {
 
 
 
+
         LinkedList<Comorbidade> Comorbs1, Comorbs2, Comorbs3;
         Comorbs1 = new LinkedList<Comorbidade>();
-        HashMap<Enum, String> tempSintomasData = new HashMap<Enum, String>();
 
 
 
@@ -249,7 +249,6 @@ public class PatientActivity extends Json {
                 }
             }
         }
-        System.out.println(idSintomas);
 //        for(ImageView i: imagens){
 //            if(idSintomas.contains(Integer.parseInt((String) i.getTag()))){
 //                System.out.println("GREY");

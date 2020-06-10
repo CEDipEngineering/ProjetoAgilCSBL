@@ -9,7 +9,11 @@
 				"tempoSintomas": 7,
 				"risco": 0.67,
 				"comorbidades": [1,2,4],
-				"sintomas": [3,5]
+				"sintomas": [3,5],
+				"sintomasData": {
+					"CATARRO": "0",
+					"GARGANTA": "0"
+				}
 			},
 			{
 				"id": 1,
@@ -19,7 +23,11 @@
 				"tempoSintomas": 3,
 				"risco": 0.67,
 				"comorbidades": [1,3,6],
-				"sintomas": [2,7]
+				"sintomas": [2,7],
+				"sintomasData": {
+					"AGEUSIA": "0",
+					"OUVIDO": "0"
+				}
 			},
 			{
 				"id": 2,
@@ -29,7 +37,12 @@
 				"tempoSintomas": 2,
 				"risco": 0.67,
 				"comorbidades": [2,3,5],
-				"sintomas": [5,7,8]
+				"sintomas": [5,7,8],
+				"sintomasData": {
+					"GARGANTA": "0",
+					"OUVIDO": "0",
+					"SIBILOS": "0"
+				}
 			}
 
 		],
