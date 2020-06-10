@@ -199,6 +199,8 @@ public class PatientEditActivity extends Json {
                     SparseBooleanArray comorbidadesChecked = listaComorbidadesView.getCheckedItemPositions();
                     if (finalPatient != null) {
                         tempSintomasData = finalPatient.getSintomasData();
+                    } else {
+                        tempSintomasData = new HashMap<String, String>();
                     }
                     for(int i = 0;i<sintomasChecked.size(); i++){
                         int key =  sintomasChecked.keyAt(i);
