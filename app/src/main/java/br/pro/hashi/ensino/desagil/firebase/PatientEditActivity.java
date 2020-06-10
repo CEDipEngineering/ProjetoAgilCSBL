@@ -60,7 +60,6 @@ public class PatientEditActivity extends Json {
     private ArrayAdapter<String> adapterSintomas;
     private ArrayAdapter<String> adapterComorbidades;
     private HashMap<String, String> tempSintomasData;
-
     private int idpacient;
     private boolean add;
 
@@ -98,6 +97,12 @@ public class PatientEditActivity extends Json {
         listaSintomasView.setAdapter(adapterSintomas);
         listaComorbidadesView.setAdapter(adapterComorbidades);
 
+        for(int j = 0; j < listaSintomasView.getCount(); j++){
+            System.out.println("listaSintomasView ESTADO 1: " + listaSintomasView.getItemAtPosition(j));
+        }
+
+        //System.out.println("listaComorbidadesView ESTADO 1: " + listaComorbidadesView);
+
 
 
 
@@ -129,8 +134,7 @@ public class PatientEditActivity extends Json {
                 while (patientes.getJSONObject(i).getInt("id") != patientid) { i++;}
 
 
-                if (i < patientes.length()) {
-                    JSONObject patiente = patientes.getJSONObject(i);
+                JSONObject patiente = patientes.getJSONObject(i);
 
                     patient = new Paciente(patiente);
                     tempSintomasData = patient.getSintomasData();
@@ -146,6 +150,7 @@ public class PatientEditActivity extends Json {
                     patientIdadeEdit.setText(Integer.toString(0));
                     tempoSintomasEdit.setText(Integer.toString(0));
                     idpacient = patientes.length();
+
                 }
                 patientNameEdit.setText(patient.getName());
                 patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
@@ -180,6 +185,7 @@ public class PatientEditActivity extends Json {
 
 
                     if (patient.getSintomas().contains(sintoma)) {
+
                         listaSintomasView.setItemChecked(b, true);
                     }
 
@@ -188,7 +194,6 @@ public class PatientEditActivity extends Json {
         }
 
 
-        Paciente finalPatient = patient;
         finalizarButton.setOnClickListener((view) -> {
             switch(view.getId()){
                 case R.id.finalizar:
