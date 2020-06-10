@@ -49,4 +49,22 @@ public enum Sintoma {
         }
         return ANOSMIA;
     }
+
+    public static Sintoma getByName(String name) {
+        for(Sintoma e : values()) {
+            if(e.getNome().equals( name)) {
+                return e;
+            }
+        }
+        return ANOSMIA;
+    }
+
+    public static String[] getNameArray(){
+        String[] output = new String[Sintoma.class.getEnumConstants().length];
+        for(int i = 0; i < Sintoma.class.getEnumConstants().length; i++){
+            output[i] = Sintoma.class.getEnumConstants()[i].getNome();
+
+        }
+        return output;
+    }
 }

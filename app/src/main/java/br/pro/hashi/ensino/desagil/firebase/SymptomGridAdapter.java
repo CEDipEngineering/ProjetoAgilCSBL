@@ -20,6 +20,9 @@ public class SymptomGridAdapter extends BaseAdapter {
     private Paciente patient;
     private ImageView imagem;
 
+    // Mudar isso para mostrar só os sintomas do paciente vs. todos os sintomas conhecidos (com os do paciente em verde)
+    private static final boolean SHOWALLSYMPTOMS = false;
+
     public SymptomGridAdapter(Activity activity, ArrayList<Sintoma> symptomArray, Paciente patient) {
         super();
         this.symptomArray = symptomArray;
@@ -64,18 +67,26 @@ public class SymptomGridAdapter extends BaseAdapter {
         txtViewTitle.setText(symptomArray.get(position).getNome());
         int color = this.colorizeView(position);
         imagem.setBackgroundColor(color);
-        
+
         return convertView;
     }
 
 
     private int colorizeView(int i) {
         Sintoma currSymptom = symptomArray.get(i);
-        if(patient.getSintomas().contains(currSymptom)){
-            return Color.GREEN;
-        }
 
-        return Color.RED;
+        if (SHOWALLSYMPTOMS) {
+            if (patient.getSintomas().contains(currSymptom)) {
+                return Color.GREEN;
+            }
+            return Color.RED;
+        } else {
+            return Color.TRANSPARENT;
+        }
+    }
+
+    public static boolean isShowallsymptoms(){
+        return SHOWALLSYMPTOMS;
     }
 }
 

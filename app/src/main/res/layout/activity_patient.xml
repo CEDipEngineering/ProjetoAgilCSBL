@@ -21,54 +21,50 @@ Your layout draws faster if it has fewer nested layouts (a wide view hierarchy i
 
         <LinearLayout
             android:id="@+id/leftMenu"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:gravity="left"
-            android:orientation="horizontal">
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical"
+            >
+            <Spinner
+                android:id="@+id/patientSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:dropDownWidth="match_parent"
+                android:padding="2dp"
+                />
 
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="25dp"
-                android:orientation="vertical">
+            <Button
+                android:id="@+id/examesButton"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="50dp"
+                android:text="Ver Exames"
+                />
 
-                <Spinner
-                    android:id="@+id/patientSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:dropDownWidth="match_parent"
-                    android:padding="2dp" />
-
-                <Button
-                    android:id="@+id/examesButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="50dp"
-                    android:text="Ver Exames" />
-
-                <Button
-                    android:id="@+id/editButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:text="Editar Paciente" />
+            <Button
+                android:id="@+id/editButton"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="Editar Paciente"
+                />
 
 
-                <Button
-                    android:id="@+id/addButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:text="Adicionar Paciente" />
+            <Button
+                android:id="@+id/addButton"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="Adicionar Paciente"
+                />
 
-            </LinearLayout>
 
-            <!--   Talvez adicionar uns botões aqui na esquerda     -->
-
-            <View
-                android:id="@+id/bar"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@android:color/black" />
+            <Button
+                android:id="@+id/alaButton"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="Ver Ala"
+                />
         </LinearLayout>
 
 
