@@ -170,18 +170,20 @@ public class PatientEditActivity extends Json {
 
         for (int i = 0; i < listaComorbidadesView.getCount(); i++) {
             Comorbidade comorbidade = Comorbidade.getByName( listaComorbidadesView.getItemAtPosition(i).toString());
-            if (patient.getComorbidades() != null && patient.getSintomas() != null) {
-                if (patient.getComorbidades().contains(comorbidade)){
-                    listaComorbidadesView.setItemChecked(i, true);
-                }
-                for (int b = 0; b < listaSintomasView.getCount(); b++) {
-                    Sintoma sintoma = Sintoma.getByName(listaSintomasView.getItemAtPosition(b).toString());
-
-
-                    if (patient.getSintomas().contains(sintoma)) {
-                        listaSintomasView.setItemChecked(b, true);
+            if (patient != null) {
+                if (patient.getComorbidades() != null && patient.getSintomas() != null) {
+                    if (patient.getComorbidades().contains(comorbidade)){
+                        listaComorbidadesView.setItemChecked(i, true);
                     }
+                    for (int b = 0; b < listaSintomasView.getCount(); b++) {
+                        Sintoma sintoma = Sintoma.getByName(listaSintomasView.getItemAtPosition(b).toString());
 
+
+                        if (patient.getSintomas().contains(sintoma)) {
+                            listaSintomasView.setItemChecked(b, true);
+                        }
+
+                    }
                 }
             }
         }
