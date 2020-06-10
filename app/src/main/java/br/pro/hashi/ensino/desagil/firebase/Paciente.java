@@ -1,5 +1,7 @@
 package br.pro.hashi.ensino.desagil.firebase;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,9 +19,9 @@ public class Paciente {
     private List<Comorbidade> comorbidades;
     private LinkedList<Exame> exames;
     private List<Sintoma> sintomas;
-    private HashMap<Enum, String> sintomasData;
+    private HashMap<String, String> sintomasData;
 
-    public Paciente(String name, int id, int idade, int tempoSintomas, List<Comorbidade> comorbidades, List<Sintoma> sintomas, double risco, HashMap<Enum, String> sintomasData) {
+    public Paciente(String name, int id, int idade, int tempoSintomas, List<Comorbidade> comorbidades, List<Sintoma> sintomas, double risco, HashMap<String, String> sintomasData) {
         this.name = name;
         this.id = id;
         this.idade = idade;
@@ -58,14 +60,16 @@ public class Paciente {
 
             this.comorbidades = comorbs;
             this.sintomas = sints;
+            JSONObject jarsinData = pacient.getJSONObject("sintomasData");
+            HashMap<String, String> sintomasData = new Gson().fromJson(jarsinData.toString(), HashMap.class);
+            this.sintomasData = sintomasData;
 
 
         } catch (JSONException e) {
-            System.out.println("DDDDDDDDDDDDDDD");
             e.printStackTrace();
         }
     }
-    public void setSintomasData(HashMap<Enum, String> sintomasData) {
+    public void setSintomasData(HashMap<String, String> sintomasData) {
         this.sintomasData = sintomasData;
     }
 
@@ -105,7 +109,7 @@ public class Paciente {
         return tempoSintomas;
     }
 
-    public HashMap<Enum, String> getSintomasData() {
+    public HashMap<String, String> getSintomasData() {
         return sintomasData;
     }
 
