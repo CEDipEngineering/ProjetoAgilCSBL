@@ -76,15 +76,12 @@ public class AlaActivity extends Json {
                 for (int l = 0; l < Alas[a].getCapacidade(); l++) {
                     int id = l+1+Alas[a].getNumber()*1000;
                     Leito newL = new Leito(id);
-                    for (int i = 0; i < JSONpacientes.length(); i++) {
+                    int i = findIndex(JSONpacientes,"leito",id);
+                    if ( i != -1) {
                         JSONObject paciente = JSONpacientes.getJSONObject(i);
-                        if (paciente.getInt("leito") == id) {
-                            newL.setPaciente(new Paciente(paciente));
-                            Paciente pacienteTeste = new Paciente(paciente);
-                            double risco = pacienteTeste.getRisco();
-                            ocup+=1;
-                            break;
-                        }
+                        newL.setPaciente(new Paciente(paciente));
+
+                        ocup+=1;
                     }
                     Alas[a].addLeito(newL);
                 }
