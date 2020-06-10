@@ -68,12 +68,13 @@ public class GridViewAdapter extends BaseAdapter
             txtViewTitle2.setText(String.valueOf(namePatient.get(position)));
             if (riskPatient.get(position).equals((double) -1)) {
                 imageView.setImageResource(R.drawable.selected_leito_vazio);
-            } else if (riskPatient.get(position) < (double) 10) {
+//                System.out
+            } else if (riskPatient.get(position) < (double) 0.3) {
                 imageView.setImageResource(R.drawable.selected_leito);
-            } else if (riskPatient.get(position) < (double) 30) {
-                imageView.setImageResource(R.drawable.selected_leito_medium);
-            } else {
+            } else if (riskPatient.get(position) < (double) 0.6) {
                 imageView.setImageResource((R.drawable.selected_leito_danger));
+            } else {
+                imageView.setImageResource(R.drawable.selected_leito_medium);
             }
         } else {
             txtViewTitle2.setText("");

@@ -49,7 +49,7 @@ public class AlaActivity extends Json {
             idGridView.add(leito.getNumber());
             if(leito.getPaciente() != null) {
                 nameGridView.add(leito.getPaciente().getName());
-                riskPatient.add((double) 22);
+                riskPatient.add(leito.getPaciente().getRisco());
             } else {
                 nameGridView.add("vago");
                 riskPatient.add((double) -1);
@@ -80,6 +80,8 @@ public class AlaActivity extends Json {
                         JSONObject paciente = JSONpacientes.getJSONObject(i);
                         if (paciente.getInt("leito") == id) {
                             newL.setPaciente(new Paciente(paciente));
+                            Paciente pacienteTeste = new Paciente(paciente);
+                            double risco = pacienteTeste.getRisco();
                             ocup+=1;
                             break;
                         }
