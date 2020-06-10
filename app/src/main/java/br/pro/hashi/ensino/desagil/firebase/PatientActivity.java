@@ -61,14 +61,6 @@ public class PatientActivity extends Json {
         }
 
 
-
-
-
-
-
-
-
-
         patientSummary.add("Nome: " + this.currPatient.getName());
         patientSummary.add("Idade: " + this.currPatient.getIdade());
         patientSummary.add("Dias com sintomas: " + this.currPatient.getTempoSintomas());
@@ -127,6 +119,12 @@ public class PatientActivity extends Json {
         gridView = findViewById(R.id.symptomGrid);
 
 
+        Intent myIntent = getIntent();
+        // Try to get message handed in when creating intent
+        int patientid = myIntent.getIntExtra("patientid",-1);
+        int leitoid = myIntent.getIntExtra("leito",-1);
+
+        int index = 0;
 
 
 
@@ -139,6 +137,7 @@ public class PatientActivity extends Json {
         Sintomas1 = new LinkedList<Sintoma>();
 
 
+
         Paciente[] Patients;
 
         String json_f = loadData();
@@ -148,6 +147,13 @@ public class PatientActivity extends Json {
             JSONArray JSONpacientes = data.getJSONArray("patients");
 
             Patients = new Paciente[JSONpacientes.length()];
+
+            if (patientid != -1) {
+                index = findIndex(JSONpacientes,"id",patientid);
+            } else if (leitoid != -1) {
+                index = findIndex(JSONpacientes,"leito",leitoid);
+            }
+
 
             for (int i = 0; i < JSONpacientes.length(); i++) {
                 JSONObject paciente = JSONpacientes.getJSONObject(i);
@@ -159,11 +165,6 @@ public class PatientActivity extends Json {
             Patients[0] = new Paciente("Rafael", 1, 21, 7, Comorbs1, Sintomas1, 0.67, tempSintomasData);
         }
 
-
-        Intent myIntent = getIntent();
-        // Try to get message handed in when creating intent
-        int patientid = myIntent.getIntExtra("patientid",-1);
-        int leitoid = myIntent.getIntExtra("leito",-1);
 
 
         ArrayList arraySpinner = new ArrayList();
@@ -180,26 +181,13 @@ public class PatientActivity extends Json {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         patientSpinner.setAdapter(adapter);
-        this.currPatient = Patients[0];
 
+        this.currPatient = Patients[index];
+        patientSpinner.setSelection(adapter.getPosition(currPatient.getName()));
 
-        if (patientid != -1) {
-            this.currPatient = Patients[patientid];
-            patientSpinner.setSelection(adapter.getPosition(currPatient.getName()));
-        } else if (leitoid != -1) {
-            for (Paciente p : Patients) {
-                if (p.getLeitoId() == leitoid) {
-                    this.currPatient = p;
-                    patientSpinner.setSelection(adapter.getPosition(currPatient.getName()));
-                    break;
-                }
-            }
-        }
 
 
         update();
-
-
 
 
 

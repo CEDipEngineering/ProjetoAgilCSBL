@@ -101,4 +101,38 @@ public class Json extends AppCompatActivity {
         }
         return i;
     }
+
+    protected int getPrevious(JSONArray js,String key,int id) {
+        id -=1;
+        int pos = findIndex(js,key,id);
+        while (pos < 0 && id < 0) {
+            id -= 1;
+            pos = findIndex(js,key,id);
+        }
+        while (pos < 0) {
+            id +=1;
+            pos = findIndex(js,key,id);
+        }
+        return id;
+    }
+
+    protected int findIndex(JSONArray js,String key,int id) {
+        try {
+            int i = 0;
+            while (js.getJSONObject(i).getInt(key) != id && i < js.length()) { i++;}
+            if (i < js.length()) {
+                return i;
+            } else {
+                return -1;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    protected int findPreviousIndex(JSONArray js,String key,int id) {
+        int i = getPrevious( js, key, id);
+        return findIndex(js, key, i);
+    }
 }

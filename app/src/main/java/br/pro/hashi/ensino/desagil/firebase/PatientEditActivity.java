@@ -33,6 +33,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -59,11 +61,12 @@ public class PatientEditActivity extends Json {
     private List<Comorbidade> comorbidadesSelecionadas;
     private ArrayAdapter<String> adapterSintomas;
     private ArrayAdapter<String> adapterComorbidades;
-    private HashMap<String, String> tempSintomasData;
+    private HashMap<String, String> tempSintomasData = new HashMap<String, String>();
 
     private int idpacient;
     private boolean add;
 
+    private Paciente patient_edited = null;
 
 
     @Override
@@ -118,37 +121,46 @@ public class PatientEditActivity extends Json {
 
 
         String json = loadData();
-        Paciente patient = null;
         try {
             JSONObject root = new JSONObject(json);
             JSONObject data = root.getJSONObject("database");
             JSONArray patientes = data.getJSONArray("patients");
             if (patientid != -1) {
-                int i = 0;
-                while (patientes.getJSONObject(i).getInt("id") != patientid) { i++;}
+                int i = findIndex(patientes,"id",patientid);
 
+                JSONObject patiente = patientes.getJSONObject(i);
 
-                if (i < patientes.length()) {
-                    JSONObject patiente = patientes.getJSONObject(i);
-
-                    patient = new Paciente(patiente);
-                    tempSintomasData = patient.getSintomasData();
-                    idpacient = patient.getId();
-                    if (patient.getLeitoId() >= 0) {
-                        leitoEdit.setText(Integer.toString(patient.getLeitoId()));
-                    }
-                    patientNameEdit.setText(patient.getName());
-                    patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
-                    tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
-                } else {
-                    add = true;
-                    patientIdadeEdit.setText(Integer.toString(0));
-                    tempoSintomasEdit.setText(Integer.toString(0));
-                    idpacient = patientes.length();
+                patient_edited = new Paciente(patiente);
+                tempSintomasData = patient_edited.getSintomasData();
+                idpacient = patient_edited.getId();
+                if (patient_edited.getLeitoId() >= 0) {
+                    leitoEdit.setText(Integer.toString(patient_edited.getLeitoId()));
                 }
-                patientNameEdit.setText(patient.getName());
-                patientIdadeEdit.setText(Integer.toString(patient.getIdade()));
-                tempoSintomasEdit.setText(Integer.toString(patient.getTempoSintomas()));
+
+                if (patient_edited.getComorbidades() != null) {
+                    for (int c = 0; c < listaComorbidadesView.getCount(); c++) {
+                        Comorbidade comorbidade = Comorbidade.getByName( listaComorbidadesView.getItemAtPosition(c).toString());
+                        if (patient_edited.getComorbidades().contains(comorbidade)){
+                            listaComorbidadesView.setItemChecked(i, true);
+                        }
+                    }
+                }
+                if (patient_edited.getSintomas() != null) {
+                    for (int b = 0; b < listaSintomasView.getCount(); b++) {
+                        Sintoma sintoma = Sintoma.getByName(listaSintomasView.getItemAtPosition(b).toString());
+                        if (patient_edited.getSintomas().contains(sintoma)) {
+                            listaSintomasView.setItemChecked(b, true);
+                        }
+                    }
+                }
+
+                patientNameEdit.setText(patient_edited.getName());
+                patientIdadeEdit.setText(Integer.toString(patient_edited.getIdade()));
+                tempoSintomasEdit.setText(Integer.toString(patient_edited.getTempoSintomas()));
+
+                patientNameEdit.setText(patient_edited.getName());
+                patientIdadeEdit.setText(Integer.toString(patient_edited.getIdade()));
+                tempoSintomasEdit.setText(Integer.toString(patient_edited.getTempoSintomas()));
 
             } else {
                 add = true;
@@ -168,28 +180,9 @@ public class PatientEditActivity extends Json {
         int c = 0;
 
 
-        for (int i = 0; i < listaComorbidadesView.getCount(); i++) {
-            Comorbidade comorbidade = Comorbidade.getByName( listaComorbidadesView.getItemAtPosition(i).toString());
-            if (patient != null) {
-                if (patient.getComorbidades() != null && patient.getSintomas() != null) {
-                    if (patient.getComorbidades().contains(comorbidade)){
-                        listaComorbidadesView.setItemChecked(i, true);
-                    }
-                    for (int b = 0; b < listaSintomasView.getCount(); b++) {
-                        Sintoma sintoma = Sintoma.getByName(listaSintomasView.getItemAtPosition(b).toString());
 
 
-                        if (patient.getSintomas().contains(sintoma)) {
-                            listaSintomasView.setItemChecked(b, true);
-                        }
 
-                    }
-                }
-            }
-        }
-
-
-        Paciente finalPatient = patient;
         finalizarButton.setOnClickListener((view) -> {
             switch(view.getId()){
                 case R.id.finalizar:
@@ -197,11 +190,6 @@ public class PatientEditActivity extends Json {
                     comorbidadesSelecionadas = new ArrayList<Comorbidade>();
                     SparseBooleanArray sintomasChecked = listaSintomasView.getCheckedItemPositions();
                     SparseBooleanArray comorbidadesChecked = listaComorbidadesView.getCheckedItemPositions();
-                    if (finalPatient != null) {
-                        tempSintomasData = finalPatient.getSintomasData();
-                    } else {
-                        tempSintomasData = new HashMap<String, String>();
-                    }
                     for(int i = 0;i<sintomasChecked.size(); i++){
                         int key =  sintomasChecked.keyAt(i);
                         boolean value = sintomasChecked.get(key);
@@ -250,7 +238,6 @@ public class PatientEditActivity extends Json {
                                 Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados, risco, tempSintomasData);
                                 String json = loadData();
                                 try {
-
                                     JSONObject root = new JSONObject(json);
                                     JSONObject data = root.getJSONObject("database");
                                     JSONArray patientes = data.getJSONArray("patients");
@@ -286,11 +273,18 @@ public class PatientEditActivity extends Json {
                                     e.printStackTrace();
                                 }
                                 //intent
+                                Toast toast = Toast.makeText(getApplicationContext(), "Paciente modificado com sucesso", Toast.LENGTH_SHORT);
+                                if (add) {
+                                    toast = Toast.makeText(getApplicationContext(), "Paciente adicionado com sucesso", Toast.LENGTH_SHORT);
+                                }
 
                                 Intent intent = new Intent(PatientEditActivity.this, PatientActivity.class);
                                 // Tem que passar o paciente atual também;
                                 intent.putExtra("patientid", idpacient);
                                 startActivity(intent);
+
+                                toast.show();
+
 
 
                             } catch (JSONException e) {

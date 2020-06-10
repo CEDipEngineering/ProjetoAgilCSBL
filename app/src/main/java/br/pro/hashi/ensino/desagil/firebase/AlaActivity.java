@@ -76,15 +76,12 @@ public class AlaActivity extends Json {
                 for (int l = 0; l < Alas[a].getCapacidade(); l++) {
                     int id = l+1+Alas[a].getNumber()*1000;
                     Leito newL = new Leito(id);
-                    for (int i = 0; i < JSONpacientes.length(); i++) {
+                    int i = findIndex(JSONpacientes,"leito",id);
+                    if ( i != -1) {
                         JSONObject paciente = JSONpacientes.getJSONObject(i);
-                        if (paciente.getInt("leito") == id) {
-                            newL.setPaciente(new Paciente(paciente));
-                            Paciente pacienteTeste = new Paciente(paciente);
-                            double risco = pacienteTeste.getRisco();
-                            ocup+=1;
-                            break;
-                        }
+                        newL.setPaciente(new Paciente(paciente));
+
+                        ocup+=1;
                     }
                     Alas[a].addLeito(newL);
                 }
@@ -231,14 +228,12 @@ public class AlaActivity extends Json {
                 JSONArray patientes = data.getJSONArray("patients");
                 JSONArray alas = data.getJSONArray("wings");
                 if (alas.length() != 1){
-                    int i = 0;
-                    while (alas.getJSONObject(i).getInt("id") != id) { i++; }
+                    int i = findIndex(alas,"id",id);
 
                     for(Leito leito: currAla.getLeitos()){
                         if(leito.getPaciente() != null) {
                             int patid = leito.getPaciente().getId();
-                            int a = 0;
-                            while (patientes.getJSONObject(a).getInt("id") != patid) { a++; }
+                            int a = findIndex(patientes,"id",patid);;
                             patientes.getJSONObject(a).put("leito",-1);
                         }
                     }
@@ -251,15 +246,8 @@ public class AlaActivity extends Json {
                     Toast toast = Toast.makeText(getApplicationContext(), "Ala removida com sucesso", Toast.LENGTH_SHORT);
                     toast.show();
 
-                    id -=1;
-                    while (alas.getJSONObject(pos).getInt("id") != id) {
-                        if (pos < patientes.length()){
-                            pos++;
-                        } else {
-                            id +=1;
-                            pos = 0;
-                        }
-                    }
+                    id = getPrevious(alas,"id",id);
+
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "Não foi possível remover ala", Toast.LENGTH_SHORT);
                     toast.show();
@@ -281,8 +269,7 @@ public class AlaActivity extends Json {
                 JSONObject data = root.getJSONObject("database");
                 JSONArray alas = data.getJSONArray("wings");
 
-                int i = 0;
-                while (alas.getJSONObject(i).getInt("id") != currAla.getId()) {i++;}
+                int i = findIndex(alas,"id",currAla.getId());
                 JSONObject ala = alas.getJSONObject(i);
 
                 int cap = ala.getInt("capacidade");
@@ -314,8 +301,8 @@ public class AlaActivity extends Json {
                 JSONArray alas = data.getJSONArray("wings");
                 JSONArray patientes = data.getJSONArray("patients");
 
-                int i = 0;
-                while (alas.getJSONObject(i).getInt("id") != currAla.getId()) {i++;}
+
+                int i = findIndex(alas,"id",currAla.getId());
                 JSONObject ala = alas.getJSONObject(i);
 
                 int cap = ala.getInt("capacidade");
@@ -328,8 +315,7 @@ public class AlaActivity extends Json {
                         lastleito = leto;
                     }
                     if (lastleito.getPaciente() != null) {
-                        int p = 0;
-                        while (patientes.getJSONObject(p).getInt("id") != lastleito.getPaciente().getId()) {i++;}
+                        int p = findIndex(patientes,"id",lastleito.getPaciente().getId());;
                         patientes.getJSONObject(p).put("leito",-1);
                         data.put("patients",patientes);
                     }
@@ -345,11 +331,6 @@ public class AlaActivity extends Json {
                     Toast toast = Toast.makeText(getApplicationContext(), "Não foi possível remover leito", Toast.LENGTH_SHORT);
                     toast.show();
                 }
-
-
-
-
-
 
             } catch (JSONException e) {
                 e.printStackTrace();
