@@ -96,8 +96,15 @@ public class PatientActivity extends Json {
 
 
         symptomGridView = new ArrayList<Sintoma>();
-        for(Sintoma s: Sintoma.class.getEnumConstants()){
-            symptomGridView.add(s);
+
+        if (!symptomGridAdapter.isShowallsymptoms()) {
+            for (Sintoma s : this.currPatient.getSintomas()) {
+                symptomGridView.add(s);
+            }
+        } else {
+            for (Sintoma s : Sintoma.class.getEnumConstants()) {
+                symptomGridView.add(s);
+            }
         }
 
         symptomGridAdapter = new SymptomGridAdapter(PatientActivity.this, symptomGridView, this.currPatient);
