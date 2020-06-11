@@ -43,14 +43,14 @@
                 android:layout_marginTop="10dp"
                 />
             <Button
-                android:id="@+id/addButton"
+                android:id="@+id/alaAddButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="Adicionar Ala"
                 android:layout_marginTop="10dp"
                 />
             <Button
-                android:id="@+id/deleteButton"
+                android:id="@+id/alaDeleteButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="Remover Ala"

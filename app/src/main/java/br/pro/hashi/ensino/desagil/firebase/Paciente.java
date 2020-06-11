@@ -32,18 +32,18 @@ public class Paciente {
         this.sintomasData = sintomasData;
     }
 
-    public Paciente(JSONObject pacient) {
+    public Paciente(JSONObject JSONpatient) {
         try {
-            this.name = pacient.getString("nome");
-            this.id = pacient.getInt("id");
-            this.idade = pacient.getInt("idade");
-            this.tempoSintomas = pacient.getInt("tempoSintomas");
-            this.risco = pacient.getDouble("risco");
-            this.idLeito = pacient.getInt("leito");
+            this.name = JSONpatient.getString("nome");
+            this.id = JSONpatient.getInt("id");
+            this.idade = JSONpatient.getInt("idade");
+            this.tempoSintomas = JSONpatient.getInt("tempoSintomas");
+            this.risco = JSONpatient.getDouble("risco");
+            this.idLeito = JSONpatient.getInt("leito");
 
 
             ArrayList<Comorbidade> comorbs= new ArrayList<Comorbidade>();
-            JSONArray jarcomorbs = pacient.getJSONArray("comorbidades");
+            JSONArray jarcomorbs = JSONpatient.getJSONArray("comorbidades");
             if (jarcomorbs != null) {
                 for (int i=0;i<jarcomorbs.length();i++) {
                     comorbs.add(Comorbidade.getById((Integer)jarcomorbs.get(i)));
@@ -51,7 +51,7 @@ public class Paciente {
             }
 
             ArrayList<Sintoma> sints= new ArrayList<Sintoma>();
-            JSONArray jarsints = pacient.getJSONArray("sintomas");
+            JSONArray jarsints = JSONpatient.getJSONArray("sintomas");
             if (jarsints != null) {
                 for (int i=0;i<jarsints.length();i++) {
                     sints.add(Sintoma.getById((Integer)jarsints.get(i)));
@@ -60,7 +60,7 @@ public class Paciente {
 
             this.comorbidades = comorbs;
             this.sintomas = sints;
-            JSONObject jarsinData = pacient.getJSONObject("sintomasData");
+            JSONObject jarsinData = JSONpatient.getJSONObject("sintomasData");
             HashMap<String, String> sintomasData = new Gson().fromJson(jarsinData.toString(), HashMap.class);
             this.sintomasData = sintomasData;
 

@@ -119,7 +119,7 @@ public class Json extends AppCompatActivity {
     protected int findIndex(JSONArray js,String key,int id) {
         try {
             int i = 0;
-            while (js.getJSONObject(i).getInt(key) != id && i < js.length()) { i++;}
+            while (i < js.length() && js.getJSONObject(i).getInt(key) != id) { i++;}
             if (i < js.length()) {
                 return i;
             } else {

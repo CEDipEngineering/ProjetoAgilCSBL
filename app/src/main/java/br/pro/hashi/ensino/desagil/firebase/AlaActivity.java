@@ -33,7 +33,7 @@ public class AlaActivity extends Json {
     private GridView gridView;
     private Spinner alaSpinner;
     private TextView lotacaoText;
-    private Button leitoAddButton, leitoDeleteButton, addButton,deleteButton;
+    private Button leitoAddButton, leitoDeleteButton, alaAddButton,alaDeleteButton;
     private ArrayList<Integer> idGridView = new ArrayList<Integer>();
     private ArrayList<String> nameGridView = new ArrayList<String>();
     private ArrayList<Double> riskPatient = new ArrayList<Double>();
@@ -67,7 +67,7 @@ public class AlaActivity extends Json {
         try {
             JSONObject root = new JSONObject(json_f);
             JSONObject data = root.getJSONObject("database");
-            JSONArray JSONpacientes = data.getJSONArray("patients");
+            JSONArray JSONpatients = data.getJSONArray("patients");
             JSONArray JSONwings = data.getJSONArray("wings");
             Alas = new Ala[JSONwings.length()];
             for (int a = 0; a < Alas.length; a++) {
@@ -76,9 +76,9 @@ public class AlaActivity extends Json {
                 for (int l = 0; l < Alas[a].getCapacidade(); l++) {
                     int id = l+1+Alas[a].getNumber()*1000;
                     Leito newL = new Leito(id);
-                    int i = findIndex(JSONpacientes,"leito",id);
+                    int i = findIndex(JSONpatients,"leito",id);
                     if ( i != -1) {
-                        JSONObject paciente = JSONpacientes.getJSONObject(i);
+                        JSONObject paciente = JSONpatients.getJSONObject(i);
                         newL.setPaciente(new Paciente(paciente));
 
                         ocup+=1;
@@ -113,8 +113,8 @@ public class AlaActivity extends Json {
         alaSpinner = findViewById(R.id.spinnerAla);
         lotacaoText = findViewById(R.id.lotacao);
 
-        addButton = findViewById(R.id.addButton);
-        deleteButton = findViewById(R.id.deleteButton);
+        alaAddButton = findViewById(R.id.alaAddButton);
+        alaDeleteButton = findViewById(R.id.alaDeleteButton);
         leitoAddButton = findViewById(R.id.leitoAddButton);
         leitoDeleteButton = findViewById(R.id.leitoDeleteButton);
 
@@ -123,14 +123,14 @@ public class AlaActivity extends Json {
 
         Intent myIntent = getIntent();
         // Try to get message handed in when creating intent
-        int alaid = myIntent.getIntExtra("ala",-1);
+        int alaId = myIntent.getIntExtra("idAla",-1);
 
         Alas = new Ala[1];
 
-        if (alaid == -1) {
+        if (alaId == -1) {
             getAlas(0);
         } else {
-            getAlas(alaid);
+            getAlas(alaId);
         }
 
 
@@ -179,31 +179,31 @@ public class AlaActivity extends Json {
                 if(leito_intent.getPaciente() == null) {
                     intent = new Intent(AlaActivity.this, PatientEditActivity.class);
                 }
-                intent.putExtra("leito", leito_intent.getId());
+                intent.putExtra("idLeito", leito_intent.getId());
                 startActivity(intent);
             }
         });
 
-        addButton.setOnClickListener((view) -> {
+        alaAddButton.setOnClickListener((view) -> {
             int id = 0;
             String json = loadData();
             try {
                 JSONObject root = new JSONObject(json);
                 JSONObject data = root.getJSONObject("database");
-                JSONArray alas = data.getJSONArray("wings");
-                JSONObject ala = new JSONObject();
+                JSONArray JSONwings = data.getJSONArray("wings");
+                JSONObject JSONwing = new JSONObject();
 
 
-                id = getNext(alas,"id");
+                id = getNext(JSONwings,"id");
 
                 String name = "Ala "+ (id+1);
-                ala.put("nome", name);
-                ala.put("id", id);
-                ala.put("capacidade", 12);
+                JSONwing.put("nome", name);
+                JSONwing.put("id", id);
+                JSONwing.put("capacidade", 12);
 
-                alas.put(alas.length(),ala);
-                alas = sortData(alas,"id");
-                data.put("wings",alas);
+                JSONwings.put(JSONwings.length(),JSONwing);
+                JSONwings = sortData(JSONwings,"id");
+                data.put("wings",JSONwings);
                 root.put("database", data);
 
                 saveData(root.toString());
@@ -218,35 +218,34 @@ public class AlaActivity extends Json {
             update();
         });
 
-        deleteButton.setOnClickListener((view) -> {
-            int pos = 0;
+        alaDeleteButton.setOnClickListener((view) -> {
             int id = currAla.getId();
             String json = loadData();
             try {
                 JSONObject root = new JSONObject(json);
                 JSONObject data = root.getJSONObject("database");
-                JSONArray patientes = data.getJSONArray("patients");
-                JSONArray alas = data.getJSONArray("wings");
-                if (alas.length() != 1){
-                    int i = findIndex(alas,"id",id);
+                JSONArray JSONpatients = data.getJSONArray("patients");
+                JSONArray JSONwings = data.getJSONArray("wings");
+                if (JSONwings.length() != 1){
+                    int i = findIndex(JSONwings,"id",id);
 
                     for(Leito leito: currAla.getLeitos()){
                         if(leito.getPaciente() != null) {
                             int patid = leito.getPaciente().getId();
-                            int a = findIndex(patientes,"id",patid);;
-                            patientes.getJSONObject(a).put("leito",-1);
+                            int a = findIndex(JSONpatients,"id",patid);;
+                            JSONpatients.getJSONObject(a).put("leito",-1);
                         }
                     }
 
-                    alas.remove(i);
-                    data.put("wings",alas);
-                    data.put("patients",patientes);
+                    JSONwings.remove(i);
+                    data.put("wings",JSONwings);
+                    data.put("patients",JSONpatients);
                     root.put("database", data);
                     saveData(root.toString());
                     Toast toast = Toast.makeText(getApplicationContext(), "Ala removida com sucesso", Toast.LENGTH_SHORT);
                     toast.show();
 
-                    id = getPrevious(alas,"id",id);
+                    id = getPrevious(JSONwings,"id",id);
 
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "Não foi possível remover ala", Toast.LENGTH_SHORT);
@@ -267,16 +266,16 @@ public class AlaActivity extends Json {
             try {
                 JSONObject root = new JSONObject(json);
                 JSONObject data = root.getJSONObject("database");
-                JSONArray alas = data.getJSONArray("wings");
+                JSONArray JSONwings = data.getJSONArray("wings");
 
-                int i = findIndex(alas,"id",currAla.getId());
-                JSONObject ala = alas.getJSONObject(i);
+                int i = findIndex(JSONwings,"id",currAla.getId());
+                JSONObject JSONwing = JSONwings.getJSONObject(i);
 
-                int cap = ala.getInt("capacidade");
-                ala.put("capacidade", (cap + 1));
+                int cap = JSONwing.getInt("capacidade");
+                JSONwing.put("capacidade", (cap + 1));
 
-                alas.put(i,ala);
-                data.put("wings",alas);
+                JSONwings.put(i,JSONwing);
+                data.put("wings",JSONwings);
                 root.put("database", data);
 
                 saveData(root.toString());
@@ -298,30 +297,30 @@ public class AlaActivity extends Json {
             try {
                 JSONObject root = new JSONObject(json);
                 JSONObject data = root.getJSONObject("database");
-                JSONArray alas = data.getJSONArray("wings");
-                JSONArray patientes = data.getJSONArray("patients");
+                JSONArray JSONwings = data.getJSONArray("wings");
+                JSONArray JSONpatients = data.getJSONArray("patients");
 
 
-                int i = findIndex(alas,"id",currAla.getId());
-                JSONObject ala = alas.getJSONObject(i);
+                int i = findIndex(JSONwings,"id",currAla.getId());
+                JSONObject JSONwing = JSONwings.getJSONObject(i);
 
-                int cap = ala.getInt("capacidade");
+                int cap = JSONwing.getInt("capacidade");
 
                 if (cap > 1) {
-                    ala.put("capacidade", (cap - 1));
+                    JSONwing.put("capacidade", (cap - 1));
 
                     Leito lastleito = new Leito(0);
                     for (Leito leto : currAla.getLeitos()) {
                         lastleito = leto;
                     }
                     if (lastleito.getPaciente() != null) {
-                        int p = findIndex(patientes,"id",lastleito.getPaciente().getId());;
-                        patientes.getJSONObject(p).put("leito",-1);
-                        data.put("patients",patientes);
+                        int p = findIndex(JSONpatients,"id",lastleito.getPaciente().getId());;
+                        JSONpatients.getJSONObject(p).put("leito",-1);
+                        data.put("patients",JSONpatients);
                     }
 
-                    alas.put(i,ala);
-                    data.put("wings",alas);
+                    JSONwings.put(i,JSONwing);
+                    data.put("wings",JSONwings);
                     root.put("database", data);
 
                     saveData(root.toString());
