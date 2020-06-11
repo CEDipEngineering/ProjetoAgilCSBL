@@ -63,7 +63,8 @@ public class PatientEditActivity extends Json {
     private ArrayAdapter<String> adapterComorbidades;
     private HashMap<String, String> tempSintomasData = new HashMap<String, String>();
 
-    private int idpacient;
+    private int patientId;
+    private int leitoId;
     private boolean add;
 
     private Paciente patient_edited = null;
@@ -110,11 +111,11 @@ public class PatientEditActivity extends Json {
 
         Intent myIntent = getIntent();
         // Try to get message handed in when creating intent
-        int patientid = myIntent.getIntExtra("patientid",-1);
-        int leito = myIntent.getIntExtra("leito",-1);
+        patientId = myIntent.getIntExtra("idPaciente",-1);
+        leitoId = myIntent.getIntExtra("idLeito",-1);
 
-        if (leito != -1) {
-            leitoEdit.setText(Integer.toString(leito));
+        if (leitoId != -1) {
+            leitoEdit.setText(Integer.toString(leitoId));
         }
 
         // If there is one, put it in the textView
@@ -124,15 +125,15 @@ public class PatientEditActivity extends Json {
         try {
             JSONObject root = new JSONObject(json);
             JSONObject data = root.getJSONObject("database");
-            JSONArray patientes = data.getJSONArray("patients");
-            if (patientid != -1) {
-                int i = findIndex(patientes,"id",patientid);
+            JSONArray JSONpatients = data.getJSONArray("patients");
+            if (patientId != -1) {
+                int i = findIndex(JSONpatients,"id",patientId);
 
-                JSONObject patiente = patientes.getJSONObject(i);
+                JSONObject JSONpatient = JSONpatients.getJSONObject(i);
 
-                patient_edited = new Paciente(patiente);
+                patient_edited = new Paciente(JSONpatient);
                 tempSintomasData = patient_edited.getSintomasData();
-                idpacient = patient_edited.getId();
+                patientId = patient_edited.getId();
                 if (patient_edited.getLeitoId() >= 0) {
                     leitoEdit.setText(Integer.toString(patient_edited.getLeitoId()));
                 }
@@ -166,7 +167,7 @@ public class PatientEditActivity extends Json {
                 add = true;
                 patientIdadeEdit.setText(Integer.toString(0));
                 tempoSintomasEdit.setText(Integer.toString(0));
-                idpacient = getNext(patientes,"id");
+                patientId = getNext(JSONpatients,"id");
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -235,34 +236,34 @@ public class PatientEditActivity extends Json {
                                 int idade = Integer.parseInt(patientIdadeEdit.getText().toString());
                                 int tempoSint = Integer.parseInt(tempoSintomasEdit.getText().toString());
                                 String currentTime = Calendar.getInstance().getTime().toString();
-                                Paciente Paciente1 = new Paciente(patientName, idpacient, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados, risco, tempSintomasData);
+                                Paciente NovoPaciente = new Paciente(patientName, patientId, idade, tempoSint, comorbidadesSelecionadas, sintomasSelecionados, risco, tempSintomasData);
                                 String json = loadData();
                                 try {
                                     JSONObject root = new JSONObject(json);
                                     JSONObject data = root.getJSONObject("database");
-                                    JSONArray patientes = data.getJSONArray("patients");
-                                    JSONObject patiente = new JSONObject();
+                                    JSONArray JSONpatients = data.getJSONArray("patients");
+                                    JSONObject JSONpatient = new JSONObject();
                                     if (!add) {
-                                        patiente = patientes.getJSONObject(idpacient);
+                                        JSONpatient = JSONpatients.getJSONObject(patientId);
                                     }
 
                                     if (!(leitoEdit.getText().toString().equals(""))) {
-                                        patiente.put("leito",Integer.parseInt(leitoEdit.getText().toString()));
+                                        JSONpatient.put("leito",Integer.parseInt(leitoEdit.getText().toString()));
                                     } else {
-                                        patiente.put("leito",-1);
+                                        JSONpatient.put("leito",-1);
                                     }
 
-                                    patiente.put("risco", risco);
-                                    patiente.put("nome", Paciente1.getName());
-                                    patiente.put("id", Paciente1.getId());
-                                    patiente.put("idade", Paciente1.getIdade());
-                                    patiente.put("tempoSintomas",Paciente1.getTempoSintomas());
-                                    patiente.put("sintomasData", new JSONObject(Paciente1.getSintomasData()));
-                                    patiente.put("sintomas",(JSONArray)Paciente1.getIdSintomas());
-                                    patiente.put("comorbidades",Paciente1.getIdComorbidades());
+                                    JSONpatient.put("risco", risco);
+                                    JSONpatient.put("nome", NovoPaciente.getName());
+                                    JSONpatient.put("id", NovoPaciente.getId());
+                                    JSONpatient.put("idade", NovoPaciente.getIdade());
+                                    JSONpatient.put("tempoSintomas",NovoPaciente.getTempoSintomas());
+                                    JSONpatient.put("sintomasData", new JSONObject(NovoPaciente.getSintomasData()));
+                                    JSONpatient.put("sintomas",(JSONArray)NovoPaciente.getIdSintomas());
+                                    JSONpatient.put("comorbidades",NovoPaciente.getIdComorbidades());
                                     if (add) {
-                                        patientes.put(patientes.length(),patiente);
-                                        data.put("patients",patientes);
+                                        JSONpatients.put(JSONpatients.length(),JSONpatient);
+                                        data.put("patients",JSONpatients);
                                         root.put("database", data);
                                     }
                                     saveData(root.toString());
@@ -280,7 +281,7 @@ public class PatientEditActivity extends Json {
 
                                 Intent intent = new Intent(PatientEditActivity.this, PatientActivity.class);
                                 // Tem que passar o paciente atual também;
-                                intent.putExtra("patientid", idpacient);
+                                intent.putExtra("idPaciente", patientId);
                                 startActivity(intent);
 
                                 toast.show();
