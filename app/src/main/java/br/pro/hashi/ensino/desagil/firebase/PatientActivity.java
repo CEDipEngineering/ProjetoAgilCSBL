@@ -1,7 +1,10 @@
 package br.pro.hashi.ensino.desagil.firebase;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,19 +31,17 @@ public class PatientActivity extends Json {
     private Spinner patientSpinner;
     private Button examesButton, editButton, addButton, alaButton;
     private ListView summaryView, symptomView, comorbityView;
-    private ImageView Sibilos, Ageusia;
+    private ImageView symptomImage;
     private Paciente currPaciente;
-    private GridView gridView;
     private Calendar currentTime;
     private HashMap<String , Paciente> converter = new HashMap<>();
     private ArrayList<Integer> idSintomas = new ArrayList<Integer>();
     private HashMap<String, String> tempSintomasData;
-    private ArrayList<Sintoma> symptomGridView = new ArrayList<>();
+    private HashMap<Sintoma, Drawable> drawableHashMap;
+    private Resources r;
 
-    public void grayOut(ImageView view) {
-        view.setColorFilter(Color.argb(150,200,200,200));
-    }
-
+    // Change this to show all symptoms around body, versus only the ones the patient has.
+    private final static boolean showAllSymptoms = false;
 
 
     private void update(){
@@ -76,10 +77,6 @@ public class PatientActivity extends Json {
                 patientSummary);
         summaryView.setAdapter(adapter0);
 
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,
-                patientSymptoms);
-        symptomView.setAdapter(adapter1);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
@@ -87,20 +84,27 @@ public class PatientActivity extends Json {
         comorbityView.setAdapter(adapter2);
 
 
-        symptomGridView = new ArrayList<Sintoma>();
+        if (currPaciente != null) {
+            Drawable[] layers = new Drawable[currPaciente.getSintomas().size() + 1];
+            if (this.showAllSymptoms) {
+                layers[0] = r.getDrawable(R.drawable.body_symptoms, null);
+            } else {
+                layers[0] = r.getDrawable(R.drawable.body, null);
+            }
+            for (int i = 1; i < currPaciente.getSintomas().size()+1; i++) {
+                Sintoma symptom = currPaciente.getSintomas().get(i-1);
+                try {
+                    layers[i] = drawableHashMap.get(symptom);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    layers[i] = r.getDrawable(R.drawable.body, null);
+                    System.out.println("Recurso para sintoma: " + symptom.toString() + "nao encontrado! Adicione um recurso na pasta e no HashMap 'drawableHashMap'");
+                }
 
-        if (!symptomGridAdapter.isShowallsymptoms()) {
-            for (Sintoma s : this.currPaciente.getSintomas()) {
-                symptomGridView.add(s);
             }
-        } else {
-            for (Sintoma s : Sintoma.class.getEnumConstants()) {
-                symptomGridView.add(s);
-            }
+            LayerDrawable layerDrawable = new LayerDrawable(layers);
+            symptomImage.setImageDrawable(layerDrawable);
         }
-
-        symptomGridAdapter = new SymptomGridAdapter(PatientActivity.this, symptomGridView, this.currPaciente);
-        gridView.setAdapter(symptomGridAdapter);
     }
 
 
@@ -109,14 +113,40 @@ public class PatientActivity extends Json {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
         patientSpinner = findViewById(R.id.patientSpinner);
-        examesButton = findViewById(R.id.examesButton);
+//        examesButton = findViewById(R.id.examesButton);
         editButton = findViewById(R.id.editButton);
         addButton = findViewById(R.id.addButton);
         alaButton = findViewById(R.id.alaButton);
         summaryView = findViewById(R.id.summaryView);
-        symptomView = findViewById(R.id.symptomView);
         comorbityView = findViewById(R.id.comorbityView);
-        gridView = findViewById(R.id.symptomGrid);
+        symptomImage = findViewById(R.id.symptomImage);
+        this.r = getResources();
+        drawableHashMap = new HashMap<Sintoma, Drawable>();
+        drawableHashMap.put(Sintoma.ANOSMIA, r.getDrawable(R.drawable.anosmia, null));
+        drawableHashMap.put(Sintoma.AGEUSIA, r.getDrawable(R.drawable.ageusia, null));
+        drawableHashMap.put(Sintoma.CATARRO, r.getDrawable(R.drawable.catarro, null));
+        drawableHashMap.put(Sintoma.ESCARRO, r.getDrawable(R.drawable.escarro, null));
+        drawableHashMap.put(Sintoma.GARGANTA, r.getDrawable(R.drawable.garganta, null));
+        drawableHashMap.put(Sintoma.RINORREIA, r.getDrawable(R.drawable.rinorreia, null));
+        drawableHashMap.put(Sintoma.OUVIDO, r.getDrawable(R.drawable.ouvido, null));
+        drawableHashMap.put(Sintoma.SIBILOS, r.getDrawable(R.drawable.sibilos, null));
+        drawableHashMap.put(Sintoma.MUSCULAR, r.getDrawable(R.drawable.muscular, null));
+        drawableHashMap.put(Sintoma.ARTICULACAO, r.getDrawable(R.drawable.articulacao, null));
+        drawableHashMap.put(Sintoma.FADIGA, r.getDrawable(R.drawable.fadiga, null));
+        drawableHashMap.put(Sintoma.AR, r.getDrawable(R.drawable.ar, null));
+        drawableHashMap.put(Sintoma.TORACICA, r.getDrawable(R.drawable.toracica, null));
+        drawableHashMap.put(Sintoma.CABEÇA, r.getDrawable(R.drawable.cabeca, null));
+        drawableHashMap.put(Sintoma.CONFUSAO, r.getDrawable(R.drawable.confusao, null));
+        drawableHashMap.put(Sintoma.CONVULSAO, r.getDrawable(R.drawable.convulsao, null));
+        drawableHashMap.put(Sintoma.ABDOMEM, r.getDrawable(R.drawable.abdomem, null));
+        drawableHashMap.put(Sintoma.VOMITO, r.getDrawable(R.drawable.vomito, null));
+        drawableHashMap.put(Sintoma.DIARREIA, r.getDrawable(R.drawable.diarreia, null));
+        drawableHashMap.put(Sintoma.CONJUTIVITE, r.getDrawable(R.drawable.conjuntivite, null));
+        drawableHashMap.put(Sintoma.CUTANEA, r.getDrawable(R.drawable.cutanea, null));
+        drawableHashMap.put(Sintoma.ULCERA, r.getDrawable(R.drawable.ulcera, null));
+        drawableHashMap.put(Sintoma.LINFA, r.getDrawable(R.drawable.linfa, null));
+        drawableHashMap.put(Sintoma.SANGRAMENTO, r.getDrawable(R.drawable.sangramento, null));
+        drawableHashMap.put(Sintoma.SECA, r.getDrawable(R.drawable.seca, null));
 
 
         Intent myIntent = getIntent();
@@ -214,7 +244,6 @@ public class PatientActivity extends Json {
 
         List<Comorbidade> tempComorb = this.currPaciente.getComorbidades();
         JSONArray jsonSintomas = this.currPaciente.getIdSintomas();
-        List<ImageView> imagens = Arrays.asList(Sibilos, Ageusia);
         ArrayList<String> patientSymptoms = new ArrayList<String>();
 
         if (jsonSintomas != null) {
@@ -227,12 +256,6 @@ public class PatientActivity extends Json {
                 }
             }
         }
-//        for(ImageView i: imagens){
-//            if(idSintomas.contains(Integer.parseInt((String) i.getTag()))){
-//                System.out.println("GREY");
-//                grayOut(i);
-//            }
-//        }
 
         alaButton.setOnClickListener((view) -> {
             Intent intent = new Intent(PatientActivity.this, AlaActivity.class);
