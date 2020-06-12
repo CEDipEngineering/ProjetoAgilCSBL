@@ -40,6 +40,9 @@ public class PatientActivity extends Json {
     private HashMap<Sintoma, Drawable> drawableHashMap;
     private Resources r;
 
+    // Change this to show all symptoms around body, versus only the ones the patient has.
+    private final static boolean showAllSymptoms = false;
+
 
     public void grayOut(ImageView view) {
         view.setColorFilter(Color.argb(150,200,200,200));
@@ -89,7 +92,11 @@ public class PatientActivity extends Json {
 
         if (currPaciente != null) {
             Drawable[] layers = new Drawable[currPaciente.getSintomas().size() + 1];
-            layers[0] = r.getDrawable(R.drawable.body, null);
+            if (this.showAllSymptoms) {
+                layers[0] = r.getDrawable(R.drawable.body_symptoms, null);
+            } else {
+                layers[0] = r.getDrawable(R.drawable.body, null);
+            }
             for (int i = 1; i < currPaciente.getSintomas().size()+1; i++) {
                 Sintoma symptom = currPaciente.getSintomas().get(i-1);
                 try {
