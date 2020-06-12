@@ -62,7 +62,7 @@ public class PatientEditActivity extends Json {
     private ListView listaSintomasView, listaComorbidadesView;
     private List<String> listaSintomasEnum = Arrays.asList(Sintoma.getNameArray());
     private List<String> listaComorbidadesEnum = Arrays.asList(Comorbidade.getNameArray());
-    private Button finalizarButton;
+    private Button finalizarButton, cancelarButton, deletarButton;
     private List<Sintoma> sintomasSelecionados;
     private List<Comorbidade> comorbidadesSelecionadas;
     private ArrayAdapter<String> adapterSintomas;
@@ -104,6 +104,8 @@ public class PatientEditActivity extends Json {
         listaSintomasView = findViewById(R.id.list_sintomas);
         listaComorbidadesView = findViewById(R.id.list_comorbidades);
         finalizarButton = findViewById((R.id.finalizar));
+        cancelarButton = findViewById((R.id.cancelar));
+        deletarButton = findViewById((R.id.deletar));
         adapterSintomas = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, listaSintomasEnum);
         adapterComorbidades = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, listaComorbidadesEnum);
         listaSintomasView.setAdapter(adapterSintomas);
@@ -176,6 +178,9 @@ public class PatientEditActivity extends Json {
 
 
         leitoEdit.setEnabled(false);
+        if (add) {
+            deletarButton.setVisibility(View.GONE);
+        }
 
 
         finalizarButton.setOnClickListener((view) -> {
@@ -317,6 +322,57 @@ public class PatientEditActivity extends Json {
                 }
                 toast.show();
 
+            }
+        });
+
+        cancelarButton.setOnClickListener((view) -> {
+            Intent intent = new Intent(PatientEditActivity.this, AlaActivity.class);
+            // Tem que passar o paciente atual também;
+            if (leitoId != -1) {
+                int idAla = leitoId/1000;
+                intent.putExtra("idAla", idAla);
+            }  else if (!add) {
+                intent = new Intent(PatientEditActivity.this, PatientActivity.class);
+                intent.putExtra("idPaciente", patientId);
+            }
+            startActivity(intent);
+        });
+
+
+        deletarButton.setOnClickListener((view) -> {
+            String json_f = loadData();
+            try {
+                JSONObject root = new JSONObject(json_f);
+                JSONObject data = root.getJSONObject("database");
+                JSONArray JSONpatients = data.getJSONArray("patients");
+                if (JSONpatients.length() != 1){
+                    int i = findIndex(JSONpatients,"id",patientId);
+
+                    JSONpatients.remove(i);
+                    data.put("patients",JSONpatients);
+                    root.put("database", data);
+                    saveData(root.toString());
+                    Toast toast = Toast.makeText(getApplicationContext(), "Paciente removida com sucesso", Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    Intent intent = new Intent(PatientEditActivity.this, PatientActivity.class);
+                    if (patient_edited.getLeitoId() >= 0) {
+                        int idAla = patient_edited.getLeitoId()/1000;
+                        intent = new Intent(PatientEditActivity.this, AlaActivity.class);
+                        intent.putExtra("idAla", idAla);
+                    } else {
+                        patientId = getPrevious(JSONpatients,"id",patientId);
+                        intent.putExtra("idPaciente", patientId);
+                    }
+                    startActivity(intent);
+
+
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Não foi possível remover oaciente", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         });
     }

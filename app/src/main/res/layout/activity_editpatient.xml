@@ -46,6 +46,19 @@
                     android:text="Finalizar" />
                 <!--   Talvez adicionar uns botões aqui na esquerda     -->
 
+                <Button
+                    android:id="@+id/cancelar"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:text="Cancelar" />
+
+                <Button
+                    android:id="@+id/deletar"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:text="Deletar Paciente" />
+
+
             </LinearLayout>
 
 
