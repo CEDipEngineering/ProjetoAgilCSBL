@@ -29,7 +29,7 @@ public class PatientActivity extends Json {
     private SymptomGridAdapter symptomGridAdapter;
 
     private Spinner patientSpinner;
-    private Button examesButton, editButton, addButton, alaButton;
+    private Button examesButton, editButton, addButton, alaButton, logButton;
     private ListView summaryView, symptomView, comorbityView;
     private ImageView symptomImage;
     private Paciente currPaciente;
@@ -117,6 +117,7 @@ public class PatientActivity extends Json {
         editButton = findViewById(R.id.editButton);
         addButton = findViewById(R.id.addButton);
         alaButton = findViewById(R.id.alaButton);
+        logButton = findViewById(R.id.logButton);
         summaryView = findViewById(R.id.summaryView);
         comorbityView = findViewById(R.id.comorbityView);
         symptomImage = findViewById(R.id.symptomImage);
@@ -261,6 +262,13 @@ public class PatientActivity extends Json {
             Intent intent = new Intent(PatientActivity.this, AlaActivity.class);
             // Tem que passar o paciente atual também;
             intent.putExtra("idAla", currPaciente.getAlaId());
+            startActivity(intent);
+        });
+
+        logButton.setOnClickListener((view) -> {
+            Intent intent = new Intent(PatientActivity.this, TimeStampActivity.class);
+            // Tem que passar o paciente atual também;
+            intent.putExtra("idPaciente", currPaciente.getId());
             startActivity(intent);
         });
 

@@ -55,6 +55,12 @@ Your layout draws faster if it has fewer nested layouts (a wide view hierarchy i
                 android:layout_marginRight="10dp"
                 android:text="Ver Ala"
                 />
+            <Button
+                android:id="@+id/logButton"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="Ver Histórico"
+                />
 
             <Button
                 android:id="@+id/addButton"
@@ -63,6 +69,7 @@ Your layout draws faster if it has fewer nested layouts (a wide view hierarchy i
                 android:text="Adicionar Paciente"
                 android:visibility="invisible"
                 />
+
 
 
 
