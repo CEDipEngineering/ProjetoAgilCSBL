@@ -44,12 +44,6 @@ public class PatientActivity extends Json {
     private final static boolean showAllSymptoms = false;
 
 
-    public void grayOut(ImageView view) {
-        view.setColorFilter(Color.argb(150,200,200,200));
-    }
-
-
-
     private void update(){
         List<Comorbidade> tempComorb = this.currPaciente.getComorbidades();
         List<Sintoma> tempSintoma = this.currPaciente.getSintomas();
@@ -119,7 +113,7 @@ public class PatientActivity extends Json {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
         patientSpinner = findViewById(R.id.patientSpinner);
-        examesButton = findViewById(R.id.examesButton);
+//        examesButton = findViewById(R.id.examesButton);
         editButton = findViewById(R.id.editButton);
         addButton = findViewById(R.id.addButton);
         alaButton = findViewById(R.id.alaButton);
