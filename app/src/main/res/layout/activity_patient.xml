@@ -21,7 +21,7 @@ Your layout draws faster if it has fewer nested layouts (a wide view hierarchy i
 
         <LinearLayout
             android:id="@+id/leftMenu"
-            android:layout_width="100dp"
+            android:layout_width="125dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="25dp"
@@ -35,36 +35,37 @@ Your layout draws faster if it has fewer nested layouts (a wide view hierarchy i
                 android:padding="2dp"
                 />
 
-            <Button
-                android:id="@+id/examesButton"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="50dp"
-                android:text="Ver Exames"
-                />
 
             <Button
                 android:id="@+id/editButton"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
+                android:layout_marginTop="65dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:text="Editar Paciente"
                 />
 
+            <Button
+                android:id="@+id/alaButton"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Ver Ala"
+                />
 
             <Button
                 android:id="@+id/addButton"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:text="Adicionar Paciente"
+                android:visibility="invisible"
                 />
 
 
-            <Button
-                android:id="@+id/alaButton"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:text="Ver Ala"
-                />
+
         </LinearLayout>
 
 
