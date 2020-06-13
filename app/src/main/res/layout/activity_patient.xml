@@ -59,6 +59,9 @@ Your layout draws faster if it has fewer nested layouts (a wide view hierarchy i
                 android:id="@+id/logButton"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:text="Ver Histórico"
                 />
 

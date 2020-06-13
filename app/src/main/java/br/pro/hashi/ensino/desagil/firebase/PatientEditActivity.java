@@ -207,9 +207,11 @@ public class PatientEditActivity extends Json {
                     }
                     String currentTime = Calendar.getInstance().getTime().toString();
                     Set<String> keys = tempSintomasData.keySet();
+                    String currentTimeEdited = currentTime.replace("GMT-03:00", "");
                     for(Sintoma s: sintomasSelecionados){
-                        if(!keys.contains(s.toString())){
-                            tempSintomasData.put(s.toString(),currentTime);
+                        String sintomaNome = s.getNome();
+                        if(!keys.contains(sintomaNome)){
+                            tempSintomasData.put(sintomaNome, currentTimeEdited);
                         }
 
                     }

@@ -21,6 +21,7 @@ public class Paciente {
     private List<Sintoma> sintomas;
     private HashMap<String, String> sintomasData;
 
+
     public Paciente(String name, int id, int idade, int tempoSintomas, List<Comorbidade> comorbidades, List<Sintoma> sintomas, double risco, HashMap<String, String> sintomasData) {
         this.name = name;
         this.id = id;
