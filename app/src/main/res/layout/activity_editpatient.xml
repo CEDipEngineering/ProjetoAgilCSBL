@@ -106,6 +106,16 @@
                     android:textAlignment="center"
                     android:gravity="bottom"/>
 
+                <TextView
+                    android:id="@+id/note"
+                    android:layout_width="@dimen/TextViewWidthEditPatient1"
+                    android:layout_height="65dp"
+                    android:textSize="@dimen/StandardFontSize"
+                    android:layout_below="@id/temposintomas"
+                    android:text="Anotação:"
+                    android:textAlignment="center"
+                    android:gravity="bottom"/>
+
                 <EditText
                     android:id="@+id/edit_name"
                     android:layout_width="200dp"
@@ -134,6 +144,12 @@
                     android:layout_alignBottom="@id/temposintomas"
                     android:layout_toRightOf="@id/temposintomas"/>
 
+                <EditText
+                    android:id="@+id/edit_note"
+                    android:layout_width="200dp"
+                    android:layout_height="65dp"
+                    android:layout_alignBottom="@id/note"
+                    android:layout_toRightOf="@id/temposintomas"/>
 
 
             </RelativeLayout>

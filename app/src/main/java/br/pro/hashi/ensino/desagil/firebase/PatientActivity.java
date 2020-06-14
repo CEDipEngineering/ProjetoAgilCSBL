@@ -37,6 +37,7 @@ public class PatientActivity extends Json {
     private HashMap<String , Paciente> converter = new HashMap<>();
     private ArrayList<Integer> idSintomas = new ArrayList<Integer>();
     private HashMap<String, String> tempSintomasData;
+    private HashMap<String, String> tempNotasMedico;
     private HashMap<Sintoma, Drawable> drawableHashMap;
     private Resources r;
 
@@ -51,6 +52,7 @@ public class PatientActivity extends Json {
         ArrayList<String> patientSymptoms = new ArrayList<String>();
         ArrayList<String> patientSummary = new ArrayList<String>();
         tempSintomasData = this.currPaciente.getSintomasData();
+        tempNotasMedico = this.currPaciente.getNotasMedico();
         if (tempSintoma != null && tempComorb != null) {
             for (Sintoma s : tempSintoma){
                 patientSymptoms.add(s.getNome());
@@ -182,7 +184,7 @@ public class PatientActivity extends Json {
         } catch (JSONException e) {
             e.printStackTrace();
             Pacientes = new Paciente[1];
-            Pacientes[0] = new Paciente("Rafael", 1, 21, 7, new LinkedList<Comorbidade>(), new LinkedList<Sintoma>(), 0.67, tempSintomasData);
+            Pacientes[0] = new Paciente("Rafael", 1, 21, 7, new LinkedList<Comorbidade>(), new LinkedList<Sintoma>(), 0.67, tempSintomasData, tempNotasMedico);
         }
 
 

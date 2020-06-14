@@ -20,8 +20,9 @@ public class Paciente {
     private LinkedList<Exame> exames;
     private List<Sintoma> sintomas;
     private HashMap<String, String> sintomasData;
+    private HashMap<String, String> notasMedico;
 
-    public Paciente(String name, int id, int idade, int tempoSintomas, List<Comorbidade> comorbidades, List<Sintoma> sintomas, double risco, HashMap<String, String> sintomasData) {
+    public Paciente(String name, int id, int idade, int tempoSintomas, List<Comorbidade> comorbidades, List<Sintoma> sintomas, double risco, HashMap<String, String> sintomasData, HashMap<String, String> notasMedico) {
         this.name = name;
         this.id = id;
         this.idade = idade;
@@ -30,6 +31,7 @@ public class Paciente {
         this.sintomas = sintomas;
         this.risco = risco;
         this.sintomasData = sintomasData;
+        this.notasMedico = notasMedico;
     }
 
     public Paciente(JSONObject JSONpatient) {
@@ -40,6 +42,7 @@ public class Paciente {
             this.tempoSintomas = JSONpatient.getInt("tempoSintomas");
             this.risco = JSONpatient.getDouble("risco");
             this.idLeito = JSONpatient.getInt("leito");
+
 
 
             ArrayList<Comorbidade> comorbs= new ArrayList<Comorbidade>();
@@ -64,6 +67,9 @@ public class Paciente {
             HashMap<String, String> sintomasData = new Gson().fromJson(jarsinData.toString(), HashMap.class);
             this.sintomasData = sintomasData;
 
+            JSONObject jarsinData2 = JSONpatient.getJSONObject("notasMedico");
+            HashMap<String, String> notasMedico = new Gson().fromJson(jarsinData2.toString(), HashMap.class);
+            this.notasMedico = notasMedico;
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -71,6 +77,10 @@ public class Paciente {
     }
     public void setSintomasData(HashMap<String, String> sintomasData) {
         this.sintomasData = sintomasData;
+    }
+
+    public void notasMedico(HashMap<String, String> notasMedico) {
+        this.notasMedico = notasMedico;
     }
 
     public void setTempoSintomas(int tempoSintomas) {
@@ -113,6 +123,10 @@ public class Paciente {
         return sintomasData;
     }
 
+    public HashMap<String, String> getNotasMedico() {
+        return notasMedico;
+    }
+
     public int getLeitoId() {
         return idLeito;
     }
@@ -152,4 +166,5 @@ public class Paciente {
     public List<Sintoma> getSintomas() {
         return sintomas;
     }
+
 }

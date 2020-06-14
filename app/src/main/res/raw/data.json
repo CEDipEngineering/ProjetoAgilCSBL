@@ -13,6 +13,10 @@
 				"sintomasData": {
 					"CATARRO": "0",
 					"GARGANTA": "0"
+				},
+				"notasMedico": {
+					"teste1": "DIA 1",
+					"teste2": "DIA 2"
 				}
 			},
 			{
@@ -27,6 +31,10 @@
 				"sintomasData": {
 					"AGEUSIA": "0",
 					"OUVIDO": "0"
+				},
+				"notasMedico": {
+					"teste1": "DIA 1",
+					"teste2": "DIA 2"
 				}
 			},
 			{
@@ -42,6 +50,10 @@
 					"GARGANTA": "0",
 					"OUVIDO": "0",
 					"SIBILOS": "0"
+				},
+				"notasMedico": {
+					"teste1": "DIA 1",
+					"teste2": "DIA 2"
 				}
 			}
 

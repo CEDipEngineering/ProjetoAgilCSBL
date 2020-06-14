@@ -13,6 +13,7 @@ import org.json.JSONObject;
 public class TimeStampActivity extends Json {
     private ListView summaryView;
     private HashMap<String, String> tempSintomasData;
+    private HashMap<String, String> tempNotasMedico;
     private TextView patientNameView;
     private int patientId;
     private int leitoId;
@@ -40,12 +41,13 @@ public class TimeStampActivity extends Json {
 
                 patient_edited = new Paciente(JSONpatient);
                 tempSintomasData = patient_edited.getSintomasData();
+                tempNotasMedico = patient_edited.getNotasMedico();
                 patientId = patient_edited.getId();
             }
         }
         catch (JSONException e) {
         e.printStackTrace();
     }
-        System.out.println(tempSintomasData);
+        System.out.println(tempNotasMedico);
     }
 }
