@@ -211,9 +211,16 @@ public class PatientEditActivity extends Json {
                     for(Sintoma s: sintomasSelecionados){
                         String sintomaNome = s.getNome();
                         if(!keys.contains(sintomaNome)){
-                            tempSintomasData.put(sintomaNome, currentTimeEdited);
+                            tempSintomasData.put(sintomaNome + " "+ "adicionado em : ", currentTimeEdited);
                         }
 
+                    }
+                    for(Sintoma s: patient_edited.getSintomas()){
+                        String sintomaNome = s.getNome();
+                        if(!sintomasSelecionados.contains(s)){
+                            tempSintomasData.remove(sintomaNome);
+                            tempSintomasData.put(sintomaNome + " " +  "retirado em : ", currentTimeEdited);
+                        }
                     }
                     System.out.println(tempSintomasData);
 

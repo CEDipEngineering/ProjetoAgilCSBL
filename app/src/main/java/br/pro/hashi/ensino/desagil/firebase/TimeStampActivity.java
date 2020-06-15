@@ -50,8 +50,8 @@ public class TimeStampActivity extends Json {
                 tempSintomasData = patient_edited.getSintomasData();
                 for (Map.Entry me : tempSintomasData.entrySet()) {
                     if(!me.getValue().equals("0")) {
-                        adapterDataString.add(me.getKey() + ": adicionado em  " + me.getValue());
-                    }
+                        adapterDataString.add(me.getKey() + "" + me.getValue());
+                }
                 }
                 patientId = patient_edited.getId();
                 adapterData = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,  adapterDataString);
