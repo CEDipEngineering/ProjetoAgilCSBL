@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+//Git
+
 public class LoginActivity extends AppCompatActivity {
     private EditText login;
     private EditText senha;
