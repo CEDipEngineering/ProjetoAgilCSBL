@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".AlaActivity"></activity>
+        <activity android:name=".TimeStampActivity"></activity>
         <activity android:name=".EditorActivity" />
         <activity android:name=".PatientActivity" />
         <activity android:name=".MapActivity" />
