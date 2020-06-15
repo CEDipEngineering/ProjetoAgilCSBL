@@ -14,17 +14,12 @@
 
         <LinearLayout
             android:id="@+id/leftMenu"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="match_parent"
-            android:gravity="left"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="25dp"
-                android:orientation="vertical">
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical"
+            >
 
 <!--                <Button-->
 <!--                    android:id="@+id/examesButton"-->
@@ -43,6 +38,9 @@
                     android:id="@+id/finalizar"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:text="Finalizar" />
                 <!--   Talvez adicionar uns botões aqui na esquerda     -->
 
@@ -50,35 +48,44 @@
                     android:id="@+id/cancelar"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:text="Cancelar" />
 
                 <Button
                     android:id="@+id/deletar"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:text="Deletar Paciente" />
 
 
-            </LinearLayout>
 
 
-            <View
+            <!--<View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@android:color/black" />
+                android:background="@android:color/black" />-->
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="111dp"
-            android:layout_marginTop="25dp">
+            >
 
 <!--            Start of Editor Field-->
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/EditorField">
+                android:layout_height="wrap_content"
+                android:id="@+id/EditorField"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="-40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="55dp">
 
                 <TextView
                     android:id="@+id/name"
@@ -151,6 +158,17 @@
                     android:layout_toRightOf="@id/temposintomas"/>
 
 
+                <TextView
+                    android:id="@+id/padding"
+                    android:layout_height="40dp"
+                    android:layout_width="@dimen/TextViewWidthEditPatient1"
+                    android:textSize="@dimen/StandardFontSize"
+                    android:layout_below="@id/temposintomas"
+                    android:text="  "
+                    android:textAlignment="center"
+                    android:gravity="center"/>
+
+
 
             </RelativeLayout>
 <!--            End of Editor Field  -->
@@ -158,12 +176,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/EditorField"
+                android:layout_centerVertical="true"
                 android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/sintomas"
                         android:layout_width="match_parent"
-                        android:layout_height="65dp"
+                        android:layout_height="wrap_content"
                         android:text="Sintomas"
                         android:textSize="@dimen/StandardFontSize"
                         android:textAlignment="center"/>
@@ -177,7 +196,8 @@
                     <TextView
                         android:id="@+id/comorbidades"
                         android:layout_width="match_parent"
-                        android:layout_height="65dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
                         android:textSize="@dimen/StandardFontSize"
                         android:text="Comorbidades"
                         android:textAlignment="center"
@@ -188,6 +208,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:choiceMode="multipleChoice"/>
+
+                <TextView
+                    android:id="@+id/padding2"
+                    android:layout_height="30dp"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/StandardFontSize"
+                    android:text="  "
+                    android:textAlignment="center"
+                    android:gravity="center"/>
 
 
             </LinearLayout>
