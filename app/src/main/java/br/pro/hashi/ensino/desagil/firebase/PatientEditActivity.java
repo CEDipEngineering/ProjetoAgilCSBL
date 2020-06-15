@@ -122,6 +122,7 @@ public class PatientEditActivity extends Json {
         patientId = myIntent.getIntExtra("idPaciente", -1);
         leitoId = myIntent.getIntExtra("idLeito", -1);
 
+        int alaId = -1;
         if (leitoId != -1) {
             leitoEdit.setText(Integer.toString(leitoId));
         }
@@ -352,7 +353,7 @@ public class PatientEditActivity extends Json {
                     data.put("patients",JSONpatients);
                     root.put("database", data);
                     saveData(root.toString());
-                    Toast toast = Toast.makeText(getApplicationContext(), "Paciente removida com sucesso", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Paciente removido com sucesso", Toast.LENGTH_SHORT);
                     toast.show();
 
                     Intent intent = new Intent(PatientEditActivity.this, PatientActivity.class);
@@ -368,7 +369,7 @@ public class PatientEditActivity extends Json {
 
 
                 } else {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Não foi possível remover oaciente", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Não foi possível remover o paciente", Toast.LENGTH_SHORT);
                     toast.show();
                 }
             } catch (JSONException e) {
