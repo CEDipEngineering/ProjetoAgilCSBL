@@ -54,7 +54,7 @@ public class TimeStampActivity extends Json {
                 tempSintomasData = patient_edited.getSintomasData();
                 for (Map.Entry me : tempSintomasData.entrySet()) {
                     if(!me.getValue().equals("0")) {
-                        adapterDataString.add(me.getKey() + "" + me.getValue());
+                        adapterDataString.add(me.getKey() + ": modificado em " + me.getValue());
                     }
                 }
                 patientId = patient_edited.getId();

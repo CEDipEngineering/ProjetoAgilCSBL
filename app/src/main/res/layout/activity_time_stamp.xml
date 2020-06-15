@@ -115,7 +115,6 @@
                 android:background="@drawable/border"
                 android:layout_margin="25dp"
                 android:fadingEdge="vertical"
-
                 />
         </LinearLayout>
     </LinearLayout>
