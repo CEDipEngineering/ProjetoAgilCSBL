@@ -117,7 +117,7 @@
                     android:layout_below="@id/leito"
                     android:text="Tempo com Sintomas:"
                     android:textAlignment="center"
-                    android:gravity="bottom"/>
+                    android:gravity="center"/>
 
                 <EditText
                     android:id="@+id/edit_name"
