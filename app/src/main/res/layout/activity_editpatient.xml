@@ -26,18 +26,18 @@
                 android:layout_marginTop="25dp"
                 android:orientation="vertical">
 
-<!--                <Button-->
-<!--                    android:id="@+id/examesButton"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="80dp"-->
-<!--                    android:layout_marginTop="50dp"-->
-<!--                    android:text="Ver Exames" />-->
+                <!--                <Button-->
+                <!--                    android:id="@+id/examesButton"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="80dp"-->
+                <!--                    android:layout_marginTop="50dp"-->
+                <!--                    android:text="Ver Exames" />-->
 
-<!--                <Button-->
-<!--                    android:id="@+id/editButton"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="80dp"-->
-<!--                    android:text="Editar Paciente" />-->
+                <!--                <Button-->
+                <!--                    android:id="@+id/editButton"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="80dp"-->
+                <!--                    android:text="Editar Paciente" />-->
 
                 <Button
                     android:id="@+id/finalizar"
@@ -61,7 +61,7 @@
             android:layout_marginLeft="111dp"
             android:layout_marginTop="25dp">
 
-<!--            Start of Editor Field-->
+            <!--            Start of Editor Field-->
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -106,6 +106,16 @@
                     android:textAlignment="center"
                     android:gravity="bottom"/>
 
+                <TextView
+                    android:id="@+id/note"
+                    android:layout_width="@dimen/TextViewWidthEditPatient1"
+                    android:layout_height="65dp"
+                    android:textSize="@dimen/StandardFontSize"
+                    android:layout_below="@id/temposintomas"
+                    android:text="Anotação:"
+                    android:textAlignment="center"
+                    android:gravity="bottom"/>
+
                 <EditText
                     android:id="@+id/edit_name"
                     android:layout_width="200dp"
@@ -134,44 +144,50 @@
                     android:layout_alignBottom="@id/temposintomas"
                     android:layout_toRightOf="@id/temposintomas"/>
 
+                <EditText
+                    android:id="@+id/edit_note"
+                    android:layout_width="200dp"
+                    android:layout_height="65dp"
+                    android:layout_alignBottom="@id/note"
+                    android:layout_toRightOf="@id/temposintomas"/>
 
 
             </RelativeLayout>
-<!--            End of Editor Field  -->
+            <!--            End of Editor Field  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/EditorField"
                 android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/sintomas"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:text="Sintomas"
-                        android:textSize="@dimen/StandardFontSize"
-                        android:textAlignment="center"/>
+                <TextView
+                    android:id="@+id/sintomas"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:text="Sintomas"
+                    android:textSize="@dimen/StandardFontSize"
+                    android:textAlignment="center"/>
 
-                    <ListView
-                        android:id="@+id/list_sintomas"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:choiceMode="multipleChoice"/>
+                <ListView
+                    android:id="@+id/list_sintomas"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:choiceMode="multipleChoice"/>
 
-                    <TextView
-                        android:id="@+id/comorbidades"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:textSize="@dimen/StandardFontSize"
-                        android:text="Comorbidades"
-                        android:textAlignment="center"
-                        />
+                <TextView
+                    android:id="@+id/comorbidades"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:textSize="@dimen/StandardFontSize"
+                    android:text="Comorbidades"
+                    android:textAlignment="center"
+                    />
 
-                    <ListView
-                        android:id="@+id/list_comorbidades"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:choiceMode="multipleChoice"/>
+                <ListView
+                    android:id="@+id/list_comorbidades"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:choiceMode="multipleChoice"/>
 
 
             </LinearLayout>

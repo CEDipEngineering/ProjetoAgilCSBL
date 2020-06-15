@@ -11,8 +11,12 @@
 				"comorbidades": [1,2,4],
 				"sintomas": [3,5],
 				"sintomasData": {
-					"Tosse com produção de catarro": "0",
-					"Dor de garganta": "0"
+					"CATARRO": "Dia 0",
+					"GARGANTA": "0"
+				},
+				"notasMedico": {
+					"teste1": "DIA 1",
+					"teste2": "DIA 2"
 				}
 			},
 			{
@@ -25,8 +29,12 @@
 				"comorbidades": [1,3,6],
 				"sintomas": [2,7],
 				"sintomasData": {
-					"Ageusia": "0",
-					"Dor de ouvido": "0"
+					"AGEUSIA": "0",
+					"OUVIDO": "0"
+				},
+				"notasMedico": {
+					"teste1": "DIA 1",
+					"teste2": "DIA 2"
 				}
 			},
 			{
@@ -39,9 +47,13 @@
 				"comorbidades": [2,3,5],
 				"sintomas": [5,7,8],
 				"sintomasData": {
-					"Dor de garganta": "0",
-					"Dor de ouvido": "0",
-					"Sibilos": "0"
+					"GARGANTA": "0",
+					"OUVIDO": "0",
+					"SIBILOS": "0"
+				},
+				"notasMedico": {
+					"teste1": "DIA 1",
+					"teste2": "DIA 2"
 				}
 			}
 
