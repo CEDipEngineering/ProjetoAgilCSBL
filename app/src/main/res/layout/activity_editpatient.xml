@@ -54,15 +54,22 @@
                     android:text="Cancelar" />
 
                 <Button
-                    android:id="@+id/deletar"
+                    android:id="@+id/alta"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="Deletar Paciente" />
+                    android:text="Dar Alta" />
 
-
+            <Button
+                android:id="@+id/deletar"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Deletar Paciente" />
 
 
             <!--<View
