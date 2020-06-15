@@ -87,7 +87,7 @@
                     android:textSize="@dimen/StandardFontSize"
                     android:text="Nome:"
                     android:textAlignment="center"
-                    android:gravity="bottom"/>
+                    android:gravity="center"/>
 
                 <TextView
                     android:id="@+id/idade"
@@ -97,7 +97,7 @@
                     android:layout_below="@id/name"
                     android:text="Idade:"
                     android:textAlignment="center"
-                    android:gravity="bottom"/>
+                    android:gravity="center"/>
 
                 <TextView
                     android:id="@+id/leito"
@@ -107,7 +107,7 @@
                     android:layout_below="@id/idade"
                     android:text="Leito:"
                     android:textAlignment="center"
-                    android:gravity="bottom"/>
+                    android:gravity="center"/>
 
                 <TextView
                     android:id="@+id/temposintomas"
