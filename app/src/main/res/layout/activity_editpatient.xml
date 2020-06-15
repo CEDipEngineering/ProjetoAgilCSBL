@@ -130,6 +130,7 @@
                     android:id="@+id/edit_idade"
                     android:layout_width="200dp"
                     android:layout_height="65dp"
+                    android:inputType="number"
                     android:layout_alignBottom="@id/idade"
                     android:layout_toRightOf="@id/idade"/>
 
@@ -137,6 +138,7 @@
                     android:id="@+id/edit_leito"
                     android:layout_width="200dp"
                     android:layout_height="65dp"
+                    android:inputType="number"
                     android:layout_alignBottom="@id/leito"
                     android:layout_toRightOf="@id/leito"/>
 
@@ -144,6 +146,7 @@
                     android:id="@+id/edit_dias"
                     android:layout_width="200dp"
                     android:layout_height="65dp"
+                    android:inputType="number"
                     android:layout_alignBottom="@id/temposintomas"
                     android:layout_toRightOf="@id/temposintomas"/>
 
