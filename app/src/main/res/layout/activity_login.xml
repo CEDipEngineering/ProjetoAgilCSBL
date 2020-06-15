@@ -7,33 +7,32 @@
     
     <EditText
         android:id="@+id/login_first"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:layout_marginLeft="20dp"
         android:layout_centerHorizontal="true"
-        android:hint="Digite aqui seu Login"
+        android:hint="Usuário"
         android:textSize="35sp"
         ></EditText>
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="250dp"
         android:layout_centerHorizontal="true"
-        android:hint="Digite aqui sua Senha"
+        android:hint="Senha"
         android:textSize="35sp"></EditText>
 
     <Button
         android:id="@+id/advance"
         android:layout_width="155dp"
         android:layout_height="65dp"
-        android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="500dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="400dp"
         android:text="Avançar"
         android:textSize="20dp"></Button>
 
