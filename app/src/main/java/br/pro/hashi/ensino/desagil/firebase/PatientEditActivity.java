@@ -57,7 +57,7 @@ import java.util.List;
 import java.util.Set;
 
 public class PatientEditActivity extends Json {
-    private TextView patientNameView, patientIdadeView, tempoSintomasView, leitoView, riscoView, comorbidadesView, examesView, sintomasView;
+    private TextView patientNameView, patientIdadeView, tempoSintomasView, leitoView, leitoText, riscoView, comorbidadesView, examesView, sintomasView;
     private EditText tempoSintomasEdit, patientNameEdit, patientIdadeEdit, leitoEdit, riscoEdit, patientNote;
     private ListView listaSintomasView, listaComorbidadesView;
     private List<String> listaSintomasEnum = Arrays.asList(Sintoma.getNameArray());
@@ -101,7 +101,8 @@ public class PatientEditActivity extends Json {
         patientNameEdit = findViewById(R.id.edit_name);
         patientIdadeEdit = findViewById(R.id.edit_idade);
         patientNote = findViewById(R.id.edit_note);
-        leitoEdit = findViewById(R.id.edit_leito);
+        leitoText = findViewById(R.id.leitoText);
+        //leitoEdit = findViewById(R.id.edit_leito);
         tempoSintomasEdit = findViewById(R.id.edit_dias);
         listaSintomasView = findViewById(R.id.list_sintomas);
         listaComorbidadesView = findViewById(R.id.list_comorbidades);
@@ -128,6 +129,9 @@ public class PatientEditActivity extends Json {
         int alaId = -1;
         if (leitoId != -1) {
             leitoEdit.setText(Integer.toString(leitoId));
+            leitoText.setText("Leito: " + leitoId);
+        } else {
+            leitoText.setText("Leito: " + "N/A");
         }
 
         // If there is one, put it in the textView
@@ -148,7 +152,7 @@ public class PatientEditActivity extends Json {
                 tempNotasMedico = patient_edited.getNotasMedico();
                 patientId = patient_edited.getId();
                 if (patient_edited.getLeitoId() >= 0) {
-                    leitoEdit.setText(Integer.toString(patient_edited.getLeitoId()));
+                    leitoText.setText("Leito: " + patient_edited.getLeitoId());
                 }
                 if (patient_edited.getComorbidades() != null) {
                     for (int c = 0; c < listaComorbidadesView.getCount(); c++) {
@@ -174,6 +178,8 @@ public class PatientEditActivity extends Json {
 
             } else {
                 add = true;
+
+                System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
                 patientId = getNext(JSONpatients, "id");
             }
         } catch (JSONException e) {
@@ -181,7 +187,7 @@ public class PatientEditActivity extends Json {
         }
 
 
-        leitoEdit.setEnabled(false);
+        //leitoEdit.setEnabled(false);
         if (add) {
             deletarButton.setVisibility(View.GONE);
             altarButton.setVisibility(View.GONE);
@@ -282,11 +288,8 @@ public class PatientEditActivity extends Json {
                                     JSONpatient = JSONpatients.getJSONObject(patientId);
                                 }
 
-                                if (!(leitoEdit.getText().toString().equals(""))) {
-                                    JSONpatient.put("leito", Integer.parseInt(leitoEdit.getText().toString()));
-                                } else {
-                                    JSONpatient.put("leito", -1);
-                                }
+                                JSONpatient.put("leito", leitoId);
+
 
                                 JSONpatient.put("risco", risco);
                                 JSONpatient.put("nome", NovoPaciente.getName());
@@ -315,6 +318,8 @@ public class PatientEditActivity extends Json {
                             Intent intent = new Intent(PatientEditActivity.this, PatientActivity.class);
                             // Tem que passar o paciente atual também;
                             intent.putExtra("idPaciente", patientId);
+                            System.out.println("AAAAAAAAAAAAAAAAAAA");
+                            System.out.println(patientId);
                             startActivity(intent);
 
                             toast.show();

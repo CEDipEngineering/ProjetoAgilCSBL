@@ -130,8 +130,7 @@ public class Paciente {
         return idLeito;
     }
 
-    public int getAlaId() {
-        return idLeito/1000;
+    public int getAlaId() { return (idLeito/1000)-1;
     }
 
     public double getRisco() {
