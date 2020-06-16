@@ -188,92 +188,110 @@ public class PatientEditActivity extends Json {
 
         finalizarButton.setOnClickListener((view) -> {
 
-                    String[] log = new String[3];
-                    boolean error = false;
+            sintomasSelecionados = new ArrayList<Sintoma>();
+            comorbidadesSelecionadas = new ArrayList<Comorbidade>();
+            SparseBooleanArray sintomasChecked = listaSintomasView.getCheckedItemPositions();
+            SparseBooleanArray comorbidadesChecked = listaComorbidadesView.getCheckedItemPositions();
+            for (int i = 0; i < sintomasChecked.size(); i++) {
+                int key = sintomasChecked.keyAt(i);
+                boolean value = sintomasChecked.get(key);
+                if (value) {
+                    sintomasSelecionados.add(Sintoma.getByName(listaSintomasView.getItemAtPosition(key).toString()));
+                }
+            }
+            for (int i = 0; i < comorbidadesChecked.size(); i++) {
+                int key = comorbidadesChecked.keyAt(i);
+                boolean value = comorbidadesChecked.get(key);
+                if (value) {
+                    comorbidadesSelecionadas.add(Comorbidade.getByName(listaComorbidadesView.getItemAtPosition(key).toString()));
+                }
+            }
 
-                    this.patientNameInput = patientNameEdit.getText().toString();
-                    if (this.patientNameInput.isEmpty()) {
-                        log[0] = "É necessário preencher o nome do paciente!";
-                        error = true;
-                    }
-                    String patientIdadeInputString = patientIdadeEdit.getText().toString();
-                    try {
-                        this.patientIdadeInput = Integer.parseInt(patientIdadeInputString);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Não consegui converter a idade em int");
-                        log[1] = "Erro na idade preenchida";
-                        error = true;
-                    }
-                    String patientTimeInputString = tempoSintomasEdit.getText().toString();
-                    try {
-                        this.patientTimeInput = Integer.parseInt(patientTimeInputString);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Não consegui converter o tempo com sintomas em int");
-                        log[2] = "Erro no tempo com sintomas preenchido";
-                        error = true;
-                    }
-                    sintomasSelecionados = new ArrayList<Sintoma>();
-                    comorbidadesSelecionadas = new ArrayList<Comorbidade>();
-                    SparseBooleanArray sintomasChecked = listaSintomasView.getCheckedItemPositions();
-                    SparseBooleanArray comorbidadesChecked = listaComorbidadesView.getCheckedItemPositions();
-                    for (int i = 0; i < sintomasChecked.size(); i++) {
-                        int key = sintomasChecked.keyAt(i);
-                        boolean value = sintomasChecked.get(key);
-                        if (value) {
-                            sintomasSelecionados.add(Sintoma.getByName(listaSintomasView.getItemAtPosition(key).toString()));
+            // Pegando tempo aqui, seria bom limpar a string melhor. Será que o objeto que chama toString() não tem métodos pra limpar.
+            String currentTime = Calendar.getInstance().getTime().toString();
+            Set<String> keys = tempSintomasData.keySet();
+            String currentTimeEdited = currentTime.replace("GMT-03:00", "");
+
+            if (add) {
+                String[] log = new String[3];
+                boolean error = false;
+
+                this.patientNameInput = patientNameEdit.getText().toString();
+                if (this.patientNameInput.isEmpty()) {
+                    log[0] = "É necessário preencher o nome do paciente!";
+                    error = true;
+                }
+                String patientIdadeInputString = patientIdadeEdit.getText().toString();
+                try {
+                    this.patientIdadeInput = Integer.parseInt(patientIdadeInputString);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Não consegui converter a idade em int");
+                    log[1] = "Erro na idade preenchida";
+                    error = true;
+                }
+                String patientTimeInputString = tempoSintomasEdit.getText().toString();
+                try {
+                    this.patientTimeInput = Integer.parseInt(patientTimeInputString);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Não consegui converter o tempo com sintomas em int");
+                    log[2] = "Erro no tempo com sintomas preenchido";
+                    error = true;
+                }
+                for (Sintoma s : sintomasSelecionados) {
+                    String sintomaNome = s.getNome();
+                    tempSintomasData.put(sintomaNome + " " + "modificado em : ", currentTimeEdited);
+                }
+
+                tempNotasMedico.put(patientNote.getText().toString(), currentTime);
+
+                System.out.println(tempSintomasData);
+
+                // Se teve algum erro nos campos preenchidos, avisamos agora, e paramos a execução
+                if (error) {
+                    for (String s : log) {
+                        if (s != null) {
+                            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                         }
                     }
-                    for (int i = 0; i < comorbidadesChecked.size(); i++) {
-                        int key = comorbidadesChecked.keyAt(i);
-                        boolean value = comorbidadesChecked.get(key);
-                        if (value) {
-                            comorbidadesSelecionadas.add(Comorbidade.getByName(listaComorbidadesView.getItemAtPosition(key).toString()));
-                        }
-                    }
+                    return;
+                }
+            } else {
+                String[] log = new String[3];
 
-                    // Pegando tempo aqui, seria bom limpar a string melhor. Será que o objeto que chama toString() não tem métodos pra limpar.
-                    String currentTime = Calendar.getInstance().getTime().toString();
-                    Set<String> keys = tempSintomasData.keySet();
-                    String currentTimeEdited = currentTime.replace("GMT-03:00", "");
+                this.patientNameInput = patientNameEdit.getText().toString();
+                if (this.patientNameInput.isEmpty()) {
+                    this.patientNameInput = patient_edited.getName();
+                }
+                String patientIdadeInputString = patientIdadeEdit.getText().toString();
+                try {
+                    this.patientIdadeInput = Integer.parseInt(patientIdadeInputString);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Não consegui converter a idade em int");
+                    this.patientIdadeInput = patient_edited.getIdade();
+                }
+                String patientTimeInputString = tempoSintomasEdit.getText().toString();
+                try {
+                    this.patientTimeInput = Integer.parseInt(patientTimeInputString);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Não consegui converter o tempo com sintomas em int");
+                    this.patientTimeInput = patient_edited.getTempoSintomas();
+                }
 
-                    // Só pra saber se estamos fazendo um paciente novo
-                    if (!add) {
-                        for (Sintoma s : sintomasSelecionados) {
-                            String sintomaNome = s.getNome();
-                            if (!keys.contains(sintomaNome)) {
-                                tempSintomasData.put(sintomaNome + " " + "modificado em : ", currentTimeEdited);
-                            }
-                        }
-                        for (Sintoma s : patient_edited.getSintomas()) {
-                            String sintomaNome = s.getNome();
-                            if (!sintomasSelecionados.contains(s)) {
-                                tempSintomasData.remove(sintomaNome);
-                                tempSintomasData.put(sintomaNome + " " + "modificado em : ", currentTimeEdited);
-                            }
+                for (Sintoma s : sintomasSelecionados) {
+                    String sintomaNome = s.getNome();
+                    tempSintomasData.put(sintomaNome + " " + "modificado em : ", currentTimeEdited);
+                }
 
-                        }
-                    } else {
-                        for (Sintoma s : sintomasSelecionados) {
-                            String sintomaNome = s.getNome();
-                            tempSintomasData.put(sintomaNome + " " + "modificado em : ", currentTimeEdited);
-                        }
-                    }
-                    tempNotasMedico.put(patientNote.getText().toString(), currentTime);
+                tempNotasMedico.put(patientNote.getText().toString(), currentTime);
 
-                    System.out.println(tempSintomasData);
+                System.out.println(tempSintomasData);
 
-                    // Se teve algum erro nos campos preenchidos, avisamos agora, e paramos a execução
-                    if (error) {
-                        for (String s : log){
-                            if (s != null) {
-                                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        return;
-                    }
-
+                // Se teve algum erro nos campos preenchidos, avisamos agora, e paramos a execução
+            }
 
                     //// INTEGRACAO JAVA -> PYTHON/////
                     String URL = "https://pythontojava3.herokuapp.com/api/post_some_data";

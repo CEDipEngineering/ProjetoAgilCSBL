@@ -133,6 +133,7 @@ public class Paciente {
 
     public int getAlaId() { return (idLeito/1000)-1; }
 
+
     public double getRisco() {
         return risco;
     }
