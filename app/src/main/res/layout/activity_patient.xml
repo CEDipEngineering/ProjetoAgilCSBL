@@ -83,7 +83,7 @@ Your layout draws faster if it has fewer nested layouts (a wide view hierarchy i
             android:id="@+id/summaryViewLabel"
             android:layout_width="@dimen/ListViewWidthViewPatient"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/leftMenu"
             android:layout_marginLeft="5dp"
             android:padding="5dp"
