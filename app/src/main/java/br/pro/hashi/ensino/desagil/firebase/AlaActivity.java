@@ -164,24 +164,24 @@ public class AlaActivity extends Json {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Leito leito_intent = null;
 
-                for(Leito leito: currAla.getLeitos()){
-                    if (leito.getId()-currAla.getNumber()*1000 == (i+1)){
-                        leito_intent = leito;
-                    }
+        gridView.setOnItemClickListener((adapterView, view, i, l) -> {
+            Leito leito_intent = null;
+
+            for(Leito leito: currAla.getLeitos()){
+                if (leito.getId()-currAla.getNumber()*1000 == (i+1)){
+                    leito_intent = leito;
                 }
-                Intent intent = new Intent(AlaActivity.this, PatientActivity.class);
-                // Tem que passar o paciente atual também;
-                if(leito_intent.getPaciente() == null) {
-                    intent = new Intent(AlaActivity.this, PatientEditActivity.class);
-                }
-                intent.putExtra("idLeito", leito_intent.getId());
-                startActivity(intent);
             }
+            Intent intent = new Intent(AlaActivity.this, PatientEditActivity.class);
+            // Tem que passar o paciente atual também;
+            if(leito_intent.getPaciente() != null) {
+                intent = new Intent(AlaActivity.this, PatientActivity.class);
+                intent.putExtra("idPaciente", leito_intent.getPaciente().getId());
+            }
+            intent.putExtra("idLeito", leito_intent.getId());
+            intent.putExtra("idAla", currAla.getId());
+            startActivity(intent);
         });
 
         alaAddButton.setOnClickListener((view) -> {
@@ -259,7 +259,6 @@ public class AlaActivity extends Json {
             update();
         });
 
-
         leitoAddButton.setOnClickListener((view) -> {
             int id = currAla.getId();
             String json = loadData();
@@ -289,7 +288,6 @@ public class AlaActivity extends Json {
             getAlas(id);
             update();
         });
-
 
         leitoDeleteButton.setOnClickListener((view) -> {
             int id = currAla.getId();
