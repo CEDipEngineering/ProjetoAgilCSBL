@@ -133,7 +133,7 @@ public class AlaActivity extends Json {
         }
 
 
-        //update();
+        update();
 
 
         alaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -163,6 +163,7 @@ public class AlaActivity extends Json {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -258,7 +259,6 @@ public class AlaActivity extends Json {
             update();
         });
 
-
         leitoAddButton.setOnClickListener((view) -> {
             int id = currAla.getId();
             String json = loadData();
@@ -288,7 +288,6 @@ public class AlaActivity extends Json {
             getAlas(id);
             update();
         });
-
 
         leitoDeleteButton.setOnClickListener((view) -> {
             int id = currAla.getId();

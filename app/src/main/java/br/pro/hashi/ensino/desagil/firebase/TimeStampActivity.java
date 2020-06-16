@@ -67,9 +67,11 @@ public class TimeStampActivity extends Json {
                 summaryViewNotas = findViewById(R.id.list_anotacoes);
 
                 tempNotasMedico = patient_edited.getNotasMedico();
-                for (Map.Entry me : tempNotasMedico.entrySet()) {
-                    if(!me.getValue().equals("0")) {
-                        adapterDataStringNotas.add(me.getKey() + ": adicionado em  " + me.getValue());
+                if (tempNotasMedico != null) {
+                    for (Map.Entry me : tempNotasMedico.entrySet()) {
+                        if (!me.getValue().equals("0")) {
+                            adapterDataStringNotas.add(me.getKey() + ": adicionado em  " + me.getValue());
+                        }
                     }
                 }
                 patientId = patient_edited.getId();
@@ -78,6 +80,7 @@ public class TimeStampActivity extends Json {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            System.out.println("JSONError");
         }
         voltarButton.setOnClickListener((view -> {
             Intent intent = new Intent(TimeStampActivity.this, PatientActivity.class);
