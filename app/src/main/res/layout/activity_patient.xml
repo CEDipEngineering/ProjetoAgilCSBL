@@ -40,7 +40,7 @@ Your layout draws faster if it has fewer nested layouts (a wide view hierarchy i
                 android:id="@+id/editButton"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginTop="65dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="Editar Paciente"
@@ -98,6 +98,7 @@ Your layout draws faster if it has fewer nested layouts (a wide view hierarchy i
             android:layout_below="@id/summaryViewLabel"
             android:layout_alignRight="@id/summaryViewLabel"
             android:layout_marginTop="2dp"
+            android:background="@drawable/border"
             android:padding="5dp" />
 
         <TextView
@@ -120,6 +121,7 @@ Your layout draws faster if it has fewer nested layouts (a wide view hierarchy i
             android:layout_below="@id/comorbityViewLabel"
             android:layout_alignRight="@id/comorbityViewLabel"
             android:layout_marginTop="2dp"
+            android:background="@drawable/border"
             android:padding="5dp" />
 
 

@@ -72,6 +72,7 @@ public class Paciente {
 
         } catch (JSONException e) {
             e.printStackTrace();
+            System.out.println("Erro na construção do Paciente por JSONobject");
         }
     }
     public void setSintomasData(HashMap<String, String> sintomasData) {
@@ -130,8 +131,7 @@ public class Paciente {
         return idLeito;
     }
 
-    public int getAlaId() { return (idLeito/1000)-1;
-    }
+    public int getAlaId() { return (idLeito/1000)-1; }
 
     public double getRisco() {
         return risco;

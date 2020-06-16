@@ -21,18 +21,6 @@
             android:orientation="vertical"
             >
 
-<!--                <Button-->
-<!--                    android:id="@+id/examesButton"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="80dp"-->
-<!--                    android:layout_marginTop="50dp"-->
-<!--                    android:text="Ver Exames" />-->
-
-<!--                <Button-->
-<!--                    android:id="@+id/editButton"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="80dp"-->
-<!--                    android:text="Editar Paciente" />-->
 
             <TextView
                 android:layout_width="match_parent"
@@ -70,6 +58,10 @@
                     android:layout_marginRight="10dp"
                     android:text="Dar Alta" />
 
+
+<!--            Funcional, mas não é bom deletar o paciente,
+                dar alta nele implica em manter seus dados no sistema,
+                o que é melhor. Escondido por enquanto.-->
             <Button
                 android:id="@+id/deletar"
                 android:layout_width="match_parent"
@@ -77,7 +69,10 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="Deletar Paciente" />
+                android:text="Deletar Paciente"
+
+                android:visibility="invisible"
+                android:clickable="false"/>
 
 
             <!--<View
@@ -100,7 +95,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginTop="-40dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="55dp">
+                android:layout_marginRight="15dp">
 
                 <TextView
                     android:id="@+id/name"
@@ -149,7 +144,7 @@
                     android:layout_below="@id/temposintomas"
                     android:text="Anotação:"
                     android:textAlignment="center"
-                    android:gravity="bottom"/>
+                    android:gravity="center"/>
 
                 <EditText
                     android:id="@+id/edit_name"
@@ -208,7 +203,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/EditorField"
                 android:layout_centerVertical="true"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginRight="15dp">
 
                     <TextView
                         android:id="@+id/sintomas"
@@ -222,7 +218,8 @@
                         android:id="@+id/list_sintomas"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:choiceMode="multipleChoice"/>
+                        android:choiceMode="multipleChoice"
+                        android:background="@drawable/border"/>
 
                     <TextView
                         android:id="@+id/comorbidades"
@@ -238,16 +235,13 @@
                         android:id="@+id/list_comorbidades"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:choiceMode="multipleChoice"/>
+                        android:choiceMode="multipleChoice"
+                        android:background="@drawable/border"/>
 
-                <TextView
+                <View
                     android:id="@+id/padding2"
                     android:layout_height="30dp"
-                    android:layout_width="match_parent"
-                    android:textSize="@dimen/StandardFontSize"
-                    android:text="  "
-                    android:textAlignment="center"
-                    android:gravity="center"/>
+                    android:layout_width="match_parent" />
 
 
             </LinearLayout>

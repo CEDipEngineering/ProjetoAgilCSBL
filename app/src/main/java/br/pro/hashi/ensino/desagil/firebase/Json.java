@@ -1,6 +1,7 @@
 package br.pro.hashi.ensino.desagil.firebase;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -111,11 +112,12 @@ public class Json extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        System.out.println("O Id do getNext é " + i);
         return i;
     }
 
     protected int getPrevious(JSONArray js,String key,int id) {
-        id -=1;
+        id--;
         int pos = findIndex(js,key,id);
         while (pos < 0 && id < 0) {
             id -= 1;
