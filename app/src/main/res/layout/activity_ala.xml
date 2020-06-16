@@ -70,7 +70,8 @@
             android:numColumns="auto_fit"
             android:horizontalSpacing="1dp"
             android:verticalSpacing="1dp"
-            android:textAlignment="center">
+            android:textAlignment="center"
+            android:background="@drawable/border">
         </GridView>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

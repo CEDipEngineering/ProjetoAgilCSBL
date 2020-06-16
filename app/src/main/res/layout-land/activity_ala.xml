@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+            android:id="@+id/leftMenu"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -71,7 +72,8 @@
             android:numColumns="auto_fit"
             android:horizontalSpacing="1dp"
             android:verticalSpacing="1dp"
-            android:textAlignment="center">
+            android:textAlignment="center"
+            android:background="@drawable/border">
         </GridView>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

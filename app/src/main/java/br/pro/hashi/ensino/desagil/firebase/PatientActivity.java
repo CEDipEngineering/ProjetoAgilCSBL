@@ -26,8 +26,6 @@ import org.json.JSONObject;
 
 
 public class PatientActivity extends Json {
-    private SymptomGridAdapter symptomGridAdapter;
-
     private Spinner patientSpinner;
     private Button examesButton, editButton, addButton, alaButton, logButton;
     private ListView summaryView, symptomView, comorbityView;
@@ -72,7 +70,7 @@ public class PatientActivity extends Json {
         } else {
             patientSummary.add("Leito: ");
         }
-        patientSummary.add("Risco: " + this.currPaciente.getRisco()*100 + "%");
+        patientSummary.add("Risco: " + Math.round(this.currPaciente.getRisco()*100) + "%");
 
         ArrayAdapter<String> adapter0 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
@@ -123,6 +121,7 @@ public class PatientActivity extends Json {
         summaryView = findViewById(R.id.summaryView);
         comorbityView = findViewById(R.id.comorbityView);
         symptomImage = findViewById(R.id.symptomImage);
+        // Imagens para o corpo do paciente com sintomas em volta
         this.r = getResources();
         drawableHashMap = new HashMap<Sintoma, Drawable>();
         drawableHashMap.put(Sintoma.ANOSMIA, r.getDrawable(R.drawable.anosmia, null));
@@ -150,17 +149,19 @@ public class PatientActivity extends Json {
         drawableHashMap.put(Sintoma.LINFA, r.getDrawable(R.drawable.linfa, null));
         drawableHashMap.put(Sintoma.SANGRAMENTO, r.getDrawable(R.drawable.sangramento, null));
         drawableHashMap.put(Sintoma.SECA, r.getDrawable(R.drawable.seca, null));
+        // Sem recurso pra dor no peito :(
+        drawableHashMap.put(Sintoma.PEITO, r.getDrawable(R.drawable.body, null));
+
 
 
         Intent myIntent = getIntent();
         // Try to get message handed in when creating intent
         int patientId = myIntent.getIntExtra("idPaciente",-1);
         int leitoId = myIntent.getIntExtra("leito",-1);
-
+        int currAla = myIntent.getIntExtra("idAla", 0);
         int index = 0;
 
-
-        Paciente[] Pacientes;
+        LinkedList<Paciente> Pacientes;
 
         String json_f = loadData();
         try {
@@ -168,7 +169,7 @@ public class PatientActivity extends Json {
             JSONObject data = root.getJSONObject("database");
             JSONArray JSONpatients = data.getJSONArray("patients");
 
-            Pacientes = new Paciente[JSONpatients.length()];
+            Pacientes = new LinkedList<>();
 
             if (patientId != -1) {
                 index = findIndex(JSONpatients,"id",patientId);
@@ -176,39 +177,41 @@ public class PatientActivity extends Json {
                 index = findIndex(JSONpatients,"leito",leitoId);
             }
 
-
+            int offset = 0;
+            boolean hit = false;
             for (int i = 0; i < JSONpatients.length(); i++) {
                 JSONObject paciente = JSONpatients.getJSONObject(i);
-                Pacientes[i] = new Paciente(paciente);
+                Paciente tempPatient = new Paciente(paciente);
+                if (tempPatient.getAlaId() == currAla){
+                    Pacientes.add(tempPatient);
+                    hit = true;
+                }
+                if (!hit) {
+                    offset ++;
+                }
             }
+            index -= offset;
         } catch (JSONException e) {
             e.printStackTrace();
-            Pacientes = new Paciente[1];
-            Pacientes[0] = new Paciente("Rafael", 1, 21, 7, new LinkedList<Comorbidade>(), new LinkedList<Sintoma>(), 0.67, tempSintomasData, tempNotasMedico);
+            System.out.println("Erro na leitura do JSON dos pacientes");
+            Pacientes = new LinkedList<>();
+            Pacientes.add(new Paciente("Rafael", 1, 21, 7, new LinkedList<Comorbidade>(), new LinkedList<Sintoma>(), 0.67, tempSintomasData, tempNotasMedico));
         }
-
 
 
 
         ArrayList arraySpinner = new ArrayList();
-        for (int i = 0; i<Pacientes.length; i++) {
-            converter.put(Pacientes[i].getName(), Pacientes[i]);
-            arraySpinner.add(Pacientes[i].getName());
+        for (Paciente p : Pacientes) {
+            converter.put(p.getName(), p);
+            arraySpinner.add(p.getName());
         }
-
-
-
-
-
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         patientSpinner.setAdapter(adapter);
 
-        this.currPaciente = Pacientes[index];
+        this.currPaciente = Pacientes.get(index);
         patientSpinner.setSelection(adapter.getPosition(currPaciente.getName()));
-
-
 
         update();
 
@@ -228,8 +231,6 @@ public class PatientActivity extends Json {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
-
-
 
         editButton.setOnClickListener((view) -> {
             Intent intent = new Intent(PatientActivity.this, PatientEditActivity.class);
