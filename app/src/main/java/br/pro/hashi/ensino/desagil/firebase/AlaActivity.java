@@ -112,7 +112,6 @@ public class AlaActivity extends Json {
         gridView = findViewById(R.id.ala);
         alaSpinner = findViewById(R.id.spinnerAla);
         lotacaoText = findViewById(R.id.lotacao);
-
         alaAddButton = findViewById(R.id.alaAddButton);
         alaDeleteButton = findViewById(R.id.alaDeleteButton);
         leitoAddButton = findViewById(R.id.leitoAddButton);

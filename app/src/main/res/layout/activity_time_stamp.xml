@@ -22,33 +22,33 @@
             >
 
             <Button
-                android:id="@+id/editButton"
+                android:id="@+id/voltar"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginTop="65dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:text="Editar Paciente"
+                android:text="Voltar"
                 />
 
-            <Button
-                android:id="@+id/alaButton"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="Ver Ala"
-                />
-            <Button
-                android:id="@+id/logButton"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="Ver Histórico"
-                />
+<!--            <Button-->
+<!--                android:id="@+id/alaButton"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="80dp"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:text="Ver Ala"-->
+<!--                />-->
+<!--            <Button-->
+<!--                android:id="@+id/logButton"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="80dp"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:text="Ver Histórico"-->
+<!--                />-->
 
         </LinearLayout>
 

@@ -242,14 +242,18 @@ public class PatientEditActivity extends Json {
                         }
 
                     }
-                    for(Sintoma s: patient_edited.getSintomas()){
-                        String sintomaNome = s.getNome();
-                        if(!sintomasSelecionados.contains(s)){
-                            tempSintomasData.remove(sintomaNome);
-                            tempSintomasData.put(sintomaNome + " " +  "modificado em : ", currentTimeEdited);
+                    if (patient_edited != null) {
+                        for(Sintoma s: patient_edited.getSintomas()){
+                            String sintomaNome = s.getNome();
+                            if(!sintomasSelecionados.contains(s)){
+                                tempSintomasData.remove(sintomaNome);
+                                tempSintomasData.put(sintomaNome + " " +  "modificado em : ", currentTimeEdited);
+                            }
                         }
                     }
-                    tempNotasMedico.put(patientNote.getText().toString(), currentTime);
+                    if (!patientNote.getText().toString().equals("")) {
+                        tempNotasMedico.put(patientNote.getText().toString(), currentTime);
+                    }
                 }
                 System.out.println(tempSintomasData);
 

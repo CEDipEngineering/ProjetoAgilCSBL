@@ -18,8 +18,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="25dp"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
 <!--                <Button-->
 <!--                    android:id="@+id/examesButton"-->
@@ -34,33 +33,33 @@
 <!--                    android:layout_height="80dp"-->
 <!--                    android:text="Editar Paciente" />-->
 
-                <Button
-                    android:id="@+id/finalizar"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Finalizar" />
-                <!--   Talvez adicionar uns botões aqui na esquerda     -->
+            <Button
+                android:id="@+id/finalizar"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Finalizar" />
+            <!--   Talvez adicionar uns botões aqui na esquerda     -->
 
-                <Button
-                    android:id="@+id/cancelar"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Cancelar" />
+            <Button
+                android:id="@+id/cancelar"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Cancelar" />
 
-                <Button
-                    android:id="@+id/alta"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Dar Alta" />
+            <Button
+                android:id="@+id/alta"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Dar Alta" />
 
             <Button
                 android:id="@+id/deletar"

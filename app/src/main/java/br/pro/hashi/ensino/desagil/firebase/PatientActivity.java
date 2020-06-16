@@ -192,8 +192,10 @@ public class PatientActivity extends Json {
 
         ArrayList arraySpinner = new ArrayList();
         for (int i = 0; i<Pacientes.length; i++) {
-            converter.put(Pacientes[i].getName(), Pacientes[i]);
-            arraySpinner.add(Pacientes[i].getName());
+            if (Pacientes[i].getLeitoId()>0) {
+                converter.put(Pacientes[i].getName(), Pacientes[i]);
+                arraySpinner.add(Pacientes[i].getName());
+            }
         }
 
 
@@ -263,7 +265,7 @@ public class PatientActivity extends Json {
         alaButton.setOnClickListener((view) -> {
             Intent intent = new Intent(PatientActivity.this, AlaActivity.class);
             // Tem que passar o paciente atual também;
-            intent.putExtra("idAla", currPaciente.getAlaId());
+            intent.putExtra("idAla", currPaciente.getAlaId()-1);
             startActivity(intent);
         });
 
