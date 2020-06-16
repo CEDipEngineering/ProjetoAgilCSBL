@@ -57,7 +57,7 @@ import java.util.List;
 import java.util.Set;
 
 public class PatientEditActivity extends Json {
-    private TextView patientNameView, patientIdadeView, tempoSintomasView, leitoView, riscoView, comorbidadesView, examesView, sintomasView;
+    private TextView patientNameView, patientIdadeView, tempoSintomasView, leitoView, leitoText, riscoView, comorbidadesView, examesView, sintomasView;
     private EditText tempoSintomasEdit, patientNameEdit, patientIdadeEdit, leitoEdit, riscoEdit, patientNote;
     private ListView listaSintomasView, listaComorbidadesView;
     private List<String> listaSintomasEnum = Arrays.asList(Sintoma.getNameArray());
@@ -96,7 +96,8 @@ public class PatientEditActivity extends Json {
         patientNameEdit = findViewById(R.id.edit_name);
         patientIdadeEdit = findViewById(R.id.edit_idade);
         patientNote = findViewById(R.id.edit_note);
-        leitoEdit = findViewById(R.id.edit_leito);
+        leitoText = findViewById(R.id.leitoText);
+        //leitoEdit = findViewById(R.id.edit_leito);
         tempoSintomasEdit = findViewById(R.id.edit_dias);
         listaSintomasView = findViewById(R.id.list_sintomas);
         listaComorbidadesView = findViewById(R.id.list_comorbidades);
@@ -122,7 +123,10 @@ public class PatientEditActivity extends Json {
         alaId = myIntent.getIntExtra("idAla", 0);
 
         if (leitoId != -1) {
-            leitoEdit.setText(Integer.toString(leitoId));
+            //leitoEdit.setText(Integer.toString(leitoId));
+            leitoText.setText("Leito: " + leitoId);
+        } else {
+            leitoText.setText("Leito: " + "N/A");
         }
         
 
@@ -141,7 +145,7 @@ public class PatientEditActivity extends Json {
                 tempNotasMedico = patient_edited.getNotasMedico();
                 patientId = patient_edited.getId();
                 if (patient_edited.getLeitoId() >= 0) {
-                    leitoEdit.setText(Integer.toString(patient_edited.getLeitoId()));
+                    leitoText.setText("Leito: " + patient_edited.getLeitoId());
                 }
                 if (patient_edited.getComorbidades() != null) {
                     for (int c = 0; c < listaComorbidadesView.getCount(); c++) {
@@ -167,14 +171,15 @@ public class PatientEditActivity extends Json {
 
             } else {
                 add = true;
-                patientId = (getNext(JSONpatients, "id") + 1000*alaId + 1000);
+
+                patientId = getNext(JSONpatients, "id");
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
-        leitoEdit.setEnabled(false);
+        //leitoEdit.setEnabled(false);
         if (add) {
             deletarButton.setVisibility(View.GONE);
             altaButton.setVisibility(View.GONE);
@@ -314,11 +319,8 @@ public class PatientEditActivity extends Json {
                                             JSONpatient = JSONpatients.getJSONObject(patientId);
                                         }
 
-                                        if (!(leitoEdit.getText().toString().equals(""))) {
-                                            JSONpatient.put("leito", Integer.parseInt(leitoEdit.getText().toString()));
-                                        } else {
-                                            JSONpatient.put("leito", -1);
-                                        }
+                                        JSONpatient.put("leito", leitoId);
+
 
                                         JSONpatient.put("risco", risco);
                                         JSONpatient.put("nome", NovoPaciente.getName());

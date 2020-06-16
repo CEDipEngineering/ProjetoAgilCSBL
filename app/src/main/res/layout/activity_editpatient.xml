@@ -21,6 +21,13 @@
             android:orientation="vertical"
             >
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/leitoText"
+                android:text="Leito"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"></TextView>
 
                 <Button
                     android:id="@+id/finalizar"
@@ -108,22 +115,22 @@
                     android:textAlignment="center"
                     android:gravity="center"/>
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/leito"
                     android:layout_width="@dimen/TextViewWidthEditPatient1"
                     android:layout_height="65dp"
                     android:textSize="@dimen/StandardFontSize"
-                    android:layout_below="@id/idade"
+                    android:layout_below="@id/note"
                     android:text="Leito:"
                     android:textAlignment="center"
-                    android:gravity="center"/>
+                    android:gravity="center"/>-->
 
                 <TextView
                     android:id="@+id/temposintomas"
                     android:layout_width="@dimen/TextViewWidthEditPatient1"
                     android:layout_height="65dp"
                     android:textSize="@dimen/StandardFontSize"
-                    android:layout_below="@id/leito"
+                    android:layout_below="@id/idade"
                     android:text="Tempo com Sintomas:"
                     android:textAlignment="center"
                     android:gravity="center"/>
@@ -136,7 +143,7 @@
                     android:layout_below="@id/temposintomas"
                     android:text="Anotação:"
                     android:textAlignment="center"
-                    android:gravity="bottom"/>
+                    android:gravity="center"/>
 
                 <EditText
                     android:id="@+id/edit_name"
@@ -153,13 +160,13 @@
                     android:layout_alignBottom="@id/idade"
                     android:layout_toRightOf="@id/idade"/>
 
-                <EditText
+                <!--<EditText
                     android:id="@+id/edit_leito"
                     android:layout_width="200dp"
                     android:layout_height="65dp"
                     android:inputType="number"
                     android:layout_alignBottom="@id/leito"
-                    android:layout_toRightOf="@id/leito"/>
+                    android:layout_toRightOf="@id/leito"/>-->
 
                 <EditText
                     android:id="@+id/edit_dias"
