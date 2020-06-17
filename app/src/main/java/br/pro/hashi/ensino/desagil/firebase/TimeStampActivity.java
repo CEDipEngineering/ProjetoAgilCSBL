@@ -3,6 +3,7 @@ package br.pro.hashi.ensino.desagil.firebase;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +26,8 @@ public class TimeStampActivity extends Json {
     private int patientId;
     private int leitoId;
     private Paciente patient_edited = null;
+    private Button returnButton;
+    private int alaId;
 
 
     @Override
@@ -36,6 +39,8 @@ public class TimeStampActivity extends Json {
         summaryViewNotas = findViewById(R.id.list_anotacoes);
         ArrayList<String> adapterDataString = new ArrayList<String>();
         ArrayList<String> adapterDataStringNotas = new ArrayList<String>();
+        returnButton = findViewById((R.id.returnButton));
+
 
         Intent myIntent = getIntent();
         patientId = myIntent.getIntExtra("idPaciente", -1);
@@ -77,5 +82,12 @@ public class TimeStampActivity extends Json {
         catch (JSONException e) {
         e.printStackTrace();
     }
+        returnButton.setOnClickListener((view) -> {
+            alaId = myIntent.getIntExtra("idAla", patient_edited.getAlaId());
+            Intent intent = new Intent(TimeStampActivity.this, PatientActivity.class);
+            intent.putExtra("idPaciente", patientId);
+            intent.putExtra("idAla", alaId);
+            startActivity(intent);
+        });
     }
 }

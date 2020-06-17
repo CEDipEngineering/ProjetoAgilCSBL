@@ -274,6 +274,7 @@ public class PatientActivity extends Json {
             Intent intent = new Intent(PatientActivity.this, TimeStampActivity.class);
             // Tem que passar o paciente atual também;
             intent.putExtra("idPaciente", currPaciente.getId());
+            intent.putExtra("idAla", currPaciente.getAlaId());
             startActivity(intent);
         });
 
