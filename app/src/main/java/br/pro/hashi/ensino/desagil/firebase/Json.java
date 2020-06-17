@@ -119,7 +119,7 @@ public class Json extends AppCompatActivity {
     protected int getPrevious(JSONArray js,String key,int id) {
         id--;
         int pos = findIndex(js,key,id);
-        while (pos < 0 && id < 0) {
+        while (pos < 0 && id > 0) {
             id -= 1;
             pos = findIndex(js,key,id);
         }
