@@ -57,7 +57,7 @@ import java.util.List;
 import java.util.Set;
 
 public class PatientEditActivity extends Json {
-    private TextView patientNameView, patientIdadeView, tempoSintomasView, leitoView, riscoView, comorbidadesView, examesView, sintomasView;
+    private TextView patientNameView, patientIdadeView, tempoSintomasView, leitoView, riscoView, comorbidadesView, examesView, sintomasView, leitoText;
     private EditText tempoSintomasEdit, patientNameEdit, patientIdadeEdit, leitoEdit, riscoEdit, patientNote;
     private ListView listaSintomasView, listaComorbidadesView;
     private List<String> listaSintomasEnum = Arrays.asList(Sintoma.getNameArray());
@@ -97,6 +97,7 @@ public class PatientEditActivity extends Json {
         patientIdadeEdit = findViewById(R.id.edit_idade);
         patientNote = findViewById(R.id.edit_note);
         leitoEdit = findViewById(R.id.edit_leito);
+        leitoText = findViewById(R.id.leitoText);
         tempoSintomasEdit = findViewById(R.id.edit_dias);
         listaSintomasView = findViewById(R.id.list_sintomas);
         listaComorbidadesView = findViewById(R.id.list_comorbidades);
@@ -119,12 +120,17 @@ public class PatientEditActivity extends Json {
         // Try to get message handed in when creating intent
         patientId = myIntent.getIntExtra("idPaciente", -1);
         leitoId = myIntent.getIntExtra("idLeito", -1);
-        alaId = myIntent.getIntExtra("idAla", 0);
+        alaId = myIntent.getIntExtra("idAla", patientId/1000-1);
 
         if (leitoId != -1) {
             leitoEdit.setText(Integer.toString(leitoId));
         }
-        
+
+        if (leitoId != -1) {
+            leitoText.setText("Leito: " + leitoId);
+        } else {
+            leitoText.setText("Leito: " + "N/A");
+        }
 
         String json = loadData();
         try {
@@ -239,9 +245,10 @@ public class PatientEditActivity extends Json {
                     tempSintomasData.put(sintomaNome + " " + "modificado em : ", currentTimeEdited);
                 }
 
-                tempNotasMedico.put(patientNote.getText().toString(), currentTime);
-
-                System.out.println(tempSintomasData);
+                String notasInput = patientNote.getText().toString();
+                if(!notasInput.isEmpty()){
+                    tempNotasMedico.put(notasInput, currentTimeEdited);
+                }
 
                 // Se teve algum erro nos campos preenchidos, avisamos agora, e paramos a execução
                 if (error) {
@@ -253,8 +260,6 @@ public class PatientEditActivity extends Json {
                     return;
                 }
             } else {
-                String[] log = new String[3];
-
                 this.patientNameInput = patientNameEdit.getText().toString();
                 if (this.patientNameInput.isEmpty()) {
                     this.patientNameInput = patient_edited.getName();
@@ -280,10 +285,10 @@ public class PatientEditActivity extends Json {
                     String sintomaNome = s.getNome();
                     tempSintomasData.put(sintomaNome + " " + "modificado em : ", currentTimeEdited);
                 }
-
-                tempNotasMedico.put(patientNote.getText().toString(), currentTime);
-
-                System.out.println(tempSintomasData);
+                String notasInput = patientNote.getText().toString();
+                if(!notasInput.isEmpty()){
+                    tempNotasMedico.put(notasInput, currentTimeEdited);
+                }
 
                 // Se teve algum erro nos campos preenchidos, avisamos agora, e paramos a execução
             }

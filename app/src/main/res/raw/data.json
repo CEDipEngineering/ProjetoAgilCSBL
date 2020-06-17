@@ -15,8 +15,6 @@
 					"Dor de garganta": "0"
 				},
 				"notasMedico": {
-					"teste1": "DIA 1",
-					"teste2": "DIA 2"
 				}
 			},
 			{
@@ -33,8 +31,6 @@
 					"Dor de ouvido": "0"
 				},
 				"notasMedico": {
-					"teste1": "DIA 1",
-					"teste2": "DIA 2"
 				}
 			},
 			{
@@ -52,8 +48,22 @@
 					"Sibilos": "0"
 				},
 				"notasMedico": {
-					"teste1": "DIA 1",
-					"teste2": "DIA 2"
+				}
+			},
+			{
+				"id": 3,
+				"leito": 2001,
+				"nome": "Godofredo",
+				"idade": 17,
+				"tempoSintomas": 5,
+				"risco": 0.67,
+				"comorbidades": [0,2,3,5],
+				"sintomas": [7,8],
+				"sintomasData": {
+					"Dor de ouvido": "0",
+					"Sibilos": "0"
+				},
+				"notasMedico": {
 				}
 			}
 

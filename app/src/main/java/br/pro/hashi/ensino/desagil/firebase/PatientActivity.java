@@ -158,7 +158,7 @@ public class PatientActivity extends Json {
         // Try to get message handed in when creating intent
         int patientId = myIntent.getIntExtra("idPaciente",-1);
         int leitoId = myIntent.getIntExtra("leito",-1);
-        int currAla = myIntent.getIntExtra("idAla", 0);
+        int currAla = myIntent.getIntExtra("idAla", patientId/1000-1);
         int index = 0;
 
         LinkedList<Paciente> Pacientes;
@@ -236,6 +236,8 @@ public class PatientActivity extends Json {
             Intent intent = new Intent(PatientActivity.this, PatientEditActivity.class);
             // Tem que passar o paciente atual também;
             intent.putExtra("idPaciente", currPaciente.getId());
+            intent.putExtra("idLeito", currPaciente.getLeitoId());
+            intent.putExtra("idAla", this.currPaciente.getAlaId());
             startActivity(intent);
         });
 

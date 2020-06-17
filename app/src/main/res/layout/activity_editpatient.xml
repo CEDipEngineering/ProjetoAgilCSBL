@@ -21,39 +21,46 @@
             android:orientation="vertical"
             >
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/leitoText"
+                android:text="Leito"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"></TextView>
 
-                <Button
-                    android:id="@+id/finalizar"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Finalizar" />
-                <!--   Talvez adicionar uns botões aqui na esquerda     -->
+            <Button
+                android:id="@+id/finalizar"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Finalizar" />
+            <!--   Talvez adicionar uns botões aqui na esquerda     -->
 
-                <Button
-                    android:id="@+id/cancelar"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Cancelar" />
+            <Button
+                android:id="@+id/cancelar"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Cancelar" />
 
-                <Button
-                    android:id="@+id/alta"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="Dar Alta" />
+            <Button
+                android:id="@+id/alta"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Dar Alta" />
 
 
-<!--            Funcional, mas não é bom deletar o paciente,
-                dar alta nele implica em manter seus dados no sistema,
-                o que é melhor. Escondido por enquanto.-->
+            <!--            Funcional, mas não é bom deletar o paciente,
+                            dar alta nele implica em manter seus dados no sistema,
+                            o que é melhor. Escondido por enquanto.-->
             <Button
                 android:id="@+id/deletar"
                 android:layout_width="match_parent"
@@ -79,14 +86,14 @@
             android:layout_marginLeft="111dp"
             >
 
-<!--            Start of Editor Field-->
+            <!--            Start of Editor Field-->
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/EditorField"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="-40dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="30dp"
                 android:layout_marginRight="15dp">
 
                 <TextView
@@ -108,22 +115,22 @@
                     android:textAlignment="center"
                     android:gravity="center"/>
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/leito"
                     android:layout_width="@dimen/TextViewWidthEditPatient1"
                     android:layout_height="65dp"
                     android:textSize="@dimen/StandardFontSize"
-                    android:layout_below="@id/idade"
+                    android:layout_below="@id/note"
                     android:text="Leito:"
                     android:textAlignment="center"
-                    android:gravity="center"/>
+                    android:gravity="center"/>-->
 
                 <TextView
                     android:id="@+id/temposintomas"
                     android:layout_width="@dimen/TextViewWidthEditPatient1"
                     android:layout_height="65dp"
                     android:textSize="@dimen/StandardFontSize"
-                    android:layout_below="@id/leito"
+                    android:layout_below="@id/idade"
                     android:text="Tempo com Sintomas:"
                     android:textAlignment="center"
                     android:gravity="center"/>
@@ -134,36 +141,36 @@
                     android:layout_height="65dp"
                     android:textSize="@dimen/StandardFontSize"
                     android:layout_below="@id/temposintomas"
-                    android:text="Anotação:"
+                    android:text="Anotações:"
                     android:textAlignment="center"
-                    android:gravity="bottom"/>
+                    android:gravity="center"/>
 
                 <EditText
                     android:id="@+id/edit_name"
-                    android:layout_width="200dp"
+                    android:layout_width="180dp"
                     android:layout_height="65dp"
                     android:layout_alignBottom="@id/name"
                     android:layout_toRightOf="@id/name"/>
 
                 <EditText
                     android:id="@+id/edit_idade"
-                    android:layout_width="200dp"
+                    android:layout_width="180dp"
                     android:layout_height="65dp"
                     android:inputType="number"
                     android:layout_alignBottom="@id/idade"
                     android:layout_toRightOf="@id/idade"/>
 
-                <EditText
+                <!--<EditText
                     android:id="@+id/edit_leito"
                     android:layout_width="200dp"
                     android:layout_height="65dp"
                     android:inputType="number"
                     android:layout_alignBottom="@id/leito"
-                    android:layout_toRightOf="@id/leito"/>
+                    android:layout_toRightOf="@id/leito"/>-->
 
                 <EditText
                     android:id="@+id/edit_dias"
-                    android:layout_width="200dp"
+                    android:layout_width="180dp"
                     android:layout_height="65dp"
                     android:inputType="number"
                     android:layout_alignBottom="@id/temposintomas"
@@ -171,7 +178,7 @@
 
                 <EditText
                     android:id="@+id/edit_note"
-                    android:layout_width="200dp"
+                    android:layout_width="180dp"
                     android:layout_height="65dp"
                     android:layout_alignBottom="@id/note"
                     android:layout_toRightOf="@id/temposintomas"/>
@@ -181,7 +188,7 @@
                     android:layout_height="40dp"
                     android:layout_width="@dimen/TextViewWidthEditPatient1"
                     android:textSize="@dimen/StandardFontSize"
-                    android:layout_below="@id/temposintomas"
+                    android:layout_below="@id/note"
                     android:text="  "
                     android:textAlignment="center"
                     android:gravity="center"/>
@@ -189,46 +196,47 @@
 
 
             </RelativeLayout>
-<!--            End of Editor Field  -->
+            <!--            End of Editor Field  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/EditorField"
                 android:layout_centerVertical="true"
                 android:orientation="vertical"
-                android:layout_marginRight="15dp">
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="45dp">
 
-                    <TextView
-                        android:id="@+id/sintomas"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sintomas"
-                        android:textSize="@dimen/StandardFontSize"
-                        android:textAlignment="center"/>
+                <TextView
+                    android:id="@+id/sintomas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sintomas"
+                    android:textSize="@dimen/StandardFontSize"
+                    android:textAlignment="center"/>
 
-                    <ListView
-                        android:id="@+id/list_sintomas"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:choiceMode="multipleChoice"
-                        android:background="@drawable/border"/>
+                <ListView
+                    android:id="@+id/list_sintomas"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:choiceMode="multipleChoice"
+                    android:background="@drawable/border"/>
 
-                    <TextView
-                        android:id="@+id/comorbidades"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:textSize="@dimen/StandardFontSize"
-                        android:text="Comorbidades"
-                        android:textAlignment="center"
-                        />
+                <TextView
+                    android:id="@+id/comorbidades"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textSize="@dimen/StandardFontSize"
+                    android:text="Comorbidades"
+                    android:textAlignment="center"
+                    />
 
-                    <ListView
-                        android:id="@+id/list_comorbidades"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:choiceMode="multipleChoice"
-                        android:background="@drawable/border"/>
+                <ListView
+                    android:id="@+id/list_comorbidades"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:choiceMode="multipleChoice"
+                    android:background="@drawable/border"/>
 
                 <View
                     android:id="@+id/padding2"
@@ -240,6 +248,13 @@
 
 
         </RelativeLayout>
+
+        <EditText
+            android:id="@+id/edit_leito"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:inputType="number"
+            android:visibility="invisible"/>
 
 
     </RelativeLayout>
