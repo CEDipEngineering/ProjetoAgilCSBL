@@ -11,6 +11,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 public class Json extends AppCompatActivity {
 
@@ -95,8 +98,17 @@ public class Json extends AppCompatActivity {
 
     protected int getNext(JSONArray js,String key) {
         int i = 0;
+        int j = 0;
+        int[] ids = new int[js.length()];
         try {
-            while (i < js.length() && i == js.getJSONObject(i).getInt(key)) { i++; }
+            while (j < js.length()) {
+                ids[j] = js.getJSONObject(j).getInt(key);
+                j++;
+            }
+            Arrays.sort(ids);
+            while ( (i < ids.length) && i == ids[i]) { i++; }
+            System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHH");
+            System.out.println(i);
         } catch (JSONException e) {
             e.printStackTrace();
         }
